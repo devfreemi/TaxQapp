@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "866255476365",
+    "project_id": "taxq-cfaf0",
+    "storage_bucket": "taxq-cfaf0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866255476365:android:f53809d07eca8bf1f834c4",
+        "android_client_info": {
+          "package_name": "com.taxq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866255476365-ph9ihp5aup28aqqqjtjtbu683519l3md.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxq",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "866255476365-koeosolvov4edpdkphivb6fvtv4lhgae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5PAppvQs1fL4V20X9MjroZehiNhs8dnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866255476365-koeosolvov4edpdkphivb6fvtv4lhgae.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
