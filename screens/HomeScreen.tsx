@@ -36,7 +36,7 @@ function HomeScreen({navigation}): JSX.Element {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#2E5AAB',
+        tabBarActiveTintColor: '#1ec677',
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen
@@ -44,6 +44,10 @@ function HomeScreen({navigation}): JSX.Element {
         component={Home}
         options={{
           headerTitleAlign: 'center',
+          headerTintColor: '#1ec677',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
         }}
       />
       <Tab.Screen name="Services" component={ServicesView} />
@@ -97,9 +101,27 @@ function Home() {
           <>
             <ScrollView>
               <View style={styles.homeGridView}>
-                <Text>Hi </Text>
+                <View style={[styles.card]}>
+                  <View style={styles.viewElementsInnerF2}>
+                    <Text style={styles.innerTextViewHead}>Your Services</Text>
+                    <View style={styles.viewElements}>
+                      <Text style={styles.innerTextView}>Services</Text>
+                      <Text style={styles.innerTextViewStatus}>02</Text>
+                    </View>
+                  </View>
+                </View>
               </View>
-              <View style={styles.homeGridView2}></View>
+              <View style={styles.services}>
+                <Text style={styles.serviceText}>Services</Text>
+              </View>
+              <View style={styles.homeGridView2}>
+                <View style={styles.tableTDHead}>
+                  <View style={styles.viewTableHead}>
+                    <Text style={styles.itemHead}>Service</Text>
+                    <Text style={styles.itemHead}>Status </Text>
+                  </View>
+                </View>
+              </View>
             </ScrollView>
           </>
         )}

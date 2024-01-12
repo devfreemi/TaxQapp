@@ -10,9 +10,20 @@ import {
 import styles from '../style';
 function ServicesView({navigation}): JSX.Element {
   const [isLoading, setLoading] = useState(true);
+
+  // For api
+  // const [uniqid, setUniqid] = useState('');
+  // const [loginWith, setLoginwith] = useState('');
+  // const [emailapi, setEmailapi] = useState('');
+  // // API CALL
+  // setEmailapi('User');
+  // setUniqid('user');
+  // setLoginwith('Google');
+  // Login API FETCH
+  // console.log(JSON.stringify({uniqid, loginWith, emailapi}));
+
   setTimeout(() => {
     setLoading(false);
-
     return false;
   }, 1000);
   return (

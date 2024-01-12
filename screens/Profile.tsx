@@ -12,15 +12,12 @@ function Profile({navigation}): JSX.Element {
     const photoUrl = await AsyncStorage.getItem('photo');
     setName(nameVal);
     setPhoto(photoUrl);
-    console.log(photo);
   };
   FetchStorageData();
   const LogoutButton = async () => {
     await AsyncStorage.removeItem('userId');
-    await AsyncStorage.removeItem('name');
     await GoogleSignin.signOut();
     navigation.navigate('LoginHome');
-    console.log(name);
   };
 
   return (
