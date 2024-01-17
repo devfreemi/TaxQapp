@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
 import LoginOption from '../screens/LoginOption';
+import ServicesView from '../screens/ServicesView';
+import IncomeTax from '../screens/form/IncomeTax';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -12,9 +13,16 @@ const Navigation = () => {
       screenOptions={{
         headerBackTitleVisible: false,
       }}>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      /> */}
+      <Stack.Screen
+        name="ServicesView"
+        component={ServicesView}
         options={{
           headerShown: false,
         }}
@@ -26,6 +34,7 @@ const Navigation = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="Income Tax" component={IncomeTax} />
     </Stack.Navigator>
   );
 };

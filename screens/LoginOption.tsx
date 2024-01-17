@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
@@ -68,7 +69,7 @@ function LoginOption({navigation}): JSX.Element {
         console.log('Internal Failure. Contact to Tech Team');
       }
       // Navigate
-      navigation.navigate('HomeScreen');
+      navigation.navigate('ServicesView');
 
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       return auth().signInWithCredential(googleCredential);
@@ -80,7 +81,7 @@ function LoginOption({navigation}): JSX.Element {
   const tokenLogin = async () => {
     const tokenValue = await AsyncStorage.getItem('userId');
     if (tokenValue !== null) {
-      navigation.navigate('HomeScreen');
+      navigation.navigate('ServicesView');
       console.log('Already Logged In');
     } else {
       navigation.navigate('LoginHome');
@@ -93,14 +94,14 @@ function LoginOption({navigation}): JSX.Element {
     <SafeAreaView style={styles.ContentView}>
       <View style={styles.hImage}>
         <Image
-          source={require('../assets/images/tax.png')}
+          source={require('../assets/images/onbording.png')}
           style={styles.logo}
         />
       </View>
-      <Text style={styles.headerTitle}>
-        Welcome To
-        <Text style={styles.brand}> TaxQ</Text>
-      </Text>
+      <Text style={styles.headerTitle}>Let's Get Started</Text>
+      <Text style={styles.brand}>Join Us, Simplify Taxes</Text>
+      <Text style={styles.brand2}>Pay Effortlessly.</Text>
+      {/* <Text style={styles.brand}> TaxQ</Text> */}
       <ScrollView>
         <View style={styles.formView}>
           <TouchableOpacity style={styles.buttonLogin} onPress={FetchLoginApi}>
@@ -110,18 +111,6 @@ function LoginOption({navigation}): JSX.Element {
                 style={styles.googleImage}
               />
               <Text style={styles.loginText}>Login With Google</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.seperator}>
-            <Text style={styles.textOr}>OR</Text>
-          </View>
-          <TouchableOpacity style={styles.buttonMobile}>
-            <View style={styles.buttonG}>
-              <Image
-                source={require('../assets/images/phone.png')}
-                style={styles.googleImage}
-              />
-              <Text style={styles.mobileText}>Login With Email</Text>
             </View>
           </TouchableOpacity>
         </View>
