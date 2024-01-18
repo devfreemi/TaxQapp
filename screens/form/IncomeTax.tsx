@@ -1,4 +1,3 @@
-import {utils} from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
 import React, {useState} from 'react';
 import {
@@ -22,19 +21,25 @@ function IncomeTax(): JSX.Element {
 
     return false;
   }, 1000);
+  // RADIO Button
+  const [selectRadio, setRadio] = useState('SE');
+
   // DOCUMENT PICK
   const [documentData, setDocumentData] = useState('');
+  const [documentDataName, setDocumentDataName] = useState('');
   const pickImage = async () => {
     const response = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
     );
     if (response === PermissionsAndroid.RESULTS.GRANTED) {
       try {
         const result = await DocumentPicker.pickSingle({
           type: [DocumentPicker.types.images],
+          copyTo: 'cachesDirectory',
         });
-        setDocumentData(result.uri);
-        console.log(result.uri);
+        console.log(result);
+        setDocumentData(result.fileCopyUri);
+        setDocumentDataName(result.name);
       } catch (err) {
         console.log(err);
       }
@@ -43,14 +48,18 @@ function IncomeTax(): JSX.Element {
   const submit = async () => {
     try {
       const upload = await storage()
-        .ref(utils.FilePath.PICTURES_DIRECTORY + 'ss.png')
+        .ref('/Form16/' + documentDataName)
         .putFile(documentData);
+      const downloadURL = await storage()
+        .ref('/Form16/' + documentDataName)
+        .getDownloadURL();
       console.log(upload);
+      console.log(downloadURL);
     } catch (err) {
       console.log(err);
     }
-    // console.log('Error');
   };
+  // DOCUMENT PICK
   return (
     <SafeAreaView style={styles.ContentViewReport}>
       <View>
@@ -74,6 +83,33 @@ function IncomeTax(): JSX.Element {
             <Text style={styles.reportHeadForm}>Income Tax</Text>
             <Text style={styles.reportHead2}>Enter Your Financial Details</Text>
             <View style={styles.datePicker}>
+              <View style={styles.radioMain}>
+                <TouchableOpacity
+                  style={styles.Radio}
+                  onPress={() => setRadio('SE')}>
+                  <View style={styles.radioWrap}>
+                    <View style={styles.radioButton}>
+                      {selectRadio === 'SE' ? (
+                        <View style={styles.radioInner}></View>
+                      ) : null}
+                    </View>
+                    <Text style={styles.radioText}>Salaried</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.Radio}
+                  onPress={() => setRadio('SR')}>
+                  <View style={styles.radioWrap}>
+                    <View style={styles.radioButton}>
+                      {selectRadio === 'SR' ? (
+                        <View style={styles.radioInner}></View>
+                      ) : null}
+                    </View>
+                    <Text style={styles.radioText}>Self Employeed</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
               <Text style={styles.Lable}>PAN Number</Text>
               <TextInput
                 style={styles.inputPass}
@@ -127,11 +163,6 @@ function IncomeTax(): JSX.Element {
                   </Text>
                 </View>
               </View>
-              {documentData ? (
-                <Text>{documentData}</Text>
-              ) : (
-                <Text>{documentData}</Text>
-              )}
               <TouchableOpacity style={styles.buttonReport} onPress={submit}>
                 <View>
                   <Text style={styles.submitText}>Submit</Text>

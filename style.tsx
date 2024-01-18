@@ -1144,12 +1144,42 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '10%',
+    marginTop: '5%',
     marginBottom: '5%',
   },
   formImage: {
     height: 65,
     width: 65,
+  },
+  radioMain: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  Radio: {
+    marginRight: '2%',
+  },
+  radioText: {
+    fontSize: 20,
+  },
+  radioButton: {
+    height: 25,
+    width: 25,
+    borderColor: '#6e63ff',
+    borderWidth: 2,
+    borderRadius: 20,
+    margin: 10,
+    alignContent: 'center',
+  },
+  radioInner: {
+    backgroundColor: '#0a0099',
+    height: 18,
+    width: 18,
+    borderRadius: 20,
+    margin: '8%',
+  },
+  radioWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   Lable: {
     textAlign: 'left',
