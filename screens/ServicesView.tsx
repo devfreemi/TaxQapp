@@ -61,7 +61,7 @@ function Service({navigation}) {
               animating={isLoading}
               size={'large'}
               style={styles.StyleIndicator}
-              color={'#2E5AAB'}
+              color={'#6e63ff'}
             />
           </View>
         ) : (
