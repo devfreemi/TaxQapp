@@ -204,7 +204,7 @@ function IncomeTax({navigation}): JSX.Element {
       setDocumentBrsData('');
       setTimeout(() => {
         setFormLoading(false);
-      }, 10000);
+      }, 15000);
     }
   };
 
@@ -238,7 +238,7 @@ function IncomeTax({navigation}): JSX.Element {
                   style={styles.StyleIndicator}
                   color={'#6e63ff'}
                 />
-                <Text style={styles.loadingText}>Please wait ...</Text>
+
                 <Text style={styles.loadingText}>
                   Your Application is in the Queue!
                 </Text>
