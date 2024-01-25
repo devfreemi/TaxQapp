@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   logoutCont: {
     flex: 1,
-    marginTop: '50%',
+    marginTop: '8%',
   },
   // ADD BY FIGMA
   transactionsLayout: {
@@ -1379,6 +1379,23 @@ const styles = StyleSheet.create({
     color: '#6e63ff',
     paddingVertical: '5%',
     // marginVertical: '15%',
+  },
+  // SUCCESS PAGE
+  ContentViewSuccess: {
+    // marginTop: 85,
+    alignItems: 'center',
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  SuccCont: {
+    flex: 1,
+    marginTop: '8%',
+  },
+  SuccessHead: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#0a0099',
+    fontWeight: '600',
   },
 });
 
