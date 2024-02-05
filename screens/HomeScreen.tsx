@@ -5,12 +5,14 @@ import {
   ActivityIndicator,
   Alert,
   BackHandler,
+  FlatList,
   SafeAreaView,
-  ScrollView,
   Text,
   View,
 } from 'react-native';
 // import {LineChart} from 'react-native-chart-kit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TouchableOpacity} from 'react-native';
 import styles from '../style';
 function HomeScreen({navigation}): JSX.Element {
   useEffect(() => {
@@ -34,10 +36,48 @@ function HomeScreen({navigation}): JSX.Element {
     );
   }, []);
   const [isLoading, setLoading] = useState(true);
+  const [totalSer, setTotalSer] = useState('');
+  const [data, setData] = useState([]);
+  const FetchDashApi = async () => {
+    const customerID = await AsyncStorage.getItem('userId');
+    const dashboardUrl =
+      'https://truetechnologies.in/taxConsultant/tax/dashboard-api-v1';
+    let resultD = await fetch(dashboardUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerID,
+      }),
+    });
+    let getResultDash = await resultD.json();
+    console.log(getResultDash);
+    setTotalSer(getResultDash.product);
+  };
+  const FetchDashListApi = async () => {
+    FetchDashApi();
+    const customerIDL = await AsyncStorage.getItem('userId');
+    const dashboardListUrl =
+      'https://truetechnologies.in/taxConsultant/tax/dashboard-api-service-list-v1';
+    let resultDlist = await fetch(dashboardListUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerIDL,
+      }),
+    });
+    let getResultDashList = await resultDlist.json();
+    setData(getResultDashList);
+  };
   setTimeout(() => {
     setLoading(false);
+    // FetchDashListApi();
     return false;
   }, 1500);
+
   return (
     <SafeAreaView style={styles.ContentViewHome}>
       <View>
@@ -52,45 +92,62 @@ function HomeScreen({navigation}): JSX.Element {
           </View>
         ) : (
           <>
-            <ScrollView>
-              <View style={styles.homeGridView}>
-                <View style={[styles.card]}>
-                  <View style={styles.viewElementsInnerF2}>
-                    <Text style={styles.innerTextViewHead}>Your Services</Text>
-                    <View style={styles.viewElements}>
-                      <Text style={styles.innerTextView}>Services</Text>
-                      <Text style={styles.innerTextViewStatus}>02</Text>
-                    </View>
+            <TouchableOpacity
+              style={styles.homeGridView}
+              onPress={FetchDashListApi}>
+              <View style={[styles.card]}>
+                <View style={styles.viewElementsInnerF2}>
+                  <Text style={styles.innerTextViewHead}>Your Services</Text>
+                  <View style={styles.viewElements}>
+                    <Text style={styles.innerTextView}>Services</Text>
+                    <Text style={styles.innerTextViewStatus}>{totalSer}</Text>
                   </View>
                 </View>
               </View>
-              <View style={styles.services}>
-                <Text style={styles.serviceText}>Services</Text>
-              </View>
-              <View style={styles.homeGridView2}>
-                <View style={styles.viewTableData}>
-                  <Text style={styles.item}>GST Filling</Text>
-                  <View style={styles.itemStatus}>
-                    <View style={styles.itemStatusInnerPending}>
-                      <Text style={styles.itemStatusTextPending}>Pending</Text>
+            </TouchableOpacity>
+            <View style={styles.services}>
+              <Text style={styles.serviceText}>Services</Text>
+            </View>
+            <View style={styles.homeGridView2}>
+              {data.length ? (
+                <FlatList
+                  style={styles.tableTD}
+                  data={data}
+                  renderItem={({item}) => (
+                    <View style={styles.viewTableData}>
+                      <Text style={styles.item}>{item.product}</Text>
+                      <View style={styles.itemStatus}>
+                        {item.status === 'Approved' ? (
+                          <View style={styles.itemStatusInnerApproved}>
+                            <Text style={styles.itemStatusTextApproved}>
+                              {item.status}
+                            </Text>
+                          </View>
+                        ) : item.status === 'Pending' ? (
+                          <View style={styles.itemStatusInnerPending}>
+                            <Text style={styles.itemStatusTextPending}>
+                              {item.status}
+                            </Text>
+                          </View>
+                        ) : item.status === 'Completed' ? (
+                          <View style={styles.itemStatusInnerActive}>
+                            <Text style={styles.itemStatusTextActive}>
+                              {item.status}
+                            </Text>
+                          </View>
+                        ) : item.status === 'Rejected' ? (
+                          <View style={styles.itemStatusInnerReject}>
+                            <Text style={styles.itemStatusTextReject}>
+                              {item.status}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </View>
                     </View>
-                  </View>
-                  <Text style={styles.item}>Income Tax Audit</Text>
-                  <View style={styles.itemStatus}>
-                    <View style={styles.itemStatusInnerActive}>
-                      <Text style={styles.itemStatusTextActive}>Active</Text>
-                    </View>
-                  </View>
-                </View>
-                {/* <View style={styles.tableTDHeadErr}>
-                  <View style={styles.viewTableHeadErr}>
-                    <Text style={styles.itemHeadAll}>
-                      You haven't any active service.
-                    </Text>
-                  </View>
-                </View> */}
-              </View>
-            </ScrollView>
+                  )}
+                />
+              ) : null}
+            </View>
           </>
         )}
       </View>

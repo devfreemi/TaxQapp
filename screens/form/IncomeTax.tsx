@@ -129,8 +129,9 @@ function IncomeTax({navigation}): JSX.Element {
       if (getResultEx) {
         console.log(getResultEx);
         navigation.navigate('Application Status', {
-          itemId: getResultEx.uniqid,
-          otherParam: getResultEx.status,
+          appId: getResultEx.uniqid,
+          status: getResultEx.status,
+          category: getResultEx.product_id,
         });
       } else {
         console.log('Internal Failure. Contact to Tech Team');
@@ -229,7 +230,6 @@ function IncomeTax({navigation}): JSX.Element {
               />
             </View>
             <Text style={styles.reportHeadForm}>Income Tax</Text>
-            <Text style={styles.reportHead2}>Enter Your Financial Details</Text>
             {isFormLoading ? (
               <View style={styles.TableLoading}>
                 <ActivityIndicator
@@ -244,149 +244,156 @@ function IncomeTax({navigation}): JSX.Element {
                 </Text>
               </View>
             ) : (
-              <View style={styles.datePicker}>
-                {errorPan ? (
-                  <Text style={styles.errorMsg}>
-                    Please Enter Valid PAN No.
-                  </Text>
-                ) : null}
-                {errorIncome ? (
-                  <Text style={styles.errorMsg}>Please Enter Valid Income</Text>
-                ) : null}
-                {errorDoc ? (
-                  <Text style={styles.errorMsg}>Please Select Form 16</Text>
-                ) : null}
-                {errorDocbrs ? (
-                  <Text style={styles.errorMsg}>
-                    Please Select Bank Statement
-                  </Text>
-                ) : null}
-                {errorMsg ? (
-                  <Text style={styles.errorMsg}>
-                    Your Login Username or Password is Invalid
-                  </Text>
-                ) : null}
-                <View style={styles.radioMain}>
-                  <TouchableOpacity
-                    style={styles.Radio}
-                    onPress={() => setRadio('SR')}>
-                    <View style={styles.radioWrap}>
-                      <View style={styles.radioButton}>
-                        {selectRadio === 'SR' ? (
-                          <View style={styles.radioInner}></View>
-                        ) : null}
+              <>
+                <Text style={styles.reportHead2}>
+                  Enter Your Financial Details
+                </Text>
+                <View style={styles.datePicker}>
+                  {errorPan ? (
+                    <Text style={styles.errorMsg}>
+                      Please Enter Valid PAN No.
+                    </Text>
+                  ) : null}
+                  {errorIncome ? (
+                    <Text style={styles.errorMsg}>
+                      Please Enter Valid Income
+                    </Text>
+                  ) : null}
+                  {errorDoc ? (
+                    <Text style={styles.errorMsg}>Please Select Form 16</Text>
+                  ) : null}
+                  {errorDocbrs ? (
+                    <Text style={styles.errorMsg}>
+                      Please Select Bank Statement
+                    </Text>
+                  ) : null}
+                  {errorMsg ? (
+                    <Text style={styles.errorMsg}>
+                      Your Login Username or Password is Invalid
+                    </Text>
+                  ) : null}
+                  <View style={styles.radioMain}>
+                    <TouchableOpacity
+                      style={styles.Radio}
+                      onPress={() => setRadio('SR')}>
+                      <View style={styles.radioWrap}>
+                        <View style={styles.radioButton}>
+                          {selectRadio === 'SR' ? (
+                            <View style={styles.radioInner}></View>
+                          ) : null}
+                        </View>
+                        <Text style={styles.radioText}>Salaried</Text>
                       </View>
-                      <Text style={styles.radioText}>Salaried</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.Radio}
-                    onPress={() => setRadio('SE')}>
-                    <View style={styles.radioWrap}>
-                      <View style={styles.radioButton}>
-                        {selectRadio === 'SE' ? (
-                          <View style={styles.radioInner}></View>
-                        ) : null}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.Radio}
+                      onPress={() => setRadio('SE')}>
+                      <View style={styles.radioWrap}>
+                        <View style={styles.radioButton}>
+                          {selectRadio === 'SE' ? (
+                            <View style={styles.radioInner}></View>
+                          ) : null}
+                        </View>
+                        <Text style={styles.radioText}>Self Employeed</Text>
                       </View>
-                      <Text style={styles.radioText}>Self Employeed</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                    </TouchableOpacity>
+                  </View>
 
-                <Text style={styles.Lable}>PAN Number</Text>
-                <TextInput
-                  style={styles.inputPass}
-                  placeholder="ADFGH1564C"
-                  autoCapitalize="characters"
-                  maxLength={10}
-                  inputMode="text"
-                  value={pan}
-                  onChangeText={text => setPan(text)}
-                />
-                <Text style={styles.Lable}>Annual Income</Text>
-                <TextInput
-                  style={styles.inputPass}
-                  placeholder="10,00,000"
-                  autoCapitalize="characters"
-                  maxLength={8}
-                  inputMode="numeric"
-                  keyboardType="number-pad"
-                  value={income}
-                  onChangeText={text => setIncome(text)}
-                />
-                <Text style={styles.Lable}>Upload Required Documents</Text>
-                <View style={styles.reportGridViewForm}>
-                  <View style={styles.divServiceForm}>
-                    <View style={[styles.cardSReport]}>
-                      <TouchableOpacity
-                        style={styles.viewElementsReport}
-                        onPress={pickImage}>
-                        <View style={styles.viewElementsReportF2}>
+                  <Text style={styles.Lable}>PAN Number</Text>
+                  <TextInput
+                    style={styles.inputPass}
+                    placeholder="ADFGH1564C"
+                    autoCapitalize="characters"
+                    maxLength={10}
+                    inputMode="text"
+                    value={pan}
+                    onChangeText={text => setPan(text)}
+                  />
+                  <Text style={styles.Lable}>Annual Income</Text>
+                  <TextInput
+                    style={styles.inputPass}
+                    placeholder="10,00,000"
+                    autoCapitalize="characters"
+                    maxLength={8}
+                    inputMode="numeric"
+                    keyboardType="number-pad"
+                    value={income}
+                    onChangeText={text => setIncome(text)}
+                  />
+                  <Text style={styles.Lable}>Upload Required Documents</Text>
+                  <View style={styles.reportGridViewForm}>
+                    <View style={styles.divServiceForm}>
+                      <View style={[styles.cardSReport]}>
+                        <TouchableOpacity
+                          style={styles.viewElementsReport}
+                          onPress={pickImage}>
+                          <View style={styles.viewElementsReportF2}>
+                            <Ionicons
+                              name="document-text-outline"
+                              size={32}
+                              color={'#6e63ff'}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                      {documentData ? (
+                        <View style={styles.SuccessDiv}>
+                          <Text style={styles.serviceNameFormSuccess}>
+                            Selected
+                          </Text>
                           <Ionicons
-                            name="document-text-outline"
-                            size={32}
-                            color={'#6e63ff'}
+                            name="checkmark-circle"
+                            size={18}
+                            color={'#1ec677'}
                           />
                         </View>
-                      </TouchableOpacity>
-                    </View>
-                    {documentData ? (
-                      <View style={styles.SuccessDiv}>
-                        <Text style={styles.serviceNameFormSuccess}>
-                          Selected
+                      ) : (
+                        <Text style={styles.serviceNameForm}>
+                          Upload{'\n'}Form 16
                         </Text>
-                        <Ionicons
-                          name="checkmark-circle"
-                          size={18}
-                          color={'#1ec677'}
-                        />
+                      )}
+                    </View>
+                    <View style={styles.divServiceForm}>
+                      <View style={[styles.cardSReport]}>
+                        <TouchableOpacity
+                          style={styles.viewElementsReport}
+                          onPress={brs}>
+                          <View style={styles.viewElementsReportF2}>
+                            <Ionicons
+                              name="document-text-outline"
+                              size={32}
+                              color={'#6e63ff'}
+                            />
+                          </View>
+                        </TouchableOpacity>
                       </View>
-                    ) : (
-                      <Text style={styles.serviceNameForm}>
-                        Upload{'\n'}Form 16
-                      </Text>
-                    )}
-                  </View>
-                  <View style={styles.divServiceForm}>
-                    <View style={[styles.cardSReport]}>
-                      <TouchableOpacity
-                        style={styles.viewElementsReport}
-                        onPress={brs}>
-                        <View style={styles.viewElementsReportF2}>
+                      {documentBrsData ? (
+                        <View style={styles.SuccessDiv}>
+                          <Text style={styles.serviceNameFormSuccess}>
+                            Selected
+                          </Text>
                           <Ionicons
-                            name="document-text-outline"
-                            size={32}
-                            color={'#6e63ff'}
+                            name="checkmark-circle"
+                            size={18}
+                            color={'#1ec677'}
                           />
                         </View>
-                      </TouchableOpacity>
-                    </View>
-                    {documentBrsData ? (
-                      <View style={styles.SuccessDiv}>
-                        <Text style={styles.serviceNameFormSuccess}>
-                          Selected
+                      ) : (
+                        <Text style={styles.serviceNameForm}>
+                          Bank{'\n'}Statement
                         </Text>
-                        <Ionicons
-                          name="checkmark-circle"
-                          size={18}
-                          color={'#1ec677'}
-                        />
-                      </View>
-                    ) : (
-                      <Text style={styles.serviceNameForm}>
-                        Bank{'\n'}Statement
-                      </Text>
-                    )}
+                      )}
+                    </View>
                   </View>
+                  <TouchableOpacity
+                    style={styles.buttonReport}
+                    onPress={validation}>
+                    <View>
+                      <Text style={styles.submitText}>Submit</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  style={styles.buttonReport}
-                  onPress={validation}>
-                  <View>
-                    <Text style={styles.submitText}>Submit</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+              </>
             )}
           </ScrollView>
         )}

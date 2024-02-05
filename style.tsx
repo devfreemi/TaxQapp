@@ -796,6 +796,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 20,
     textAlign: 'center',
+    height: '100%',
   },
   homeGridView3: {
     flexDirection: 'row',
@@ -1172,10 +1173,12 @@ const styles = StyleSheet.create({
   viewTableData: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+    alignSelf: 'center',
   },
   tableTD: {
-    height: '63%',
+    height: '100%',
     // marginBottom: '5%',
+    alignSelf: 'center',
   },
   formImagediv: {
     flex: 1,
@@ -1184,9 +1187,15 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     marginBottom: '2%',
   },
+  conImagediv: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '25%',
+    marginBottom: '8%',
+  },
   formImage: {
-    height: 65,
-    width: 65,
+    height: 80,
+    width: 80,
   },
   radioMain: {
     flex: 1,
@@ -1242,8 +1251,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   itemStatusInnerPending: {
-    width: '40%',
-    backgroundColor: '#fff4d9',
+    width: '45%',
+    backgroundColor: '#dcf3ff',
     borderRadius: 10,
     alignSelf: 'center',
   },
@@ -1251,10 +1260,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: '5%',
     paddingVertical: '4%',
-    color: '#ffb400',
+    color: '#16b1ff',
   },
   itemStatusInnerActive: {
-    width: '40%',
+    width: '50%',
     backgroundColor: '#e6f7d9',
     borderRadius: 10,
     alignSelf: 'center',
@@ -1265,16 +1274,42 @@ const styles = StyleSheet.create({
     paddingVertical: '4%',
     color: '#56ca00',
   },
+  itemStatusInnerReject: {
+    width: '45%',
+    backgroundColor: '#ffe4e5',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  itemStatusTextReject: {
+    textAlign: 'center',
+    paddingHorizontal: '5%',
+    paddingVertical: '4%',
+    color: '#ff4c51',
+  },
+  itemStatusInnerApproved: {
+    width: '50%',
+    backgroundColor: '#fff4d9',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  itemStatusTextApproved: {
+    textAlign: 'center',
+    paddingHorizontal: '5%',
+    paddingVertical: '4%',
+    color: '#ffb400',
+  },
   services: {
     width: '100%',
     textAlign: 'center',
     paddingVertical: '3%',
+    alignSelf: 'center',
   },
   serviceText: {
     textAlign: 'center',
     fontSize: 18,
     fontWeight: '900',
     color: '#6E63FF',
+    alignItems: 'center',
   },
   viewTableHead: {
     flexWrap: 'wrap',
@@ -1382,7 +1417,6 @@ const styles = StyleSheet.create({
   },
   // SUCCESS PAGE
   ContentViewSuccess: {
-    // marginTop: 85,
     alignItems: 'center',
     flex: 1,
     backgroundColor: '#ffffff',
@@ -1396,6 +1430,40 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#0a0099',
     fontWeight: '600',
+    marginHorizontal: '3%',
+  },
+  conHead2: {
+    marginTop: '5%',
+    fontSize: 18,
+    fontWeight: '400',
+    color: '#848484',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    marginBottom: '10%',
+    marginHorizontal: '5%',
+  },
+  paramHead: {
+    width: '50%',
+    textAlign: 'left',
+    padding: 4,
+    fontWeight: '700',
+    color: '#848484',
+    marginBottom: 15,
+  },
+  paramStatus: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#2A2A2A',
+    letterSpacing: 0.5,
+    textAlign: 'right',
+  },
+  buttonCos: {
+    width: '80%',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#6e63ff',
+    backgroundColor: '#6e63ff',
+    marginVertical: 20,
   },
 });
 
