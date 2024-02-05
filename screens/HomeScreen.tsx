@@ -74,10 +74,11 @@ function HomeScreen({navigation}): JSX.Element {
   };
   setTimeout(() => {
     setLoading(false);
-    // FetchDashListApi();
     return false;
   }, 1500);
-
+  if (isLoading) {
+    FetchDashListApi();
+  }
   return (
     <SafeAreaView style={styles.ContentViewHome}>
       <View>
