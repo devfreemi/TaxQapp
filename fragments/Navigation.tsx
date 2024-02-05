@@ -3,6 +3,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginOption from '../screens/LoginOption';
 import ServicesView from '../screens/ServicesView';
+import GstFilling from '../screens/form/GstFilling';
 import IncomeTax from '../screens/form/IncomeTax';
 import Conformation from '../screens/form/conformation';
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ const Navigation = () => {
         }}
       />
       <Stack.Screen name="Income Tax" component={IncomeTax} />
+      <Stack.Screen name="Gst Filling" component={GstFilling} />
       <Stack.Screen name="Application Status" component={Conformation} />
     </Stack.Navigator>
   );

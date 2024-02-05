@@ -125,9 +125,10 @@ function IncomeTax({navigation}): JSX.Element {
           downloadURLBrsU,
         }),
       });
+
       let getResultEx = await result.json();
       if (getResultEx) {
-        console.log(getResultEx);
+        // console.log(getResultEx);
         navigation.navigate('Application Status', {
           appId: getResultEx.uniqid,
           status: getResultEx.status,

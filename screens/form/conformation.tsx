@@ -42,7 +42,7 @@ function Conformation({route, navigation}): JSX.Element {
                 {product === '1' ? (
                   <Text style={styles.paramStatus}>Income Tax</Text>
                 ) : product === '2' ? (
-                  <Text style={styles.paramStatus}>GST Filling</Text>
+                  <Text style={styles.paramStatus}>GST Return</Text>
                 ) : product === '3' ? (
                   <Text style={styles.paramStatus}>Digital Signature</Text>
                 ) : null}
