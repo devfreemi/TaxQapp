@@ -69,7 +69,7 @@ function LoginOption({navigation}): JSX.Element {
         console.log('Internal Failure. Contact to Tech Team');
       }
       // Navigate
-      navigation.navigate('ServicesView');
+      navigation.navigate('MobileVerification');
 
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       return auth().signInWithCredential(googleCredential);
@@ -81,7 +81,7 @@ function LoginOption({navigation}): JSX.Element {
   const tokenLogin = async () => {
     const tokenValue = await AsyncStorage.getItem('userId');
     if (tokenValue !== null) {
-      navigation.navigate('ServicesView');
+      navigation.navigate('MobileVerification');
       console.log('Already Logged In');
     } else {
       navigation.navigate('LoginHome');

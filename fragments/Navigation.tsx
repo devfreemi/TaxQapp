@@ -2,6 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginOption from '../screens/LoginOption';
+import MobileVerification from '../screens/MobileVerification';
 import ServicesView from '../screens/ServicesView';
 import GstFilling from '../screens/form/GstFilling';
 import IncomeTax from '../screens/form/IncomeTax';
@@ -25,6 +26,13 @@ const Navigation = () => {
       <Stack.Screen
         name="ServicesView"
         component={ServicesView}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="MobileVerification"
+        component={MobileVerification}
         options={{
           headerShown: false,
         }}

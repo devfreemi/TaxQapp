@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: '35%',
   },
-
+  formViewOTP: {
+    alignItems: 'center',
+    marginTop: '10%',
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -78,6 +81,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: '4%',
     marginTop: '45%',
+    marginBottom: '10%',
+    marginRight: 35,
+    marginLeft: 35,
+  },
+  hImageOTP: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '4%',
+    marginTop: '30%',
     marginBottom: '10%',
     marginRight: 35,
     marginLeft: 35,
@@ -1157,6 +1170,18 @@ const styles = StyleSheet.create({
     borderColor: '#6e63ff',
     backgroundColor: '#6e63ff',
     marginVertical: 20,
+  },
+  buttonOTP: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 312,
+    borderWidth: 2,
+    borderRadius: 8,
+    backgroundColor: '#6e63ff',
+    marginVertical: 20,
+    // padding: 18,
+    height: 57.59,
+    borderColor: '#6e63ff',
   },
   submitText: {
     fontSize: 16,
