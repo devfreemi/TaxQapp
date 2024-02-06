@@ -1252,11 +1252,23 @@ const styles = StyleSheet.create({
   },
   itemStatusInnerPending: {
     width: '45%',
-    backgroundColor: '#dcf3ff',
+    backgroundColor: '#fff4d9',
     borderRadius: 10,
     alignSelf: 'center',
   },
   itemStatusTextPending: {
+    textAlign: 'center',
+    paddingHorizontal: '5%',
+    paddingVertical: '4%',
+    color: '#ffb400',
+  },
+  itemStatusInnerPendingPay: {
+    width: '80%',
+    backgroundColor: '#dcf3ff',
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  itemStatusTextPendingPay: {
     textAlign: 'center',
     paddingHorizontal: '5%',
     paddingVertical: '4%',
@@ -1288,7 +1300,7 @@ const styles = StyleSheet.create({
   },
   itemStatusInnerApproved: {
     width: '50%',
-    backgroundColor: '#fff4d9',
+    backgroundColor: '#eee6ff',
     borderRadius: 10,
     alignSelf: 'center',
   },
@@ -1296,7 +1308,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: '5%',
     paddingVertical: '4%',
-    color: '#ffb400',
+    color: '#9055fd',
   },
   services: {
     width: '100%',

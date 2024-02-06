@@ -37,7 +37,7 @@ const Navigation = () => {
         }}
       />
       <Stack.Screen name="Income Tax" component={IncomeTax} />
-      <Stack.Screen name="Gst Filling" component={GstFilling} />
+      <Stack.Screen name="Gst Return" component={GstFilling} />
       <Stack.Screen name="Application Status" component={Conformation} />
     </Stack.Navigator>
   );

@@ -130,6 +130,12 @@ function HomeScreen({navigation}): JSX.Element {
                               {item.status}
                             </Text>
                           </View>
+                        ) : item.status === 'Received' ? (
+                          <View style={styles.itemStatusInnerApproved}>
+                            <Text style={styles.itemStatusTextApproved}>
+                              {item.status}
+                            </Text>
+                          </View>
                         ) : item.status === 'Completed' ? (
                           <View style={styles.itemStatusInnerActive}>
                             <Text style={styles.itemStatusTextActive}>
@@ -139,6 +145,12 @@ function HomeScreen({navigation}): JSX.Element {
                         ) : item.status === 'Rejected' ? (
                           <View style={styles.itemStatusInnerReject}>
                             <Text style={styles.itemStatusTextReject}>
+                              {item.status}
+                            </Text>
+                          </View>
+                        ) : item.status === 'Pending Payment' ? (
+                          <View style={styles.itemStatusInnerPendingPay}>
+                            <Text style={styles.itemStatusTextPendingPay}>
                               {item.status}
                             </Text>
                           </View>

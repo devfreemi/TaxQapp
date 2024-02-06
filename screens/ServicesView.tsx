@@ -1,6 +1,6 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -96,7 +96,7 @@ function Service({navigation}) {
                   <View style={[styles.cardIReport]}>
                     <TouchableOpacity
                       style={styles.viewElementsReport}
-                      onPress={() => navigation.navigate('Gst Filling')}>
+                      onPress={() => navigation.navigate('Gst Return')}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/gst.png')}
