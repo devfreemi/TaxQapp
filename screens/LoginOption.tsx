@@ -81,7 +81,7 @@ function LoginOption({navigation}): JSX.Element {
   const tokenLogin = async () => {
     const tokenValue = await AsyncStorage.getItem('userId');
     if (tokenValue !== null) {
-      navigation.navigate('MobileVerification');
+      navigation.navigate('ServicesView');
       console.log('Already Logged In');
     } else {
       navigation.navigate('LoginHome');
