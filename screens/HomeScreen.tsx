@@ -7,6 +7,7 @@ import {
   BackHandler,
   FlatList,
   SafeAreaView,
+  ScrollView,
   Text,
   View,
 } from 'react-native';
@@ -161,6 +162,33 @@ function HomeScreen({navigation}): JSX.Element {
                 />
               ) : null}
             </View>
+            <ScrollView>
+              <View style={styles.paymentDiv}>
+                <Text style={styles.paymentText}>Pending Payments</Text>
+              </View>
+              <View style={[styles.homeGridView3]}>
+                {/* <Text style={styles.noPayment}>
+                  You Have not any pending paymnets
+                </Text> */}
+                <View style={[styles.elevationPro, styles.cardI]}>
+                  <Text style={styles.itemPay}>GST Filling</Text>
+                  <Text style={styles.itemPayAmount}>Rs. 11,000.00</Text>
+
+                  <View style={styles.innerViewPay}>
+                    <TouchableOpacity style={styles.buttonPayReject}>
+                      <View>
+                        <Text style={styles.rejectText}>Reject</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonPay}>
+                      <View>
+                        <Text style={styles.submitText}>Pay</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
           </>
         )}
       </View>

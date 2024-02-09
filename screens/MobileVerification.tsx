@@ -22,15 +22,8 @@ function MobileVerification({navigation}): JSX.Element {
 
   // MOBILE VERIFIED CHECK
   const tokenLogin = async () => {
-    // const tokenValue = await AsyncStorage.getItem('userId');
-    // if (tokenValue !== null) {
-    //   navigation.navigate('ServicesView');
-    //   console.log('Already Logged In');
-    // } else {
-    //   navigation.navigate('LoginHome');
-    //   console.log('Token Expired');
-    // }
     const customerID = await AsyncStorage.getItem('userId');
+    const mobileID = await AsyncStorage.getItem('mobile');
     const dashboardUrl =
       'https://truetechnologies.in/taxConsultant/tax/mobile-api-v1';
     let resultD = await fetch(dashboardUrl, {
@@ -43,8 +36,10 @@ function MobileVerification({navigation}): JSX.Element {
       }),
     });
     let getResultDash = await resultD.json();
-    // console.log(getResultDash.mobileNumber);
-    if (getResultDash.mobileNumber !== null) {
+    if (mobileID !== null) {
+      navigation.navigate('ServicesView');
+      console.log('Already Verified ');
+    } else if (getResultDash.mobileNumber !== null) {
       navigation.navigate('ServicesView');
       console.log('Already Verified ');
     } else {
@@ -78,6 +73,7 @@ function MobileVerification({navigation}): JSX.Element {
     console.log(confirmation);
   };
   const validation = async () => {
+    tokenLogin();
     let sampleRegEx: RegExp = /^[6789]\d{9}$/;
     if (!sampleRegEx.test(mobile)) {
       //   console.log('INVALID');
@@ -93,11 +89,14 @@ function MobileVerification({navigation}): JSX.Element {
   const confirmCode = async () => {
     try {
       const res = await confirm.confirm(code);
-      setCnfmOTPbtn('Validating..');
-      // Navigation
+      console.log(res);
       navigation.navigate('ServicesView');
+
+      setCnfmOTPbtn('Validating....');
+      // Navigation
       // Mobile Update
       const mobileNumber = res.user.phoneNumber;
+      AsyncStorage.setItem('mobile', mobileNumber);
       const uniqid = res.user.uid;
       const customerIDM = await AsyncStorage.getItem('userId');
       const mobileUrl =
@@ -186,14 +185,19 @@ function MobileVerification({navigation}): JSX.Element {
           />
         </View>
         <Text style={styles.headerTitle}>Verify Your Mobile Number</Text>
-        {/* <Text style={styles.brand}> TaxQ</Text> */}
+
         <ScrollView>
           <View style={styles.formViewOTP}>
             {codeErr ? (
               <Text style={styles.errorMsg}>
                 OTP is Invalid. Please Enter Correct OTP !
               </Text>
-            ) : null}
+            ) : (
+              <Text style={styles.brandOTP}>
+                {' '}
+                OTP Sent to Your Mobile Number
+              </Text>
+            )}
             <TextInput
               style={styles.inputPass}
               placeholder="Enter OTP"
