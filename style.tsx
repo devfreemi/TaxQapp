@@ -1549,7 +1549,7 @@ const styles = StyleSheet.create({
   ContentViewSuccess: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#999999',
+    backgroundColor: '#ffffff',
   },
   SuccCont: {
     flex: 1,

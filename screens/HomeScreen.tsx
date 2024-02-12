@@ -72,6 +72,7 @@ function HomeScreen({navigation}): JSX.Element {
     });
     let getResultDashList = await resultDlist.json();
     setData(getResultDashList);
+    console.log(data.length);
   };
   setTimeout(() => {
     setLoading(false);
@@ -167,9 +168,6 @@ function HomeScreen({navigation}): JSX.Element {
                 <Text style={styles.paymentText}>Pending Payments</Text>
               </View>
               <View style={[styles.homeGridView3]}>
-                {/* <Text style={styles.noPayment}>
-                  You Have not any pending paymnets
-                </Text> */}
                 <View style={[styles.elevationPro, styles.cardI]}>
                   <Text style={styles.itemPay}>GST Filling</Text>
                   <Text style={styles.itemPayAmount}>Rs. 11,000.00</Text>
