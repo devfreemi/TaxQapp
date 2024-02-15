@@ -11,9 +11,11 @@ import {
   Text,
   View,
 } from 'react-native';
+
 // import {LineChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native';
+import RNUpiPayment from 'react-native-upi-payment';
 import styles from '../style';
 function HomeScreen({navigation}): JSX.Element {
   useEffect(() => {
@@ -38,6 +40,10 @@ function HomeScreen({navigation}): JSX.Element {
   }, []);
   const [isLoading, setLoading] = useState(true);
   const [totalSer, setTotalSer] = useState('');
+  const [orderId, setOrderId] = useState('');
+  const [productName, setProductName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [amountUI, setAmountUI] = useState('');
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
     const customerID = await AsyncStorage.getItem('userId');
@@ -72,14 +78,47 @@ function HomeScreen({navigation}): JSX.Element {
     });
     let getResultDashList = await resultDlist.json();
     setData(getResultDashList);
-    console.log(data.length);
+  };
+  const FetchPaymentApi = async () => {
+    // FetchDashApi();
+    const customerIPL = await AsyncStorage.getItem('userId');
+    const paymentUrl =
+      'https://truetechnologies.in/taxConsultant/tax/payment-api-v1';
+    let resultPaymet = await fetch(paymentUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerIPL,
+      }),
+    });
+    let getResultPayment = await resultPaymet.json();
+    setAmount(getResultPayment.Amount);
+    setAmountUI(getResultPayment.AmountUI);
+    setOrderId(getResultPayment.OrderId);
+    setProductName(getResultPayment.product);
+    console.log(getResultPayment);
   };
   setTimeout(() => {
     setLoading(false);
     return false;
   }, 1500);
+  const pay = async () => {
+    RNUpiPayment.initializePayment(
+      {
+        vpa: 'john@upi', // or can be john@ybl or mobileNo@upi
+        payeeName: 'John Doe',
+        amount: amount,
+        transactionRef: 'aasf-332-aoei-fn',
+      },
+      successCallback,
+      failureCallback,
+    );
+  };
   if (isLoading) {
     FetchDashListApi();
+    FetchPaymentApi();
   }
   return (
     <SafeAreaView style={styles.ContentViewHome}>
@@ -169,8 +208,8 @@ function HomeScreen({navigation}): JSX.Element {
               </View>
               <View style={[styles.homeGridView3]}>
                 <View style={[styles.elevationPro, styles.cardI]}>
-                  <Text style={styles.itemPay}>GST Filling</Text>
-                  <Text style={styles.itemPayAmount}>Rs. 11,000.00</Text>
+                  <Text style={styles.itemPay}>{productName}</Text>
+                  <Text style={styles.itemPayAmount}>Rs. {amountUI}.00</Text>
 
                   <View style={styles.innerViewPay}>
                     <TouchableOpacity style={styles.buttonPayReject}>
@@ -178,7 +217,12 @@ function HomeScreen({navigation}): JSX.Element {
                         <Text style={styles.rejectText}>Reject</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonPay}>
+                    {/* <TouchableOpacity style={styles.buttonPay}>
+                      <View>
+                        <Text style={styles.submitText}>Pay</Text>
+                      </View>
+                    </TouchableOpacity> */}
+                    <TouchableOpacity style={styles.buttonPay} onPress={pay}>
                       <View>
                         <Text style={styles.submitText}>Pay</Text>
                       </View>
