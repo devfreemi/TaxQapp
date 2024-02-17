@@ -14,16 +14,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../style';
 
 function Profile({navigation}): JSX.Element {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('Loading...');
   const [photo, setPhoto] = useState(
     'https://www.flaticon.com/free-icon/user_3177440?term=profile&page=1&position=13&origin=tag&related_id=3177440',
   );
-  const [email, setEmail] = useState('');
-  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('Loading...');
+  const [mobile, setMobile] = useState('Loading...');
   const [isLoading, setLoading] = useState(true);
-  const [cId, setCid] = useState('');
+  const [cId, setCid] = useState('Loading...');
   const FetchStorageData = async () => {
-    const customerID = await AsyncStorage.getItem('userId');
+    const customerIDP = await AsyncStorage.getItem('userId');
     const profileUrl =
       'https://truetechnologies.in/taxConsultant/tax/profile-api-v1';
     let resultDlist = await fetch(profileUrl, {
@@ -32,11 +32,18 @@ function Profile({navigation}): JSX.Element {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        customerID,
+        customerIDP,
       }),
     });
 
     let getResultProfile = await resultDlist.json();
+    if (getResultProfile.status === 101) {
+      await AsyncStorage.removeItem('userId');
+      await AsyncStorage.removeItem('mobile');
+      await GoogleSignin.signOut();
+      navigation.navigate('LoginHome');
+      console.log(getResultProfile.customerID);
+    }
     console.log(getResultProfile);
     setName(getResultProfile.name);
     setPhoto(getResultProfile.photo);
@@ -46,9 +53,10 @@ function Profile({navigation}): JSX.Element {
   };
   FetchStorageData();
   setTimeout(() => {
+    FetchStorageData();
     setLoading(false);
     return false;
-  }, 1200);
+  }, 1500);
   const LogoutButton = async () => {
     await AsyncStorage.removeItem('userId');
     await AsyncStorage.removeItem('mobile');

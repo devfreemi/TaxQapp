@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 13,
-    marginVertical: 15,
+    marginVertical: '1.5%',
   },
   logoutCont: {
     marginTop: '2%',
@@ -830,7 +830,7 @@ const styles = StyleSheet.create({
   homeGridView3: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '2%',
+    marginTop: '5%',
     marginBottom: 5,
     // height: '50%',
     textAlign: 'center',
@@ -861,7 +861,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    paddingHorizontal: '1.5%',
+    paddingHorizontal: '1%',
   },
   viewElementsP: {
     width: '100%',
@@ -887,14 +887,14 @@ const styles = StyleSheet.create({
   },
   viewElementsInnerP: {marginHorizontal: 8},
   innerTextView: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: '#FAF9F6',
     letterSpacing: 1.5,
     paddingTop: '10%',
     paddingBottom: '5%',
     textAlign: 'left',
-    paddingRight: '65%',
+    paddingRight: '50%',
   },
   innerTextViewStatus: {
     fontSize: 18,
@@ -1026,6 +1026,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginVertical: '1%',
   },
+  ServiceScroll: {
+    // height: '100%',
+    marginBottom: '45%',
+  },
   cardIReport: {
     backgroundColor: '#e7e6ff',
     borderRadius: 150,
@@ -1111,7 +1115,7 @@ const styles = StyleSheet.create({
     marginTop: '2%',
   },
   reportHead2: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
     color: '#6a6a6a',
     letterSpacing: 0.5,
@@ -1167,6 +1171,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: '10%',
   },
+  CheckBox: {
+    flexDirection: 'row',
+  },
+  CheckBoxDiv: {
+    // flex: 1,
+    marginTop: '6%',
+    flexDirection: 'row',
+  },
+  CheckBoxInner: {
+    marginLeft: '6%',
+  },
   reportGridViewForm: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -1186,11 +1201,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   datePicker: {
-    marginTop: '5%',
+    marginTop: '3%',
     marginHorizontal: '10%',
   },
   reportHeadForm: {
-    fontSize: 25,
+    fontSize: 21,
     fontWeight: '600',
     color: '#4a4a4a',
     letterSpacing: 1,
@@ -1271,8 +1286,8 @@ const styles = StyleSheet.create({
     marginBottom: '8%',
   },
   formImage: {
-    height: 80,
-    width: 80,
+    height: 50,
+    width: 50,
   },
   radioMain: {
     flex: 1,
@@ -1290,7 +1305,8 @@ const styles = StyleSheet.create({
     borderColor: '#6e63ff',
     borderWidth: 2,
     borderRadius: 20,
-    margin: 10,
+    marginHorizontal: 10,
+    marginVertical: 8,
     alignContent: 'center',
   },
   radioInner: {
@@ -1311,7 +1327,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.8,
     color: '#0a0099',
-    marginTop: '5%',
+    marginTop: '4%',
+  },
+  LableCheck: {
+    paddingBottom: '4%',
+    fontSize: 16,
+    fontWeight: '600',
+    paddingTop: '3.5%',
   },
   // Dashboard
   item: {
@@ -1594,6 +1616,15 @@ const styles = StyleSheet.create({
     borderColor: '#6e63ff',
     backgroundColor: '#6e63ff',
     marginVertical: 20,
+  },
+  noService: {
+    textAlign: 'center',
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#808080',
+    letterSpacing: 1,
+    paddingVertical: '10%',
   },
 });
 

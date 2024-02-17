@@ -28,11 +28,11 @@ function GstFilling({navigation}): JSX.Element {
   // PRODUCT CODE
   const productID = 2;
   // GET INPUT FIELD
-  const [pan, setPan] = useState('');
-  const [income, setIncome] = useState('');
+  const [gst, setGst] = useState('');
+  const [trade, setTrade] = useState('');
   // Validation
-  const [errorIncome, setErrorIncome] = useState(false);
-  const [errorPan, setErrorPan] = useState(false);
+  const [errorTrade, setErrorTrade] = useState(false);
+  const [errorGst, setErrorGst] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
   // DATA RECEIVED FROM API
   const [isFormLoading, setFormLoading] = useState(false);
@@ -50,8 +50,8 @@ function GstFilling({navigation}): JSX.Element {
         body: JSON.stringify({
           productID,
           customerID,
-          income,
-          pan,
+          trade,
+          gst,
         }),
       });
 
@@ -74,32 +74,39 @@ function GstFilling({navigation}): JSX.Element {
   // DOCUMENT PICK
   // Validation
   const validation = async () => {
-    if (!pan) {
-      setErrorPan(true);
-      setErrorIncome(false);
+    let sampleRegEx: RegExp =
+      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+    if (!gst) {
+      setErrorGst(true);
+      setErrorTrade(false);
 
       return false;
-    } else if (pan.length < 10) {
-      setErrorPan(true);
-      setErrorIncome(false);
+    } else if (gst.length < 15) {
+      setErrorGst(true);
+      setErrorTrade(false);
+
+      return false;
+    } else if (!sampleRegEx.test(gst)) {
+      setErrorGst(true);
+      setErrorTrade(false);
 
       return false;
     } else {
       setErrorMsg(false);
-      setErrorPan(false);
+      setErrorGst(false);
     }
-    if (!income) {
-      setErrorIncome(true);
-      setErrorPan(false);
+    if (!trade) {
+      setErrorTrade(true);
+      setErrorGst(false);
       return false;
-    } else if (income.length < 5) {
-      setErrorIncome(true);
-      setErrorPan(false);
+    } else if (trade.length < 5) {
+      setErrorTrade(true);
+      setErrorGst(false);
       return false;
     } else {
       setFormLoading(true);
       setErrorMsg(false);
-      setErrorIncome(false);
+      setErrorTrade(false);
       submit();
       setTimeout(() => {
         setFormLoading(false);
@@ -147,14 +154,14 @@ function GstFilling({navigation}): JSX.Element {
                   Enter Your Financial Details
                 </Text>
                 <View style={styles.datePicker}>
-                  {errorPan ? (
+                  {errorGst ? (
                     <Text style={styles.errorMsg}>
-                      Please Enter Valid PAN No.
+                      Please Enter Valid GST No.
                     </Text>
                   ) : null}
-                  {errorIncome ? (
+                  {errorTrade ? (
                     <Text style={styles.errorMsg}>
-                      Please Enter Valid Income
+                      Please Enter Valid Trade Name
                     </Text>
                   ) : null}
                   {errorMsg ? (
@@ -163,26 +170,25 @@ function GstFilling({navigation}): JSX.Element {
                     </Text>
                   ) : null}
 
-                  <Text style={styles.Lable}>PAN Number</Text>
+                  <Text style={styles.Lable}>GST Number</Text>
                   <TextInput
                     style={styles.inputPass}
-                    placeholder="ADFGH1564C"
+                    placeholder="Enter GST Number"
                     autoCapitalize="characters"
-                    maxLength={10}
+                    maxLength={15}
                     inputMode="text"
-                    value={pan}
-                    onChangeText={text => setPan(text)}
+                    value={gst}
+                    onChangeText={text => setGst(text)}
                   />
-                  <Text style={styles.Lable}>Annual Income</Text>
+                  <Text style={styles.Lable}>Trade Name</Text>
                   <TextInput
                     style={styles.inputPass}
-                    placeholder="10,00,000"
+                    placeholder="Enter Your Trade Name"
                     autoCapitalize="characters"
-                    maxLength={8}
-                    inputMode="numeric"
-                    keyboardType="number-pad"
-                    value={income}
-                    onChangeText={text => setIncome(text)}
+                    maxLength={64}
+                    inputMode="text"
+                    value={trade}
+                    onChangeText={text => setTrade(text)}
                   />
 
                   <TouchableOpacity

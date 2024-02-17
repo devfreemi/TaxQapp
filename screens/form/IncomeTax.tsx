@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import DocumentPicker from 'react-native-document-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../../style';
@@ -35,20 +36,43 @@ function IncomeTax({navigation}): JSX.Element {
   const productID = 1;
   // GET INPUT FIELD
   const [pan, setPan] = useState('');
-  const [income, setIncome] = useState('');
+  const [name, setName] = useState('');
   // DOCUMENT PICK
   const [documentData, setDocumentData] = useState('');
   const [documentDataName, setDocumentDataName] = useState('');
   const [documentBrsData, setDocumentBrsData] = useState('');
   const [documentBrsDataName, setDocumentBrsDataName] = useState('');
   // Validation
-  const [errorIncome, setErrorIncome] = useState(false);
+  const [errorName, setErrorName] = useState(false);
   const [errorPan, setErrorPan] = useState(false);
   const [errorDoc, setErrorDoc] = useState(false);
   const [errorDocbrs, setErrorDocbrs] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
   // DATA RECEIVED FROM API
   const [isFormLoading, setFormLoading] = useState(false);
+  // 80C & D Check
+  const [eightC, setEightC] = useState(true);
+  // const [eightCstring, setEightCstring] = useState('Y');
+  const [eightD, setEightD] = useState(true);
+
+  // PRE DATA CHECK
+  const FetchStorageDataSer = async () => {
+    const customerIDP = await AsyncStorage.getItem('userId');
+    const profileUrl =
+      'https://truetechnologies.in/taxConsultant/tax/profile-api-v1';
+    let resultDlist = await fetch(profileUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerIDP,
+      }),
+    });
+    let getResultProfile = await resultDlist.json();
+    console.log(getResultProfile.name);
+    setName(getResultProfile.name);
+  };
 
   const pickImage = async () => {
     const response = await PermissionsAndroid.request(
@@ -57,7 +81,7 @@ function IncomeTax({navigation}): JSX.Element {
     if (response === PermissionsAndroid.RESULTS.GRANTED) {
       try {
         const result = await DocumentPicker.pickSingle({
-          type: [DocumentPicker.types.pdf],
+          // type: [DocumentPicker.types.pdf],
           copyTo: 'cachesDirectory',
         });
         console.log(result);
@@ -76,7 +100,7 @@ function IncomeTax({navigation}): JSX.Element {
     if (response === PermissionsAndroid.RESULTS.GRANTED) {
       try {
         const resultBrs = await DocumentPicker.pickSingle({
-          type: [DocumentPicker.types.pdf],
+          // type: [DocumentPicker.types.pdf],
           copyTo: 'cachesDirectory',
         });
         console.log(resultBrs);
@@ -106,7 +130,8 @@ function IncomeTax({navigation}): JSX.Element {
         .getDownloadURL();
       const downloadURLBrsU = downloadURLBrs;
       // BBRS
-
+      const eightyC = eightC.toString();
+      const eightyD = eightD.toString();
       const serviceUrl =
         'https://truetechnologies.in/taxConsultant/tax/service-api-v1';
       let result = await fetch(serviceUrl, {
@@ -119,10 +144,12 @@ function IncomeTax({navigation}): JSX.Element {
           productID,
           customerID,
           selectRadio,
-          income,
+          name,
           pan,
           downloadURLP1,
           downloadURLBrsU,
+          eightyC,
+          eightyD,
         }),
       });
 
@@ -144,45 +171,52 @@ function IncomeTax({navigation}): JSX.Element {
   // DOCUMENT PICK
   // Validation
   const validation = async () => {
+    let sampleRegEx: RegExp = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+    if (!name) {
+      setErrorName(true);
+      setErrorPan(false);
+      setErrorDoc(false);
+      setErrorDocbrs(false);
+      return false;
+    } else if (name.length < 5) {
+      setErrorName(true);
+      setErrorPan(false);
+      setErrorDoc(false);
+      setErrorDocbrs(false);
+      return false;
+    } else {
+      setErrorMsg(false);
+      setErrorName(false);
+      setErrorDoc(false);
+      setErrorDocbrs(false);
+    }
     if (!pan) {
       setErrorPan(true);
-      setErrorIncome(false);
+      setErrorName(false);
       setErrorDoc(false);
       setErrorDocbrs(false);
       return false;
     } else if (pan.length < 10) {
       setErrorPan(true);
-      setErrorIncome(false);
+      setErrorName(false);
+      setErrorDoc(false);
+      setErrorDocbrs(false);
+      return false;
+    } else if (!sampleRegEx.test(pan)) {
+      setErrorPan(true);
+      setErrorName(false);
       setErrorDoc(false);
       setErrorDocbrs(false);
       return false;
     } else {
       setErrorMsg(false);
       setErrorPan(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-    }
-    if (!income) {
-      setErrorIncome(true);
-      setErrorPan(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
-    } else if (income.length < 5) {
-      setErrorIncome(true);
-      setErrorPan(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
-    } else {
-      setErrorMsg(false);
-      setErrorIncome(false);
       setErrorDoc(false);
       setErrorDocbrs(false);
     }
     if (!documentData) {
       setErrorDoc(true);
-      setErrorIncome(false);
+      setErrorName(false);
       setErrorPan(false);
       setErrorDocbrs(false);
       return false;
@@ -192,7 +226,7 @@ function IncomeTax({navigation}): JSX.Element {
     }
     if (!documentBrsData) {
       setErrorDocbrs(true);
-      setErrorIncome(false);
+      setErrorName(false);
       setErrorPan(false);
       return false;
     } else {
@@ -201,7 +235,7 @@ function IncomeTax({navigation}): JSX.Element {
       setErrorMsg(false);
       submit();
       setPan('');
-      setIncome('');
+      setName('');
       setDocumentData('');
       setDocumentBrsData('');
       setTimeout(() => {
@@ -210,6 +244,10 @@ function IncomeTax({navigation}): JSX.Element {
     }
   };
 
+  const focus = async () => {
+    setName('');
+    FetchStorageDataSer();
+  };
   return (
     <SafeAreaView style={styles.ContentViewReport}>
       <View>
@@ -250,14 +288,12 @@ function IncomeTax({navigation}): JSX.Element {
                   Enter Your Financial Details
                 </Text>
                 <View style={styles.datePicker}>
+                  {errorName ? (
+                    <Text style={styles.errorMsg}>Please Enter Valid Name</Text>
+                  ) : null}
                   {errorPan ? (
                     <Text style={styles.errorMsg}>
                       Please Enter Valid PAN No.
-                    </Text>
-                  ) : null}
-                  {errorIncome ? (
-                    <Text style={styles.errorMsg}>
-                      Please Enter Valid Income
                     </Text>
                   ) : null}
                   {errorDoc ? (
@@ -299,7 +335,16 @@ function IncomeTax({navigation}): JSX.Element {
                       </View>
                     </TouchableOpacity>
                   </View>
-
+                  <Text style={styles.Lable}>Name</Text>
+                  <TextInput
+                    style={styles.inputPass}
+                    placeholder="Enter Your Name"
+                    maxLength={28}
+                    inputMode="text"
+                    value={name}
+                    onPressIn={focus}
+                    onChangeText={text => setName(text)}
+                  />
                   <Text style={styles.Lable}>PAN Number</Text>
                   <TextInput
                     style={styles.inputPass}
@@ -310,17 +355,29 @@ function IncomeTax({navigation}): JSX.Element {
                     value={pan}
                     onChangeText={text => setPan(text)}
                   />
-                  <Text style={styles.Lable}>Annual Income</Text>
-                  <TextInput
-                    style={styles.inputPass}
-                    placeholder="10,00,000"
-                    autoCapitalize="characters"
-                    maxLength={8}
-                    inputMode="numeric"
-                    keyboardType="number-pad"
-                    value={income}
-                    onChangeText={text => setIncome(text)}
-                  />
+                  {selectRadio === 'SR' ? (
+                    <View style={styles.CheckBoxDiv}>
+                      <View style={styles.CheckBox}>
+                        <Text style={styles.LableCheck}>80C Applicable</Text>
+                        <BouncyCheckbox
+                          fillColor="#6e63ff"
+                          isChecked={eightC}
+                          style={styles.CheckBoxInner}
+                          onPress={() => setEightC(!eightC)}
+                        />
+                      </View>
+                      <View style={styles.CheckBox}>
+                        <Text style={styles.LableCheck}>80D Applicable</Text>
+                        <BouncyCheckbox
+                          fillColor="#6e63ff"
+                          isChecked={eightD}
+                          style={styles.CheckBoxInner}
+                          onPress={() => setEightD(!eightD)}
+                        />
+                      </View>
+                    </View>
+                  ) : null}
+
                   <Text style={styles.Lable}>Upload Required Documents</Text>
                   <View style={styles.reportGridViewForm}>
                     <View style={styles.divServiceForm}>

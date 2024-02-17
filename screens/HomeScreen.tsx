@@ -6,6 +6,7 @@ import {
   Alert,
   BackHandler,
   FlatList,
+  Linking,
   SafeAreaView,
   ScrollView,
   Text,
@@ -15,7 +16,7 @@ import {
 // import {LineChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native';
-import RNUpiPayment from 'react-native-upi-payment';
+
 import styles from '../style';
 function HomeScreen({navigation}): JSX.Element {
   useEffect(() => {
@@ -44,6 +45,7 @@ function HomeScreen({navigation}): JSX.Element {
   const [productName, setProductName] = useState('');
   const [amount, setAmount] = useState('');
   const [amountUI, setAmountUI] = useState('');
+  const [err, setErr] = useState(false);
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
     const customerID = await AsyncStorage.getItem('userId');
@@ -59,9 +61,13 @@ function HomeScreen({navigation}): JSX.Element {
       }),
     });
     let getResultDash = await resultD.json();
-    console.log(getResultDash);
-    setTotalSer(getResultDash.product);
+    if (getResultDash.status === 201) {
+      setTotalSer('0');
+    } else {
+      setTotalSer(getResultDash.product);
+    }
   };
+
   const FetchDashListApi = async () => {
     FetchDashApi();
     const customerIDL = await AsyncStorage.getItem('userId');
@@ -77,10 +83,11 @@ function HomeScreen({navigation}): JSX.Element {
       }),
     });
     let getResultDashList = await resultDlist.json();
-    setData(getResultDashList);
+    if (getResultDashList.statusCode !== 200) {
+      setData(getResultDashList);
+    }
   };
   const FetchPaymentApi = async () => {
-    // FetchDashApi();
     const customerIPL = await AsyncStorage.getItem('userId');
     const paymentUrl =
       'https://truetechnologies.in/taxConsultant/tax/payment-api-v1';
@@ -94,27 +101,33 @@ function HomeScreen({navigation}): JSX.Element {
       }),
     });
     let getResultPayment = await resultPaymet.json();
-    setAmount(getResultPayment.Amount);
-    setAmountUI(getResultPayment.AmountUI);
-    setOrderId(getResultPayment.OrderId);
-    setProductName(getResultPayment.product);
-    console.log(getResultPayment);
+    if (getResultPayment.statusCode === 201) {
+      setErr(true);
+    } else {
+      setErr(false);
+      setAmount(getResultPayment.Amount);
+      setAmountUI(getResultPayment.AmountUI);
+      setOrderId(getResultPayment.OrderId);
+      setProductName(getResultPayment.product);
+      console.log(getResultPayment);
+    }
   };
   setTimeout(() => {
     setLoading(false);
     return false;
   }, 1500);
   const pay = async () => {
-    RNUpiPayment.initializePayment(
-      {
-        vpa: 'john@upi', // or can be john@ybl or mobileNo@upi
-        payeeName: 'John Doe',
-        amount: amount,
-        transactionRef: 'aasf-332-aoei-fn',
-      },
-      successCallback,
-      failureCallback,
-    );
+    const payURL =
+      'upi://pay? pa=8240145941@ybl&pn=Subhajit&mc=0000& mode=02&purpose=00';
+    const upiOpen = async () => {
+      Linking.openURL(payURL);
+    };
+    upiOpen();
+  };
+  const refresh = async () => {
+    FetchDashListApi();
+    FetchPaymentApi();
+    FetchDashApi();
   };
   if (isLoading) {
     FetchDashListApi();
@@ -134,14 +147,12 @@ function HomeScreen({navigation}): JSX.Element {
           </View>
         ) : (
           <>
-            <TouchableOpacity
-              style={styles.homeGridView}
-              onPress={FetchDashListApi}>
+            <TouchableOpacity style={styles.homeGridView} onPress={refresh}>
               <View style={[styles.card]}>
                 <View style={styles.viewElementsInnerF2}>
                   <Text style={styles.innerTextViewHead}>Your Services</Text>
                   <View style={styles.viewElements}>
-                    <Text style={styles.innerTextView}>Services</Text>
+                    <Text style={styles.innerTextView}>Total Services</Text>
                     <Text style={styles.innerTextViewStatus}>{totalSer}</Text>
                   </View>
                 </View>
@@ -200,36 +211,42 @@ function HomeScreen({navigation}): JSX.Element {
                     </View>
                   )}
                 />
-              ) : null}
+              ) : (
+                <Text style={styles.noService}>
+                  You have not choose any service!{' '}
+                </Text>
+              )}
             </View>
             <ScrollView>
               <View style={styles.paymentDiv}>
                 <Text style={styles.paymentText}>Pending Payments</Text>
               </View>
-              <View style={[styles.homeGridView3]}>
-                <View style={[styles.elevationPro, styles.cardI]}>
-                  <Text style={styles.itemPay}>{productName}</Text>
-                  <Text style={styles.itemPayAmount}>Rs. {amountUI}.00</Text>
+              {err ? (
+                <Text style={styles.noService}>
+                  You have not any pending payments.
+                </Text>
+              ) : (
+                <View style={[styles.homeGridView3]}>
+                  <View style={[styles.elevationPro, styles.cardI]}>
+                    <Text style={styles.itemPay}>{productName}</Text>
+                    <Text style={styles.itemPayAmount}>Rs. {amountUI}.00</Text>
 
-                  <View style={styles.innerViewPay}>
-                    <TouchableOpacity style={styles.buttonPayReject}>
-                      <View>
-                        <Text style={styles.rejectText}>Reject</Text>
-                      </View>
-                    </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.buttonPay}>
-                      <View>
-                        <Text style={styles.submitText}>Pay</Text>
-                      </View>
-                    </TouchableOpacity> */}
-                    <TouchableOpacity style={styles.buttonPay} onPress={pay}>
-                      <View>
-                        <Text style={styles.submitText}>Pay</Text>
-                      </View>
-                    </TouchableOpacity>
+                    <View style={styles.innerViewPay}>
+                      <TouchableOpacity style={styles.buttonPayReject}>
+                        <View>
+                          <Text style={styles.rejectText}>Reject</Text>
+                        </View>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={styles.buttonPay} onPress={pay}>
+                        <View>
+                          <Text style={styles.submitText}>Pay</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-              </View>
+              )}
             </ScrollView>
           </>
         )}

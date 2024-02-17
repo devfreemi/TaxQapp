@@ -1,6 +1,6 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -71,10 +71,8 @@ function Service({navigation}) {
               style={styles.banner}
             />
 
-            <Text style={styles.reportHead}>
-              What service are you looking for?
-            </Text>
-            <ScrollView>
+            <Text style={styles.reportHead}>Select Our Services</Text>
+            <ScrollView style={styles.ServiceScroll}>
               <Text style={styles.serviceNamein}>Services</Text>
               <View style={styles.reportGridView}>
                 <View style={styles.divService}>
@@ -139,6 +137,34 @@ function Service({navigation}) {
                     Company{'\n'}Incorporation
                   </Text>
                 </View>
+                <View style={styles.divService}>
+                  <View style={[styles.cardIReport]}>
+                    <TouchableOpacity style={styles.viewElementsReport}>
+                      <View style={styles.viewElementsReportF2}>
+                        <Image
+                          source={require('../assets/images/corporate.png')}
+                          style={styles.SerPic}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.serviceName}>
+                    Corporate{'\n'}Compliance
+                  </Text>
+                </View>
+                <View style={styles.divService}>
+                  <View style={[styles.cardIReport]}>
+                    <TouchableOpacity style={styles.viewElementsReport}>
+                      <View style={styles.viewElementsReportF2}>
+                        <Image
+                          source={require('../assets/images/tds.png')}
+                          style={styles.SerPic}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.serviceName}>TDS{'\n'}</Text>
+                </View>
               </View>
               {/* NEXT DIV */}
               <Text style={styles.serviceNamein2}>Licensing</Text>
@@ -172,21 +198,7 @@ function Service({navigation}) {
                     License
                   </Text>
                 </View>
-                <View style={styles.divService}>
-                  <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
-                      <View style={styles.viewElementsReportF2}>
-                        <Image
-                          source={require('../assets/images/corporate.png')}
-                          style={styles.SerPic}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.serviceName}>
-                    Corporate{'\n'}Compliance
-                  </Text>
-                </View>
+
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
                     <TouchableOpacity style={styles.viewElementsReport}>
@@ -207,13 +219,30 @@ function Service({navigation}) {
                     <TouchableOpacity style={styles.viewElementsReport}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
-                          source={require('../assets/images/tds.png')}
+                          source={require('../assets/images/idea.png')}
                           style={styles.SerPic}
                         />
                       </View>
                     </TouchableOpacity>
                   </View>
-                  <Text style={styles.serviceName}>TDS{'\n'}</Text>
+                  <Text style={styles.serviceName}>
+                    Startup{'\n'}Registration
+                  </Text>
+                </View>
+                <View style={styles.divService}>
+                  <View style={[styles.cardIReport]}>
+                    <TouchableOpacity style={styles.viewElementsReport}>
+                      <View style={styles.viewElementsReportF2}>
+                        <Image
+                          source={require('../assets/images/fssai.png')}
+                          style={styles.SerPic}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.serviceName}>
+                    FSSAI{'\n'}Registration
+                  </Text>
                 </View>
 
                 <View style={styles.divService}>
