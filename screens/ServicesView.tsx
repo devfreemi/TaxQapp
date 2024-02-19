@@ -110,7 +110,9 @@ function Service({navigation}) {
                 </View>
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={() => navigation.navigate('Digital Signature')}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/signature.png')}

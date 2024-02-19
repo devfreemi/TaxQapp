@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginOption from '../screens/LoginOption';
 import MobileVerification from '../screens/MobileVerification';
 import ServicesView from '../screens/ServicesView';
+import DigitalSignature from '../screens/form/DigitalSignature';
 import GstFilling from '../screens/form/GstFilling';
 import IncomeTax from '../screens/form/IncomeTax';
 import Conformation from '../screens/form/conformation';
@@ -46,6 +47,7 @@ const Navigation = () => {
       />
       <Stack.Screen name="Income Tax" component={IncomeTax} />
       <Stack.Screen name="Gst Return" component={GstFilling} />
+      <Stack.Screen name="Digital Signature" component={DigitalSignature} />
       <Stack.Screen name="Application Status" component={Conformation} />
     </Stack.Navigator>
   );

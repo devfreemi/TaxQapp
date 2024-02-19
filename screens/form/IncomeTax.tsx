@@ -113,134 +113,230 @@ function IncomeTax({navigation}): JSX.Element {
   };
 
   const submit = async () => {
-    try {
-      const upload = await storage()
-        .ref('/Form16/' + customerID + documentDataName)
-        .putFile(documentData);
-      const downloadURL = await storage()
-        .ref('/Form16/' + customerID + documentDataName)
-        .getDownloadURL();
-      const downloadURLP1 = downloadURL;
-      // BRS upload
-      const uploadBrs = await storage()
-        .ref('/BankStatement/' + documentBrsDataName)
-        .putFile(documentBrsData);
-      const downloadURLBrs = await storage()
-        .ref('/BankStatement/' + documentBrsDataName)
-        .getDownloadURL();
-      const downloadURLBrsU = downloadURLBrs;
-      // BBRS
-      const eightyC = eightC.toString();
-      const eightyD = eightD.toString();
-      const serviceUrl =
-        'https://truetechnologies.in/taxConsultant/tax/service-api-v1';
-      let result = await fetch(serviceUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=3600',
-        },
-        body: JSON.stringify({
-          productID,
-          customerID,
-          selectRadio,
-          name,
-          pan,
-          downloadURLP1,
-          downloadURLBrsU,
-          eightyC,
-          eightyD,
-        }),
-      });
-
-      let getResultEx = await result.json();
-      if (getResultEx) {
-        // console.log(getResultEx);
-        navigation.navigate('Application Status', {
-          appId: getResultEx.uniqid,
-          status: getResultEx.status,
-          category: getResultEx.product_id,
+    if (selectRadio === 'SR') {
+      try {
+        const upload = await storage()
+          .ref('/Form16/' + customerID + documentDataName)
+          .putFile(documentData);
+        const downloadURL = await storage()
+          .ref('/Form16/' + customerID + documentDataName)
+          .getDownloadURL();
+        const downloadURLP1 = downloadURL;
+        // BRS upload
+        const uploadBrs = await storage()
+          .ref('/BankStatement/' + documentBrsDataName)
+          .putFile(documentBrsData);
+        const downloadURLBrs = await storage()
+          .ref('/BankStatement/' + documentBrsDataName)
+          .getDownloadURL();
+        const downloadURLBrsU = downloadURLBrs;
+        // BBRS
+        const eightyC = eightC.toString();
+        const eightyD = eightD.toString();
+        const serviceUrl =
+          'https://truetechnologies.in/taxConsultant/tax/service-api-v1';
+        let result = await fetch(serviceUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'max-age=3600',
+          },
+          body: JSON.stringify({
+            productID,
+            customerID,
+            selectRadio,
+            name,
+            pan,
+            downloadURLP1,
+            downloadURLBrsU,
+            eightyC,
+            eightyD,
+          }),
         });
-      } else {
-        console.log('Internal Failure. Contact to Tech Team');
+
+        let getResultEx = await result.json();
+        if (getResultEx) {
+          // console.log(getResultEx);
+          navigation.navigate('Application Status', {
+            appId: getResultEx.uniqid,
+            status: getResultEx.status,
+            category: getResultEx.product_id,
+          });
+        } else {
+          console.log('Internal Failure. Contact to Tech Team');
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else {
+      try {
+        const downloadURLP1 = 'NA';
+        const downloadURLBrsU = 'NA';
+        // BBRS
+        const eightyC = 'false';
+        const eightyD = 'false';
+        const serviceUrl =
+          'https://truetechnologies.in/taxConsultant/tax/service-api-v1';
+        let result = await fetch(serviceUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'max-age=3600',
+          },
+          body: JSON.stringify({
+            productID,
+            customerID,
+            selectRadio,
+            name,
+            pan,
+            downloadURLP1,
+            downloadURLBrsU,
+            eightyC,
+            eightyD,
+          }),
+        });
+
+        let getResultEx = await result.json();
+        if (getResultEx) {
+          // console.log(getResultEx);
+          navigation.navigate('Application Status', {
+            appId: getResultEx.uniqid,
+            status: getResultEx.status,
+            category: getResultEx.product_id,
+          });
+        } else {
+          console.log('Internal Failure. Contact to Tech Team');
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   // DOCUMENT PICK
   // Validation
   const validation = async () => {
     let sampleRegEx: RegExp = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
-    if (!name) {
-      setErrorName(true);
-      setErrorPan(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
-    } else if (name.length < 5) {
-      setErrorName(true);
-      setErrorPan(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
+    if (selectRadio === 'SR') {
+      if (!name) {
+        setErrorName(true);
+        setErrorPan(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else if (name.length < 5) {
+        setErrorName(true);
+        setErrorPan(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else {
+        setErrorMsg(false);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+      }
+      if (!pan) {
+        setErrorPan(true);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else if (pan.length < 10) {
+        setErrorPan(true);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else if (!sampleRegEx.test(pan)) {
+        setErrorPan(true);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else {
+        setErrorMsg(false);
+        setErrorPan(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+      }
+      if (!documentData) {
+        setErrorDoc(true);
+        setErrorName(false);
+        setErrorPan(false);
+        setErrorDocbrs(false);
+        return false;
+      } else {
+        setErrorMsg(false);
+        setErrorDoc(false);
+      }
+      if (!documentBrsData) {
+        setErrorDocbrs(true);
+        setErrorName(false);
+        setErrorPan(false);
+        return false;
+      } else {
+        setFormLoading(true);
+        setErrorDocbrs(false);
+        setErrorMsg(false);
+        submit();
+        setPan('');
+        setName('');
+        setDocumentData('');
+        setDocumentBrsData('');
+        setTimeout(() => {
+          setFormLoading(false);
+        }, 15000);
+      }
     } else {
-      setErrorMsg(false);
-      setErrorName(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-    }
-    if (!pan) {
-      setErrorPan(true);
-      setErrorName(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
-    } else if (pan.length < 10) {
-      setErrorPan(true);
-      setErrorName(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
-    } else if (!sampleRegEx.test(pan)) {
-      setErrorPan(true);
-      setErrorName(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-      return false;
-    } else {
-      setErrorMsg(false);
-      setErrorPan(false);
-      setErrorDoc(false);
-      setErrorDocbrs(false);
-    }
-    if (!documentData) {
-      setErrorDoc(true);
-      setErrorName(false);
-      setErrorPan(false);
-      setErrorDocbrs(false);
-      return false;
-    } else {
-      setErrorMsg(false);
-      setErrorDoc(false);
-    }
-    if (!documentBrsData) {
-      setErrorDocbrs(true);
-      setErrorName(false);
-      setErrorPan(false);
-      return false;
-    } else {
-      setFormLoading(true);
-      setErrorDocbrs(false);
-      setErrorMsg(false);
-      submit();
-      setPan('');
-      setName('');
-      setDocumentData('');
-      setDocumentBrsData('');
-      setTimeout(() => {
-        setFormLoading(false);
-      }, 15000);
+      if (!name) {
+        setErrorName(true);
+        setErrorPan(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else if (name.length < 5) {
+        setErrorName(true);
+        setErrorPan(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else {
+        setErrorMsg(false);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+      }
+      if (!pan) {
+        setErrorPan(true);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else if (pan.length < 10) {
+        setErrorPan(true);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else if (!sampleRegEx.test(pan)) {
+        setErrorPan(true);
+        setErrorName(false);
+        setErrorDoc(false);
+        setErrorDocbrs(false);
+        return false;
+      } else {
+        setErrorMsg(false);
+        setErrorPan(false);
+        setFormLoading(true);
+        submit();
+        setPan('');
+        setName('');
+        setDocumentData('');
+        setDocumentBrsData('');
+        setTimeout(() => {
+          setFormLoading(false);
+        }, 15000);
+      }
     }
   };
 
@@ -377,72 +473,77 @@ function IncomeTax({navigation}): JSX.Element {
                       </View>
                     </View>
                   ) : null}
-
-                  <Text style={styles.Lable}>Upload Required Documents</Text>
-                  <View style={styles.reportGridViewForm}>
-                    <View style={styles.divServiceForm}>
-                      <View style={[styles.cardSReport]}>
-                        <TouchableOpacity
-                          style={styles.viewElementsReport}
-                          onPress={pickImage}>
-                          <View style={styles.viewElementsReportF2}>
-                            <Ionicons
-                              name="document-text-outline"
-                              size={32}
-                              color={'#6e63ff'}
-                            />
+                  {selectRadio === 'SR' ? (
+                    <>
+                      <Text style={styles.Lable}>
+                        Upload Required Documents
+                      </Text>
+                      <View style={styles.reportGridViewForm}>
+                        <View style={styles.divServiceForm}>
+                          <View style={[styles.cardSReport]}>
+                            <TouchableOpacity
+                              style={styles.viewElementsReport}
+                              onPress={pickImage}>
+                              <View style={styles.viewElementsReportF2}>
+                                <Ionicons
+                                  name="document-text-outline"
+                                  size={32}
+                                  color={'#6e63ff'}
+                                />
+                              </View>
+                            </TouchableOpacity>
                           </View>
-                        </TouchableOpacity>
-                      </View>
-                      {documentData ? (
-                        <View style={styles.SuccessDiv}>
-                          <Text style={styles.serviceNameFormSuccess}>
-                            Selected
-                          </Text>
-                          <Ionicons
-                            name="checkmark-circle"
-                            size={18}
-                            color={'#1ec677'}
-                          />
+                          {documentData ? (
+                            <View style={styles.SuccessDiv}>
+                              <Text style={styles.serviceNameFormSuccess}>
+                                Selected
+                              </Text>
+                              <Ionicons
+                                name="checkmark-circle"
+                                size={18}
+                                color={'#1ec677'}
+                              />
+                            </View>
+                          ) : (
+                            <Text style={styles.serviceNameForm}>
+                              Upload{'\n'}Form 16
+                            </Text>
+                          )}
                         </View>
-                      ) : (
-                        <Text style={styles.serviceNameForm}>
-                          Upload{'\n'}Form 16
-                        </Text>
-                      )}
-                    </View>
-                    <View style={styles.divServiceForm}>
-                      <View style={[styles.cardSReport]}>
-                        <TouchableOpacity
-                          style={styles.viewElementsReport}
-                          onPress={brs}>
-                          <View style={styles.viewElementsReportF2}>
-                            <Ionicons
-                              name="document-text-outline"
-                              size={32}
-                              color={'#6e63ff'}
-                            />
+                        <View style={styles.divServiceForm}>
+                          <View style={[styles.cardSReport]}>
+                            <TouchableOpacity
+                              style={styles.viewElementsReport}
+                              onPress={brs}>
+                              <View style={styles.viewElementsReportF2}>
+                                <Ionicons
+                                  name="document-text-outline"
+                                  size={32}
+                                  color={'#6e63ff'}
+                                />
+                              </View>
+                            </TouchableOpacity>
                           </View>
-                        </TouchableOpacity>
-                      </View>
-                      {documentBrsData ? (
-                        <View style={styles.SuccessDiv}>
-                          <Text style={styles.serviceNameFormSuccess}>
-                            Selected
-                          </Text>
-                          <Ionicons
-                            name="checkmark-circle"
-                            size={18}
-                            color={'#1ec677'}
-                          />
+                          {documentBrsData ? (
+                            <View style={styles.SuccessDiv}>
+                              <Text style={styles.serviceNameFormSuccess}>
+                                Selected
+                              </Text>
+                              <Ionicons
+                                name="checkmark-circle"
+                                size={18}
+                                color={'#1ec677'}
+                              />
+                            </View>
+                          ) : (
+                            <Text style={styles.serviceNameForm}>
+                              Bank{'\n'}Statement
+                            </Text>
+                          )}
                         </View>
-                      ) : (
-                        <Text style={styles.serviceNameForm}>
-                          Bank{'\n'}Statement
-                        </Text>
-                      )}
-                    </View>
-                  </View>
+                      </View>
+                    </>
+                  ) : null}
                   <TouchableOpacity
                     style={styles.buttonReport}
                     onPress={validation}>

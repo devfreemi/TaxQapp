@@ -101,8 +101,9 @@ function HomeScreen({navigation}): JSX.Element {
       }),
     });
     let getResultPayment = await resultPaymet.json();
-    if (getResultPayment.statusCode === 201) {
+    if (getResultPayment.statusCode !== 200) {
       setErr(true);
+      console.log(getResultPayment);
     } else {
       setErr(false);
       setAmount(getResultPayment.Amount);
