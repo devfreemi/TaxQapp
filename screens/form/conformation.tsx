@@ -45,6 +45,8 @@ function Conformation({route, navigation}): JSX.Element {
                   <Text style={styles.paramStatus}>GST Return</Text>
                 ) : product === '3' ? (
                   <Text style={styles.paramStatus}>Digital Signature</Text>
+                ) : product === '4' ? (
+                  <Text style={styles.paramStatus}>Company Incorporation</Text>
                 ) : null}
               </View>
             </View>

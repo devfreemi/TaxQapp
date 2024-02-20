@@ -160,7 +160,7 @@ function DigitalSignature({navigation}): JSX.Element {
               animating={isLoading}
               size={'small'}
               style={styles.StyleIndicator}
-              color={'#6e63ff'}
+              color={'#745bff'}
             />
           </View>
         ) : (
@@ -178,7 +178,7 @@ function DigitalSignature({navigation}): JSX.Element {
                   animating={isFormLoading}
                   size={'small'}
                   style={styles.StyleIndicator}
-                  color={'#6e63ff'}
+                  color={'#745bff'}
                 />
 
                 <Text style={styles.loadingText}>

@@ -72,7 +72,7 @@ function Profile({navigation}): JSX.Element {
             animating={isLoading}
             size={'large'}
             style={styles.StyleIndicator}
-            color={'#6e63ff'}
+            color={'#745bff'}
           />
         </View>
       ) : (

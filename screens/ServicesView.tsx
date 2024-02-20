@@ -36,7 +36,7 @@ function ServicesView({navigation}): JSX.Element {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#6e63ff',
+        tabBarActiveTintColor: '#745bff',
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen name="Services" component={Service} />
@@ -61,7 +61,7 @@ function Service({navigation}) {
               animating={isLoading}
               size={'large'}
               style={styles.StyleIndicator}
-              color={'#6e63ff'}
+              color={'#745bff'}
             />
           </View>
         ) : (
@@ -126,7 +126,11 @@ function Service({navigation}) {
 
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={() =>
+                        navigation.navigate('Company Incorporation')
+                      }>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/brand.png')}
@@ -254,7 +258,7 @@ function Service({navigation}) {
                         <Ionicons
                           name="grid-outline"
                           size={32}
-                          color={'#6e63ff'}
+                          color={'#745bff'}
                         />
                       </View>
                     </TouchableOpacity>

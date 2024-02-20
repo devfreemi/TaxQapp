@@ -353,7 +353,7 @@ function IncomeTax({navigation}): JSX.Element {
               animating={isLoading}
               size={'small'}
               style={styles.StyleIndicator}
-              color={'#6e63ff'}
+              color={'#745bff'}
             />
           </View>
         ) : (
@@ -371,7 +371,7 @@ function IncomeTax({navigation}): JSX.Element {
                   animating={isFormLoading}
                   size={'small'}
                   style={styles.StyleIndicator}
-                  color={'#6e63ff'}
+                  color={'#745bff'}
                 />
 
                 <Text style={styles.loadingText}>
@@ -456,7 +456,7 @@ function IncomeTax({navigation}): JSX.Element {
                       <View style={styles.CheckBox}>
                         <Text style={styles.LableCheck}>80C Applicable</Text>
                         <BouncyCheckbox
-                          fillColor="#6e63ff"
+                          fillColor="#745bff"
                           isChecked={eightC}
                           style={styles.CheckBoxInner}
                           onPress={() => setEightC(!eightC)}
@@ -465,7 +465,7 @@ function IncomeTax({navigation}): JSX.Element {
                       <View style={styles.CheckBox}>
                         <Text style={styles.LableCheck}>80D Applicable</Text>
                         <BouncyCheckbox
-                          fillColor="#6e63ff"
+                          fillColor="#745bff"
                           isChecked={eightD}
                           style={styles.CheckBoxInner}
                           onPress={() => setEightD(!eightD)}
@@ -488,7 +488,7 @@ function IncomeTax({navigation}): JSX.Element {
                                 <Ionicons
                                   name="document-text-outline"
                                   size={32}
-                                  color={'#6e63ff'}
+                                  color={'#745bff'}
                                 />
                               </View>
                             </TouchableOpacity>
@@ -519,7 +519,7 @@ function IncomeTax({navigation}): JSX.Element {
                                 <Ionicons
                                   name="document-text-outline"
                                   size={32}
-                                  color={'#6e63ff'}
+                                  color={'#745bff'}
                                 />
                               </View>
                             </TouchableOpacity>

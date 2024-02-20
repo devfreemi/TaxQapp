@@ -6,7 +6,6 @@ import {
   Alert,
   BackHandler,
   FlatList,
-  Linking,
   SafeAreaView,
   ScrollView,
   Text,
@@ -16,7 +15,7 @@ import {
 // import {LineChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native';
-
+import RazorpayCheckout from 'react-native-razorpay';
 import styles from '../style';
 function HomeScreen({navigation}): JSX.Element {
   useEffect(() => {
@@ -118,12 +117,31 @@ function HomeScreen({navigation}): JSX.Element {
     return false;
   }, 1500);
   const pay = async () => {
-    const payURL =
-      'upi://pay? pa=8240145941@ybl&pn=Subhajit&mc=0000& mode=02&purpose=00';
-    const upiOpen = async () => {
-      Linking.openURL(payURL);
+    var options = {
+      description: 'Credits towards consultation',
+      image:
+        'https://truetechnologies.in/taxConsultant//assets/img/icons/brands/appLogo.png',
+      currency: 'INR',
+      key: 'rzp_test_xDskoVbdRxNOez',
+      amount: amount,
+      name: 'Complyify',
+      order_id: orderId,
+      prefill: {
+        email: 'gaurav.kumar@example.com',
+        contact: '9191919191',
+        name: 'Gaurav Kumar',
+      },
+      theme: {color: '#53a20e'},
     };
-    upiOpen();
+    RazorpayCheckout.open(options)
+      .then(data => {
+        // handle success
+        console.log(`Success: ${data.razorpay_payment_id}`);
+      })
+      .catch(error => {
+        // handle failure
+        console.log(`Error: ${error.code} | ${error.description}`);
+      });
   };
   const refresh = async () => {
     FetchDashListApi();
