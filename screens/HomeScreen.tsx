@@ -42,6 +42,9 @@ function HomeScreen({navigation}): JSX.Element {
   const [totalSer, setTotalSer] = useState('');
   const [orderId, setOrderId] = useState('');
   const [productName, setProductName] = useState('');
+  const [payeeName, setPayeeName] = useState('');
+  const [payeeEmail, setPayeeEmail] = useState('');
+  const [payeeMobile, setPayeeMobile] = useState('');
   const [amount, setAmount] = useState('');
   const [amountUI, setAmountUI] = useState('');
   const [err, setErr] = useState(false);
@@ -109,6 +112,9 @@ function HomeScreen({navigation}): JSX.Element {
       setAmountUI(getResultPayment.AmountUI);
       setOrderId(getResultPayment.OrderId);
       setProductName(getResultPayment.product);
+      setPayeeName(getResultPayment.Name);
+      setPayeeEmail(getResultPayment.Email);
+      setPayeeMobile(getResultPayment.Mobile);
       console.log(getResultPayment);
     }
   };
@@ -127,16 +133,16 @@ function HomeScreen({navigation}): JSX.Element {
       name: 'Complyify',
       order_id: orderId,
       prefill: {
-        email: 'gaurav.kumar@example.com',
-        contact: '9191919191',
-        name: 'Gaurav Kumar',
+        email: payeeEmail,
+        contact: payeeMobile,
+        name: payeeName,
       },
-      theme: {color: '#53a20e'},
+      theme: {color: '#745bff'},
     };
     RazorpayCheckout.open(options)
       .then(data => {
         // handle success
-        console.log(`Success: ${data.razorpay_payment_id}`);
+        console.log(JSON.stringify(data));
       })
       .catch(error => {
         // handle failure
@@ -161,7 +167,7 @@ function HomeScreen({navigation}): JSX.Element {
               animating={isLoading}
               size={'large'}
               style={styles.StyleIndicator}
-              color={'#6e63ff'}
+              color={'#745bff'}
             />
           </View>
         ) : (

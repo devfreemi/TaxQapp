@@ -968,7 +968,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     paddingBottom: '5%',
     paddingHorizontal: '3%',
-    color: '#3CB371',
+    color: '#18b47a',
   },
   buttonPay: {
     width: '45%',
