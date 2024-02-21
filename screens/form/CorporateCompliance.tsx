@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import styles from '../../style';
-function CompanyIncorporation({navigation}): JSX.Element {
+function CorporateCompliance({navigation}): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   setTimeout(() => {
     setLoading(false);
@@ -21,14 +21,11 @@ function CompanyIncorporation({navigation}): JSX.Element {
   // FETCH STORAGE ID OF CUSTOMER
   const [customerID, setCustomerID] = useState('');
   const [customerName, setCustomerName] = useState('');
-  const [email, setEmail] = useState('');
-  const [mobile, setMobile] = useState('');
   const FetchStorageData = async () => {
     const userId = await AsyncStorage.getItem('userId');
     setCustomerID(userId);
   };
   FetchStorageData();
-
   // PRE DATA CHECK
   const FetchStorageDataSer = async () => {
     const customerIDP = await AsyncStorage.getItem('userId');
@@ -46,23 +43,26 @@ function CompanyIncorporation({navigation}): JSX.Element {
     let getResultProfile = await resultDlist.json();
     console.log(getResultProfile.name);
     setCustomerName(getResultProfile.name);
-    setEmail(getResultProfile.email);
     setMobile(getResultProfile.mobile);
   };
   // PRODUCT CODE
-  const productID = 4;
-
+  const productID = 5;
+  // GET INPUT FIELD
+  const [msg, setMsg] = useState('');
+  const [company, setCompany] = useState('');
+  const [mobile, setMobile] = useState('');
   // Validation
+  const [errorCompany, setErrorCompany] = useState(false);
   const [errorName, setErrorName] = useState(false);
   const [errorMobile, setErrorMobile] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
   // DATA RECEIVED FROM API
   const [isFormLoading, setFormLoading] = useState(false);
 
   const submit = async () => {
     try {
       const serviceUrl =
-        'https://truetechnologies.in/taxConsultant/tax/service-api-company-v1';
+        'https://truetechnologies.in/taxConsultant/tax/service-api-compliance-v1';
       let result = await fetch(serviceUrl, {
         method: 'POST',
         headers: {
@@ -73,8 +73,9 @@ function CompanyIncorporation({navigation}): JSX.Element {
           productID,
           customerID,
           customerName,
-          email,
           mobile,
+          company,
+          msg,
         }),
       });
 
@@ -99,44 +100,70 @@ function CompanyIncorporation({navigation}): JSX.Element {
   const validation = async () => {
     if (!customerName) {
       setErrorName(true);
-      setErrorEmail(false);
+      setErrorMsg(false);
       setErrorMobile(false);
+      setErrorCompany(false);
       return false;
     } else if (customerName.length < 5) {
       setErrorName(true);
-      setErrorEmail(false);
+      setErrorMsg(false);
       setErrorMobile(false);
+      setErrorCompany(false);
       return false;
     } else {
       setErrorName(false);
-      setErrorEmail(false);
+      setErrorMsg(false);
       setErrorMobile(false);
+      setErrorCompany(false);
     }
     if (!mobile) {
       setErrorName(false);
-      setErrorEmail(false);
+      setErrorMsg(false);
+      setErrorCompany(false);
       setErrorMobile(true);
       return false;
     } else if (mobile.length < 10) {
       setErrorName(false);
-      setErrorEmail(false);
+      setErrorMsg(false);
+      setErrorCompany(false);
       setErrorMobile(true);
       return false;
     } else {
       setErrorName(false);
-      setErrorEmail(false);
+      setErrorMsg(false);
+      setErrorCompany(false);
       setErrorMobile(false);
     }
-    if (!email) {
+    if (!company) {
       setErrorName(false);
-      setErrorEmail(true);
+      setErrorMsg(false);
       setErrorMobile(false);
+      setErrorCompany(true);
+      return false;
+    } else if (company.length < 5) {
+      setErrorName(false);
+      setErrorMsg(false);
+      setErrorMobile(false);
+      setErrorCompany(true);
+      return false;
+    } else {
+      setErrorName(false);
+      setErrorMsg(false);
+      setErrorMobile(false);
+      setErrorCompany(false);
+    }
+    if (!msg) {
+      setErrorName(false);
+      setErrorMsg(true);
+      setErrorMobile(false);
+      setErrorCompany(false);
       return false;
     } else {
       setFormLoading(true);
       setErrorName(false);
-      setErrorEmail(false);
+      setErrorMsg(false);
       setErrorMobile(false);
+      setErrorCompany(false);
       submit();
       setTimeout(() => {
         setFormLoading(false);
@@ -144,9 +171,9 @@ function CompanyIncorporation({navigation}): JSX.Element {
     }
   };
   const focus = async () => {
-    setCustomerName('');
     FetchStorageDataSer();
   };
+
   return (
     <SafeAreaView style={styles.ContentViewReport}>
       <View>
@@ -156,25 +183,25 @@ function CompanyIncorporation({navigation}): JSX.Element {
               animating={isLoading}
               size={'small'}
               style={styles.StyleIndicator}
-              color={'#745bff'}
+              color={'#6e63ff'}
             />
           </View>
         ) : (
           <ScrollView>
             <View style={styles.formImagediv}>
               <Image
-                source={require('../../assets/images/brand.png')}
+                source={require('../../assets/images/corporate.png')}
                 style={styles.formImage}
               />
             </View>
-            <Text style={styles.reportHeadForm}>Company Incorporation</Text>
+            <Text style={styles.reportHeadForm}>Corporate Compliance</Text>
             {isFormLoading ? (
               <View style={styles.TableLoading}>
                 <ActivityIndicator
                   animating={isFormLoading}
                   size={'small'}
                   style={styles.StyleIndicator}
-                  color={'#745bff'}
+                  color={'#6e63ff'}
                 />
 
                 <Text style={styles.loadingText}>
@@ -183,20 +210,27 @@ function CompanyIncorporation({navigation}): JSX.Element {
               </View>
             ) : (
               <>
-                <Text style={styles.reportHead2}>Enter Your Details Here</Text>
+                <Text style={styles.reportHead2}>
+                  Enter Your Financial Details
+                </Text>
                 <View style={styles.datePicker}>
                   {errorName ? (
-                    <Text style={styles.errorMsg}>Please Enter Valid Name</Text>
+                    <Text style={styles.errorMsg}>
+                      Please Enter Valid Name.
+                    </Text>
                   ) : null}
                   {errorMobile ? (
                     <Text style={styles.errorMsg}>
                       Please Enter Valid Mobile Number
                     </Text>
                   ) : null}
-                  {errorEmail ? (
+                  {errorCompany ? (
                     <Text style={styles.errorMsg}>
-                      Please Enter Valid Email Id
+                      Please Enter Valid Company Name
                     </Text>
+                  ) : null}
+                  {errorMsg ? (
+                    <Text style={styles.errorMsg}>Please Enter Details</Text>
                   ) : null}
 
                   <Text style={styles.Lable}>Contact Person Name</Text>
@@ -210,15 +244,6 @@ function CompanyIncorporation({navigation}): JSX.Element {
                     onPressIn={focus}
                     onChangeText={text => setCustomerName(text)}
                   />
-                  <Text style={styles.Lable}>Email</Text>
-                  <TextInput
-                    style={styles.inputPass}
-                    placeholder="Email Address"
-                    maxLength={64}
-                    inputMode="text"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                  />
                   <Text style={styles.Lable}>Mobile</Text>
                   <TextInput
                     style={styles.inputPass}
@@ -227,37 +252,36 @@ function CompanyIncorporation({navigation}): JSX.Element {
                     inputMode="tel"
                     keyboardType="phone-pad"
                     value={mobile}
+                    // onPressIn={focus}
                     onChangeText={text => setMobile(text)}
                   />
 
-                  <Text style={styles.Lable}>Required Documents</Text>
-                  <Text style={styles.list}>1. Voter Id Card</Text>
-                  <Text style={styles.list}>
-                    2. Two copy of photo of each directors
-                  </Text>
-                  <Text style={styles.list}>
-                    3. Address proof of registered office
-                  </Text>
-                  <Text style={styles.list}>
-                    4. Electricity bill (not older than one month)
-                  </Text>
-                  <Text style={styles.list}>
-                    5. Current tax bill of registered office
-                  </Text>
-                  <Text style={styles.list}>
-                    6. Deed or rent agreement of registered office
-                  </Text>
-                  <Text style={styles.condition}>
-                    Our executive will ask you for all above the documents over
-                    Email / Mobile.
-                  </Text>
+                  <Text style={styles.Lable}>Company Name</Text>
+                  <TextInput
+                    style={styles.inputPass}
+                    placeholder="Enter Company Name"
+                    autoCapitalize="characters"
+                    maxLength={28}
+                    inputMode="text"
+                    value={company}
+                    onChangeText={text => setCompany(text)}
+                  />
+                  <Text style={styles.Lable}>Submit Details</Text>
+                  <TextInput
+                    style={styles.inputPass}
+                    placeholder="Enter Details Within 200 words"
+                    inputMode="text"
+                    value={msg}
+                    multiline={true}
+                    numberOfLines={3}
+                    onChangeText={text => setMsg(text)}
+                  />
+
                   <TouchableOpacity
                     style={styles.buttonReport}
                     onPress={validation}>
                     <View>
-                      <Text style={styles.submitText}>
-                        Get Detailed Quotes Now
-                      </Text>
+                      <Text style={styles.submitText}>Submit</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -269,4 +293,4 @@ function CompanyIncorporation({navigation}): JSX.Element {
     </SafeAreaView>
   );
 }
-export default CompanyIncorporation;
+export default CorporateCompliance;

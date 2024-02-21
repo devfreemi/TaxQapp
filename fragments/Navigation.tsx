@@ -5,6 +5,7 @@ import LoginOption from '../screens/LoginOption';
 import MobileVerification from '../screens/MobileVerification';
 import ServicesView from '../screens/ServicesView';
 import CompanyIncorporation from '../screens/form/CompanyIncorporation';
+import CorporateCompliance from '../screens/form/CorporateCompliance';
 import DigitalSignature from '../screens/form/DigitalSignature';
 import GstFilling from '../screens/form/GstFilling';
 import IncomeTax from '../screens/form/IncomeTax';
@@ -52,6 +53,10 @@ const Navigation = () => {
       <Stack.Screen
         name="Company Incorporation"
         component={CompanyIncorporation}
+      />
+      <Stack.Screen
+        name="Corporate Compliance"
+        component={CorporateCompliance}
       />
       <Stack.Screen name="Application Status" component={Conformation} />
     </Stack.Navigator>
