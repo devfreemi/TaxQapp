@@ -11,11 +11,11 @@ import {
   Text,
   View,
 } from 'react-native';
-
 // import {LineChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native';
 import RazorpayCheckout from 'react-native-razorpay';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../style';
 function HomeScreen({navigation}): JSX.Element {
   useEffect(() => {
@@ -140,9 +140,9 @@ function HomeScreen({navigation}): JSX.Element {
       theme: {color: '#745bff'},
     };
     RazorpayCheckout.open(options)
-      .then(data => {
+      .then(dataPay => {
         // handle success
-        console.log(JSON.stringify(data));
+        console.log(JSON.stringify(dataPay));
       })
       .catch(error => {
         // handle failure
@@ -174,6 +174,12 @@ function HomeScreen({navigation}): JSX.Element {
           <>
             <TouchableOpacity style={styles.homeGridView} onPress={refresh}>
               <View style={[styles.card]}>
+                <Ionicons
+                  name="refresh-outline"
+                  size={18}
+                  color={'#ffffff'}
+                  style={styles.refresh}
+                />
                 <View style={styles.viewElementsInnerF2}>
                   <Text style={styles.innerTextViewHead}>Your Services</Text>
                   <View style={styles.viewElements}>

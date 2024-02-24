@@ -73,10 +73,9 @@ const styles = StyleSheet.create({
     color: '#31ab00',
   },
   container: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 32,
-    marginHorizontal: 45,
+    // alignItems: 'baseline',
   },
   deviderDash: {
     flex: 1,
@@ -1322,7 +1321,7 @@ const styles = StyleSheet.create({
   },
   Lable: {
     textAlign: 'left',
-    paddingBottom: '4%',
+    paddingBottom: '2%',
     fontSize: 16,
     fontWeight: '600',
     letterSpacing: 0.8,
@@ -1339,8 +1338,8 @@ const styles = StyleSheet.create({
   },
   condition: {
     textAlign: 'left',
-    paddingVertical: '1%',
-    fontSize: 14,
+    paddingVertical: '2%',
+    fontSize: 13,
     fontWeight: '400',
     paddingLeft: '3%',
   },
@@ -1640,6 +1639,9 @@ const styles = StyleSheet.create({
     color: '#808080',
     letterSpacing: 1,
     paddingVertical: '10%',
+  },
+  refresh: {
+    textAlign: 'right',
   },
 });
 

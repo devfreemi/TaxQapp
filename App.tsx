@@ -7,6 +7,7 @@
 import {getAnalytics, logEvent} from '@react-native-firebase/analytics';
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
+import {StatusBar} from 'react-native';
 import Navigation from './fragments/Navigation';
 import SplashScreen from './screens/SplashScreen';
 function App({navigation}): React.JSX.Element {
@@ -25,6 +26,8 @@ function App({navigation}): React.JSX.Element {
       setLoading(false);
     }, 3500);
   }, []);
+  const STYLES = 'dark-content';
+  const statusBarStyle = STYLES;
   return (
     <>
       {isLoading ? (
@@ -32,6 +35,7 @@ function App({navigation}): React.JSX.Element {
       ) : (
         <>
           <NavigationContainer>
+            <StatusBar backgroundColor="#ffffff" barStyle={statusBarStyle} />
             <Navigation />
           </NavigationContainer>
         </>

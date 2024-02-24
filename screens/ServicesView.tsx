@@ -3,7 +3,9 @@ import * as React from 'react';
 import {useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
@@ -52,6 +54,19 @@ function Service({navigation}) {
     setLoading(false);
     return false;
   }, 1000);
+  const comingSoon = () =>
+    Alert.alert('Coming Soon!', 'Unlocking Possibilities, Coming Soon!', [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+  // Refresh
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return (
     <SafeAreaView style={styles.ContentViewReport}>
       <View>
@@ -72,7 +87,11 @@ function Service({navigation}) {
             />
 
             <Text style={styles.reportHead}>Select Our Services</Text>
-            <ScrollView style={styles.ServiceScroll}>
+            <ScrollView
+              style={styles.ServiceScroll}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
               <Text style={styles.serviceNamein}>Services</Text>
               <View style={styles.reportGridView}>
                 <View style={styles.divService}>
@@ -164,7 +183,9 @@ function Service({navigation}) {
                 </View>
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={comingSoon}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/tds.png')}

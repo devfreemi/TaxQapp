@@ -5,6 +5,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Switch,
   Text,
   TextInput,
   TouchableOpacity,
@@ -56,6 +57,7 @@ function CompanyIncorporation({navigation}): JSX.Element {
   const [errorName, setErrorName] = useState(false);
   const [errorMobile, setErrorMobile] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
+  const [tandc, setTandC] = useState(false);
   // DATA RECEIVED FROM API
   const [isFormLoading, setFormLoading] = useState(false);
 
@@ -95,34 +97,54 @@ function CompanyIncorporation({navigation}): JSX.Element {
     }
   };
   // DOCUMENT PICK
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // Validation
   const validation = async () => {
     if (!customerName) {
       setErrorName(true);
       setErrorEmail(false);
       setErrorMobile(false);
+      setTandC(false);
       return false;
     } else if (customerName.length < 5) {
       setErrorName(true);
       setErrorEmail(false);
       setErrorMobile(false);
+      setTandC(false);
       return false;
     } else {
       setErrorName(false);
       setErrorEmail(false);
       setErrorMobile(false);
+      setTandC(false);
     }
     if (!mobile) {
       setErrorName(false);
       setErrorEmail(false);
       setErrorMobile(true);
+      setTandC(false);
       return false;
     } else if (mobile.length < 10) {
       setErrorName(false);
       setErrorEmail(false);
       setErrorMobile(true);
+      setTandC(false);
       return false;
     } else {
+      setErrorName(false);
+      setErrorEmail(false);
+      setErrorMobile(false);
+      setTandC(false);
+    }
+    if (isEnabled === false) {
+      setErrorName(false);
+      setErrorEmail(false);
+      setTandC(true);
+      setErrorMobile(false);
+      return false;
+    } else {
+      setTandC(false);
       setErrorName(false);
       setErrorEmail(false);
       setErrorMobile(false);
@@ -131,12 +153,14 @@ function CompanyIncorporation({navigation}): JSX.Element {
       setErrorName(false);
       setErrorEmail(true);
       setErrorMobile(false);
+      setTandC(false);
       return false;
     } else {
       setFormLoading(true);
       setErrorName(false);
       setErrorEmail(false);
       setErrorMobile(false);
+      setTandC(false);
       submit();
       setTimeout(() => {
         setFormLoading(false);
@@ -147,6 +171,7 @@ function CompanyIncorporation({navigation}): JSX.Element {
     setCustomerName('');
     FetchStorageDataSer();
   };
+
   return (
     <SafeAreaView style={styles.ContentViewReport}>
       <View>
@@ -198,6 +223,11 @@ function CompanyIncorporation({navigation}): JSX.Element {
                       Please Enter Valid Email Id
                     </Text>
                   ) : null}
+                  {tandc ? (
+                    <Text style={styles.errorMsg}>
+                      Please Agree Terms and Conditions!
+                    </Text>
+                  ) : null}
 
                   <Text style={styles.Lable}>Contact Person Name</Text>
                   <TextInput
@@ -247,10 +277,19 @@ function CompanyIncorporation({navigation}): JSX.Element {
                   <Text style={styles.list}>
                     6. Deed or rent agreement of registered office
                   </Text>
-                  <Text style={styles.condition}>
-                    Our executive will ask you for all above the documents over
-                    Email / Mobile.
-                  </Text>
+                  <View style={styles.container}>
+                    <Switch
+                      trackColor={{false: '#767577', true: '#745bff'}}
+                      thumbColor={isEnabled ? '#0a0099' : '#f4f3f4'}
+                      onValueChange={toggleSwitch}
+                      value={isEnabled}
+                    />
+                    <Text style={styles.condition}>
+                      Our executive will ask you for all above the documents
+                      over Email / Mobile.
+                    </Text>
+                  </View>
+
                   <TouchableOpacity
                     style={styles.buttonReport}
                     onPress={validation}>
