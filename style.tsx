@@ -974,6 +974,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: '3%',
     color: '#18b47a',
   },
+  itemPayAmountRev: {
+    fontSize: 18,
+    fontWeight: '600',
+    paddingBottom: '5%',
+    paddingHorizontal: '3%',
+    color: '#18b47a',
+  },
   buttonPay: {
     width: '45%',
     borderWidth: 1,
@@ -1649,6 +1656,14 @@ const styles = StyleSheet.create({
   },
   refresh: {
     textAlign: 'right',
+  },
+  paymentR: {
+    fontSize: 16,
+    paddingHorizontal: '2%',
+  },
+  dot: {
+    paddingHorizontal: '1%',
+    paddingTop: '1.5%',
   },
 });
 

@@ -47,6 +47,7 @@ function HomeScreen({navigation}): JSX.Element {
   const [payeeMobile, setPayeeMobile] = useState('');
   const [amount, setAmount] = useState('');
   const [amountUI, setAmountUI] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('');
   const [err, setErr] = useState(false);
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
@@ -115,7 +116,7 @@ function HomeScreen({navigation}): JSX.Element {
       setPayeeName(getResultPayment.Name);
       setPayeeEmail(getResultPayment.Email);
       setPayeeMobile(getResultPayment.Mobile);
-      console.log(getResultPayment);
+      setPaymentStatus(getResultPayment.status);
     }
   };
   setTimeout(() => {
@@ -143,6 +144,7 @@ function HomeScreen({navigation}): JSX.Element {
   //   let getResultPaymentRes = await resultPaymetres.json();
   //   console.log(getResultPaymentRes);
   // };
+
   const pay = async () => {
     var options = {
       description: 'Credits towards consultation',
@@ -182,11 +184,6 @@ function HomeScreen({navigation}): JSX.Element {
         let getResultPaymentRes = await resultPaymetres.json();
         console.log(getResultPaymentRes);
         // handle success
-
-        // setRazorpay_signature(dataPay.razorpay_signature);
-        // setRazorpay_order_id(dataPay.razorpay_order_id);
-        // setRazorpay_payment_id(dataPay.razorpay_payment_id);
-        // paymentResponse();
       })
       .catch(error => {
         // handle failure
@@ -296,11 +293,12 @@ function HomeScreen({navigation}): JSX.Element {
               <View style={styles.paymentDiv}>
                 <Text style={styles.paymentText}>Pending Payments</Text>
               </View>
-              {err ? (
+              {/* {err ? (
                 <Text style={styles.noService}>
                   You have not any pending payments.
                 </Text>
-              ) : (
+              ) : ( */}
+              {paymentStatus === 'created' ? (
                 <View style={[styles.homeGridView3]}>
                   <View style={[styles.elevationPro, styles.cardI]}>
                     <Text style={styles.itemPay}>{productName}</Text>
@@ -321,7 +319,28 @@ function HomeScreen({navigation}): JSX.Element {
                     </View>
                   </View>
                 </View>
-              )}
+              ) : paymentStatus === 'Initiated' ? (
+                <View style={[styles.homeGridView3]}>
+                  <View style={[styles.elevationPro, styles.cardI]}>
+                    <Text style={styles.itemPay}>{productName}</Text>
+                    <Text style={styles.itemPayAmountRev}>
+                      Rs. {amountUI}.00
+                    </Text>
+                    <View style={styles.innerViewPay}>
+                      <Ionicons
+                        name="ellipse"
+                        size={14}
+                        color={'#ffb400'}
+                        style={styles.dot}
+                      />
+                      <Text style={styles.paymentR}>
+                        Your payment is under review !
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              ) : null}
+              {/* )} */}
             </ScrollView>
           </>
         )}
