@@ -49,6 +49,12 @@ function Conformation({route, navigation}): JSX.Element {
                   <Text style={styles.paramStatus}>Company Incorporation</Text>
                 ) : product === '5' ? (
                   <Text style={styles.paramStatus}>Corporate Compliance</Text>
+                ) : product === '6' ? (
+                  <Text style={styles.paramStatus}>GST Registration</Text>
+                ) : product === '7' ? (
+                  <Text style={styles.paramStatus}>Trade License</Text>
+                ) : product === '8' ? (
+                  <Text style={styles.paramStatus}>Pan Card Application</Text>
                 ) : null}
               </View>
             </View>

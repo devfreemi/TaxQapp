@@ -202,7 +202,9 @@ function Service({navigation}) {
               <View style={styles.reportGridView2}>
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={() => navigation.navigate('GST Registration')}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/gstReg.png')}
@@ -215,7 +217,9 @@ function Service({navigation}) {
                 </View>
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={() => navigation.navigate('Trade License')}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/trade.png')}
@@ -232,7 +236,11 @@ function Service({navigation}) {
 
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={() =>
+                        navigation.navigate('Pan Card Application')
+                      }>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/pan.png')}
@@ -247,7 +255,9 @@ function Service({navigation}) {
                 </View>
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={comingSoon}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/idea.png')}
@@ -262,7 +272,9 @@ function Service({navigation}) {
                 </View>
                 <View style={styles.divService}>
                   <View style={[styles.cardIReport]}>
-                    <TouchableOpacity style={styles.viewElementsReport}>
+                    <TouchableOpacity
+                      style={styles.viewElementsReport}
+                      onPress={comingSoon}>
                       <View style={styles.viewElementsReportF2}>
                         <Image
                           source={require('../assets/images/fssai.png')}

@@ -8,7 +8,10 @@ import CompanyIncorporation from '../screens/form/CompanyIncorporation';
 import CorporateCompliance from '../screens/form/CorporateCompliance';
 import DigitalSignature from '../screens/form/DigitalSignature';
 import GstFilling from '../screens/form/GstFilling';
+import GstLicense from '../screens/form/GstLicense';
 import IncomeTax from '../screens/form/IncomeTax';
+import PanCard from '../screens/form/PanCard';
+import TradeLicense from '../screens/form/TradeLicense';
 import Conformation from '../screens/form/conformation';
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +61,9 @@ const Navigation = () => {
         name="Corporate Compliance"
         component={CorporateCompliance}
       />
+      <Stack.Screen name="GST Registration" component={GstLicense} />
+      <Stack.Screen name="Trade License" component={TradeLicense} />
+      <Stack.Screen name="Pan Card Application" component={PanCard} />
       <Stack.Screen name="Application Status" component={Conformation} />
     </Stack.Navigator>
   );

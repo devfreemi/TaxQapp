@@ -77,6 +77,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // alignItems: 'baseline',
   },
+  containerTrade: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: '6%',
+  },
   deviderDash: {
     flex: 1,
     height: 1,
@@ -1293,10 +1298,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   Radio: {
-    marginRight: '2%',
+    marginRight: '1%',
   },
   radioText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   radioButton: {
     height: 25,
@@ -1304,7 +1309,7 @@ const styles = StyleSheet.create({
     borderColor: '#745bff',
     borderWidth: 2,
     borderRadius: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 8,
     marginVertical: 8,
     alignContent: 'center',
   },
@@ -1512,14 +1517,16 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   placeholderStyle: {
-    fontWeight: '900',
+    fontWeight: '500',
+    color: '#8c8c8c',
   },
   selectedTextStyle: {
-    color: '#ff0000',
-    padding: 8,
+    color: '#000000',
+    // padding: 8,
+    fontWeight: '500',
   },
   inputSearchStyle: {
-    color: '#1266f1',
+    color: '#000000',
     paddingHorizontal: 8,
   },
   profilePic: {

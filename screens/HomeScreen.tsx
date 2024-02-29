@@ -122,13 +122,34 @@ function HomeScreen({navigation}): JSX.Element {
     setLoading(false);
     return false;
   }, 1500);
+  // SEND PAYMENT RESPONSE TO SERVER
+  // const [razorpay_signature, setRazorpay_signature] = useState('');
+  // const [razorpay_order_id, setRazorpay_order_id] = useState('');
+  // const [razorpay_payment_id, setRazorpay_payment_id] = useState('');
+  // const paymentResponse = async () => {
+  //   const paymentResUrl =
+  //     'https://truetechnologies.in/taxConsultant/tax/payment-response-api-v1';
+  //   let resultPaymetres = await fetch(paymentResUrl, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       razorpay_signature,
+  //       razorpay_order_id,
+  //       razorpay_payment_id,
+  //     }),
+  //   });
+  //   let getResultPaymentRes = await resultPaymetres.json();
+  //   console.log(getResultPaymentRes);
+  // };
   const pay = async () => {
     var options = {
       description: 'Credits towards consultation',
       image:
         'https://truetechnologies.in/taxConsultant//assets/img/icons/brands/appLogo.png',
       currency: 'INR',
-      key: 'rzp_test_xDskoVbdRxNOez',
+      key: 'rzp_test_nM0gkKKYwEqjex',
       amount: amount,
       name: 'Complyify',
       order_id: orderId,
@@ -140,9 +161,32 @@ function HomeScreen({navigation}): JSX.Element {
       theme: {color: '#745bff'},
     };
     RazorpayCheckout.open(options)
-      .then(dataPay => {
-        // handle success
+      .then(async dataPay => {
         console.log(JSON.stringify(dataPay));
+        const razorpay_signature_id = dataPay.razorpay_signature;
+        const razorpay_order_res = dataPay.razorpay_order_id;
+        const razorpay_payment_res = dataPay.razorpay_payment_id;
+        const paymentResUrl =
+          'https://truetechnologies.in/taxConsultant/tax/payment-response-api-v1';
+        let resultPaymetres = await fetch(paymentResUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            razorpay_signature_id,
+            razorpay_order_res,
+            razorpay_payment_res,
+          }),
+        });
+        let getResultPaymentRes = await resultPaymetres.json();
+        console.log(getResultPaymentRes);
+        // handle success
+
+        // setRazorpay_signature(dataPay.razorpay_signature);
+        // setRazorpay_order_id(dataPay.razorpay_order_id);
+        // setRazorpay_payment_id(dataPay.razorpay_payment_id);
+        // paymentResponse();
       })
       .catch(error => {
         // handle failure
