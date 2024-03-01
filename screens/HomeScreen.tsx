@@ -48,7 +48,7 @@ function HomeScreen({navigation}): JSX.Element {
   const [amount, setAmount] = useState('');
   const [amountUI, setAmountUI] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
-  const [err, setErr] = useState(false);
+  // const [err, setErr] = useState(false);
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
     const customerID = await AsyncStorage.getItem('userId');
@@ -104,11 +104,7 @@ function HomeScreen({navigation}): JSX.Element {
       }),
     });
     let getResultPayment = await resultPaymet.json();
-    if (getResultPayment.statusCode !== 200) {
-      setErr(true);
-      console.log(getResultPayment);
-    } else {
-      setErr(false);
+    if (getResultPayment) {
       setAmount(getResultPayment.Amount);
       setAmountUI(getResultPayment.AmountUI);
       setOrderId(getResultPayment.OrderId);
@@ -117,6 +113,7 @@ function HomeScreen({navigation}): JSX.Element {
       setPayeeEmail(getResultPayment.Email);
       setPayeeMobile(getResultPayment.Mobile);
       setPaymentStatus(getResultPayment.status);
+      console.log(getResultPayment);
     }
   };
   setTimeout(() => {
@@ -293,11 +290,7 @@ function HomeScreen({navigation}): JSX.Element {
               <View style={styles.paymentDiv}>
                 <Text style={styles.paymentText}>Pending Payments</Text>
               </View>
-              {/* {err ? (
-                <Text style={styles.noService}>
-                  You have not any pending payments.
-                </Text>
-              ) : ( */}
+
               {paymentStatus === 'created' ? (
                 <View style={[styles.homeGridView3]}>
                   <View style={[styles.elevationPro, styles.cardI]}>
@@ -339,8 +332,11 @@ function HomeScreen({navigation}): JSX.Element {
                     </View>
                   </View>
                 </View>
-              ) : null}
-              {/* )} */}
+              ) : (
+                <Text style={styles.noService}>
+                  You have not any pending payments.
+                </Text>
+              )}
             </ScrollView>
           </>
         )}
