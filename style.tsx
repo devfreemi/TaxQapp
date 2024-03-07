@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     marginBottom: 8,
-    color: '#262626',
+    color: '#808080',
     letterSpacing: 0.5,
     justifyContent: 'center',
     textAlign: 'center',

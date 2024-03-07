@@ -70,7 +70,6 @@ function LoginOption({navigation}): JSX.Element {
       }
       // Navigate
       navigation.navigate('MobileVerification');
-
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       return auth().signInWithCredential(googleCredential);
     } catch (error) {
@@ -80,8 +79,9 @@ function LoginOption({navigation}): JSX.Element {
 
   const tokenLogin = async () => {
     const tokenValue = await AsyncStorage.getItem('userId');
+    // const mobileID = await AsyncStorage.getItem('mobile');
     if (tokenValue !== null) {
-      navigation.navigate('ServicesView');
+      navigation.navigate('MobileVerification');
       console.log('Already Logged In');
     } else {
       navigation.navigate('LoginHome');
@@ -98,9 +98,9 @@ function LoginOption({navigation}): JSX.Element {
           style={styles.logo}
         />
       </View>
-      <Text style={styles.headerTitle}>Let's Get Started</Text>
-      <Text style={styles.brand}>Join Us, Simplify Taxes</Text>
-      <Text style={styles.brand2}>Pay Effortlessly.</Text>
+      <Text style={styles.headerTitle}>Compliance Simplyfied</Text>
+      <Text style={styles.brand2}>Affordable Business Solutions</Text>
+      {/* <Text style={styles.brand2}>Pay Effortlessly.</Text> */}
       {/* <Text style={styles.brand}> TaxQ</Text> */}
       <ScrollView>
         <View style={styles.formView}>
@@ -115,12 +115,6 @@ function LoginOption({navigation}): JSX.Element {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View style={styles.Footer}>
-        <Text style={styles.FooterText}>
-          Made With &#10084; By
-          <Text style={styles.FooterBrand}> FindSoftware4U</Text>
-        </Text>
-      </View>
     </SafeAreaView>
   );
 }
