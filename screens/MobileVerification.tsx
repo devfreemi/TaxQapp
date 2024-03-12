@@ -221,16 +221,8 @@ function MobileVerification({navigation}): JSX.Element {
             </TouchableOpacity>
           </View>
         </ScrollView>
-        <View style={styles.Footer}>
-          <Text style={styles.FooterText}>
-            Made With &#10084; By
-            <Text style={styles.FooterBrand}> FindSoftware4U</Text>
-          </Text>
-        </View>
       </SafeAreaView>
     </>
-    //   <TextInput value={code} onChangeText={text => setCode(text)} />
-    //   <Button title="Confirm Code" onPress={() => confirmCode()} />
   );
 }
 
