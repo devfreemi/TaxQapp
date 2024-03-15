@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -37,27 +38,24 @@ function MobileVerification({navigation}): JSX.Element {
     });
     let getResultDash = await resultD.json();
     if (mobileID !== null) {
-      navigation.navigate('ServicesView');
+      // navigation.navigate('ServicesView');
       console.log('Already Verified ');
     } else if (getResultDash.mobileNumber !== null) {
-      navigation.navigate('ServicesView');
+      // navigation.navigate('ServicesView');
       console.log('Already Verified ');
     } else {
       navigation.navigate('MobileVerification');
       console.log('Not Verified ');
     }
   };
-  tokenLogin();
+
   // verification code (OTP - One-Time-Passcode)
   const [code, setCode] = useState('');
 
   // Handle login
   function onAuthStateChanged(user: any) {
     if (user) {
-      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
-      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
-      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
-      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
+      tokenLogin();
     }
   }
 
@@ -88,31 +86,33 @@ function MobileVerification({navigation}): JSX.Element {
   };
   const confirmCode = async () => {
     try {
-      const res = await confirm.confirm(code);
-      console.log(res);
-      navigation.navigate('ServicesView');
-
-      setCnfmOTPbtn('Validating....');
+      // setCnfmOTPbtn('Validating....');
+      // navigation.navigate('ServicesView');
+      await confirm.confirm(code);
+      // const res = await confirm.confirm(code);
+      // setCnfmOTPbtn('Validating....');
       // Navigation
       // Mobile Update
-      const mobileNumber = res.user.phoneNumber;
-      AsyncStorage.setItem('mobile', mobileNumber);
-      const uniqid = res.user.uid;
-      const customerIDM = await AsyncStorage.getItem('userId');
-      const mobileUrl =
-        'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
-      let result = await fetch(mobileUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=3600',
-        },
-        body: JSON.stringify({
-          uniqid,
-          mobileNumber,
-          customerIDM,
-        }),
-      });
+      // console.log(res);
+      Alert.alert('Mobile Number Verified');
+      // const mobileNumber = res.user.phoneNumber;
+      // AsyncStorage.setItem('mobile', mobileNumber);
+      // const uniqid = res.user.uid;
+      // const customerIDM = await AsyncStorage.getItem('userId');
+      // const mobileUrl =
+      //   'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
+      // let result = await fetch(mobileUrl, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Cache-Control': 'max-age=3600',
+      //   },
+      //   body: JSON.stringify({
+      //     uniqid,
+      //     mobileNumber,
+      //     customerIDM,
+      //   }),
+      // });
     } catch (error) {
       if (error.code === 'auth/invalid-verification-code') {
         setCodeErr(true);
@@ -164,12 +164,6 @@ function MobileVerification({navigation}): JSX.Element {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <View style={styles.Footer}>
-            <Text style={styles.FooterText}>
-              Made With &#10084; By
-              <Text style={styles.FooterBrand}> FindSoftware4U</Text>
-            </Text>
-          </View>
         </SafeAreaView>
       </>
     );
@@ -223,6 +217,8 @@ function MobileVerification({navigation}): JSX.Element {
         </ScrollView>
       </SafeAreaView>
     </>
+    //   <TextInput value={code} onChangeText={text => setCode(text)} />
+    //   <Button title="Confirm Code" onPress={() => confirmCode()} />
   );
 }
 

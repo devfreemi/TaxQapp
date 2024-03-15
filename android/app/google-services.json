@@ -14,11 +14,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "866255476365-fivpgmouojfpb7r3ufgsr1va19m125ff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxq",
+            "certificate_hash": "3b177f761660cdcc45a0cb9212975e3e38fba112"
+          }
+        },
+        {
           "client_id": "866255476365-ph9ihp5aup28aqqqjtjtbu683519l3md.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.taxq",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "866255476365-rrplge00b8o1slf4pqkc4pjfpqftijns.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxq",
+            "certificate_hash": "992a4b744ed7347696fa8badf8566745243e9552"
+          }
+        },
+        {
+          "client_id": "866255476365-samn49fnu6kvhph23kq6p9lu14rscmai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taxq",
+            "certificate_hash": "29b8e3da2b97f4a5211e69f5515e57760ffa255c"
           }
         },
         {
