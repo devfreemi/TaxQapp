@@ -79,8 +79,8 @@ android {
         applicationId "com.taxq"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.0.02.7"
+        versionCode 7
+        versionName "1.0.02.8"
     }
     signingConfigs {
         release {

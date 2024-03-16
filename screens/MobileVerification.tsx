@@ -48,14 +48,13 @@ function MobileVerification({navigation}): JSX.Element {
       console.log('Not Verified ');
     }
   };
-
+  tokenLogin();
   // verification code (OTP - One-Time-Passcode)
   const [code, setCode] = useState('');
 
   // Handle login
   function onAuthStateChanged(user: any) {
     if (user) {
-      tokenLogin();
     }
   }
 
@@ -68,13 +67,11 @@ function MobileVerification({navigation}): JSX.Element {
   const signInWithPhoneNumber = async (phoneNumber: string) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
-    console.log(confirmation);
   };
   const validation = async () => {
     tokenLogin();
     let sampleRegEx: RegExp = /^[6789]\d{9}$/;
     if (!sampleRegEx.test(mobile)) {
-      //   console.log('INVALID');
       setMobileErr(true);
       return false;
     } else {
@@ -86,15 +83,15 @@ function MobileVerification({navigation}): JSX.Element {
   };
   const confirmCode = async () => {
     try {
-      // setCnfmOTPbtn('Validating....');
-      // navigation.navigate('ServicesView');
       await confirm.confirm(code);
+      setCnfmOTPbtn('Validating....');
+      navigation.navigate('ServicesView');
       // const res = await confirm.confirm(code);
       // setCnfmOTPbtn('Validating....');
       // Navigation
       // Mobile Update
       // console.log(res);
-      Alert.alert('Mobile Number Verified');
+      // Alert.alert('Mobile Number Verified');
       // const mobileNumber = res.user.phoneNumber;
       // AsyncStorage.setItem('mobile', mobileNumber);
       // const uniqid = res.user.uid;
@@ -118,6 +115,7 @@ function MobileVerification({navigation}): JSX.Element {
         setCodeErr(true);
       }
     }
+    Alert.alert('res');
   };
 
   if (!confirm) {
