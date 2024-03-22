@@ -24,7 +24,7 @@ function App({navigation}): React.JSX.Element {
     // _retriveData();
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 1500);
   }, []);
   const STYLES = 'dark-content';
   const statusBarStyle = STYLES;

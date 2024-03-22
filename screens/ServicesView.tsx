@@ -1,4 +1,3 @@
-import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import {useState} from 'react';
@@ -51,15 +50,6 @@ function ServicesView({navigation}): JSX.Element {
 function Service({navigation}) {
   const [isLoading, setLoading] = useState(true);
 
-  async function NotiFication() {
-    await inAppMessaging().setMessagesDisplaySuppressed(true);
-  }
-  NotiFication();
-  // async function onSetup(user) {
-  //   await setupUser(user);
-  //   // Allow user to receive messages now setup is complete
-  //   inAppMessaging().setMessagesDisplaySuppressed(false);
-  // }
   setTimeout(() => {
     setLoading(false);
     return false;

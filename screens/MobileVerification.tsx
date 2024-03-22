@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
@@ -11,113 +10,64 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {removeListener, startOtpListener} from 'react-native-otp-verify';
 import styles from '../style';
-
 function MobileVerification({navigation}): JSX.Element {
   const [confirm, setConfirm] = useState(null);
-  const [sendOTPbtn, setsendOTPbtn] = useState('Send OTP');
-  const [cnfmOTPbtn, setCnfmOTPbtn] = useState('Confirm OTP');
-  const [mobile, setMobile] = useState('');
-  const [mobileErr, setMobileErr] = useState(false);
-  const [codeErr, setCodeErr] = useState(false);
-
-  // MOBILE VERIFIED CHECK
-  const tokenLogin = async () => {
-    const customerID = await AsyncStorage.getItem('userId');
-    const mobileID = await AsyncStorage.getItem('mobile');
-    const dashboardUrl =
-      'https://truetechnologies.in/taxConsultant/tax/mobile-api-v1';
-    let resultD = await fetch(dashboardUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        customerID,
-      }),
-    });
-    let getResultDash = await resultD.json();
-    if (mobileID !== null) {
-      // navigation.navigate('ServicesView');
-      console.log('Already Verified ');
-    } else if (getResultDash.mobileNumber !== null) {
-      // navigation.navigate('ServicesView');
-      console.log('Already Verified ');
-    } else {
-      navigation.navigate('MobileVerification');
-      console.log('Not Verified ');
-    }
-  };
-  tokenLogin();
-  // verification code (OTP - One-Time-Passcode)
   const [code, setCode] = useState('');
+  // const [sendOTPbtn, setsendOTPbtn] = useState('Send OTP');
+  // const [cnfmOTPbtn, setCnfmOTPbtn] = useState('Confirm OTP');
+  const [mobile, setMobile] = useState('');
+  const [cnfmOTPbtn, setCnfmOTPbtn] = useState('');
 
+  // const [mobileErr, setMobileErr] = useState(false);
+  // const [codeErr, setCodeErr] = useState(false);
   // Handle login
-  function onAuthStateChanged(user: any) {
-    if (user) {
-    }
-  }
+  // function onAuthStateChanged(user) {
+  //   if (user) {
+  //     // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
+  //     // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
+  //     // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
+  //     // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
+  //   }
+  // }
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+  // useEffect(() => {
+  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+  //   return subscriber; // unsubscribe on unmount
+  // }, []);
 
   // Handle the button press
   const signInWithPhoneNumber = async (phoneNumber: string) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
   };
-  const validation = async () => {
-    tokenLogin();
-    let sampleRegEx: RegExp = /^[6789]\d{9}$/;
-    if (!sampleRegEx.test(mobile)) {
-      setMobileErr(true);
-      return false;
-    } else {
-      setMobile(mobile);
-      setMobileErr(false);
-      setsendOTPbtn('Sending....');
-      signInWithPhoneNumber('+91 ' + mobile);
+  // OTP VER
+  const [otpCode, setOtpCode] = useState('');
+  function getOtpCode(message: string) {
+    if (message) {
+      // console.log('Message Captured=>', message);
+      const otp = /(\d{6})/g.exec(message)![1];
+      setOtpCode(otp);
+      Alert.alert('OTP' + otp);
     }
-  };
-  const confirmCode = async () => {
+  }
+  useEffect(() => {
+    // getHash().then(hash => console.log('Message Hash=> ', hash));
+    startOtpListener(message => getOtpCode(message));
+    return () => removeListener();
+  }, []);
+  async function confirmCode() {
     try {
       await confirm.confirm(code);
-      setCnfmOTPbtn('Validating....');
-      navigation.navigate('ServicesView');
-      // const res = await confirm.confirm(code);
-      // setCnfmOTPbtn('Validating....');
-      // Navigation
-      // Mobile Update
+      const res = await confirm.confirm(code);
+      Alert.alert('Pass' + res.phoneNumber);
       // console.log(res);
-      // Alert.alert('Mobile Number Verified');
-      // const mobileNumber = res.user.phoneNumber;
-      // AsyncStorage.setItem('mobile', mobileNumber);
-      // const uniqid = res.user.uid;
-      // const customerIDM = await AsyncStorage.getItem('userId');
-      // const mobileUrl =
-      //   'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
-      // let result = await fetch(mobileUrl, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Cache-Control': 'max-age=3600',
-      //   },
-      //   body: JSON.stringify({
-      //     uniqid,
-      //     mobileNumber,
-      //     customerIDM,
-      //   }),
-      // });
     } catch (error) {
-      if (error.code === 'auth/invalid-verification-code') {
-        setCodeErr(true);
-      }
+      setCnfmOTPbtn(error.code);
+      Alert.alert(error.code);
     }
-    Alert.alert('res');
-  };
-
+  }
   if (!confirm) {
     return (
       <>
@@ -132,15 +82,16 @@ function MobileVerification({navigation}): JSX.Element {
           {/* <Text style={styles.brand}> TaxQ</Text> */}
           <ScrollView>
             <View style={styles.formViewOTP}>
-              {mobileErr ? (
+              {/* {mobileErr ? (
                 <Text style={styles.errorMsg}>
                   Please Enter Valid Mobile No.
                 </Text>
-              ) : null}
+              ) : null} */}
               <Text style={styles.Lable}>Mobile Number</Text>
               <TextInput
                 style={styles.inputPass}
                 placeholder="Enter Mobile Number"
+                placeholderTextColor="#57585b"
                 autoCapitalize="characters"
                 maxLength={10}
                 inputMode="numeric"
@@ -150,14 +101,15 @@ function MobileVerification({navigation}): JSX.Element {
               />
               <TouchableOpacity
                 style={styles.buttonOTP}
-                // onPress={() => signInWithPhoneNumber('+91 ' + mobile)}
-                onPress={validation}>
+                onPress={() => signInWithPhoneNumber('+91 ' + mobile)}
+                // onPress={() => signInWithPhoneNumber(mobile)}
+              >
                 <View style={styles.buttonG}>
                   <Image
                     source={require('../assets/images/phone.png')}
                     style={styles.googleImage}
                   />
-                  <Text style={styles.submitText}>{sendOTPbtn}</Text>
+                  <Text style={styles.submitText}>SEND OTP</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -180,7 +132,7 @@ function MobileVerification({navigation}): JSX.Element {
 
         <ScrollView>
           <View style={styles.formViewOTP}>
-            {codeErr ? (
+            {/* {codeErr ? (
               <Text style={styles.errorMsg}>
                 OTP is Invalid. Please Enter Correct OTP !
               </Text>
@@ -189,17 +141,25 @@ function MobileVerification({navigation}): JSX.Element {
                 {' '}
                 OTP Sent to Your Mobile Number
               </Text>
-            )}
-            <TextInput
+            )} */}
+            <Text style={styles.errorMsg}>{cnfmOTPbtn}</Text>
+            {/* <TextInput
               style={styles.inputPass}
               placeholder="Enter OTP"
+              placeholderTextColor="#57585b"
               autoCapitalize="characters"
               maxLength={6}
               inputMode="numeric"
               keyboardType="number-pad"
               value={code}
               onChangeText={text => setCode(text)}
-            />
+            /> */}
+            <TextInput value={otpCode[0]} />
+            <TextInput value={otpCode[1]} />
+            <TextInput value={otpCode[2]} />
+            <TextInput value={otpCode[3]} />
+            <TextInput value={otpCode[4]} />
+            <TextInput value={otpCode[5]} />
             <TouchableOpacity
               style={styles.buttonOTP}
               onPress={() => confirmCode()}>
@@ -208,7 +168,7 @@ function MobileVerification({navigation}): JSX.Element {
                   source={require('../assets/images/otp.png')}
                   style={styles.googleImage}
                 />
-                <Text style={styles.submitText}>{cnfmOTPbtn}</Text>
+                <Text style={styles.submitText}>Confirm</Text>
               </View>
             </TouchableOpacity>
           </View>

@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     padding: 15,
     width: '100%',
     fontSize: 16,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: '#E5E7EA',
     borderRadius: 8,
     verticalAlign: 'middle',
     marginHorizontal: 'auto',
@@ -1224,7 +1224,7 @@ const styles = StyleSheet.create({
     paddingBottom: '2%',
   },
   errorMsgRe: {
-    color: '#dc3545',
+    color: '#821722',
     marginTop: 15,
     marginBottom: 0,
     textAlign: 'center',
