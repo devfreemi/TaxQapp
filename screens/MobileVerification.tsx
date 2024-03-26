@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
-  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -55,18 +54,6 @@ function MobileVerification({navigation}): JSX.Element {
   // verification code (OTP - One-Time-Passcode)
   const [code, setCode] = useState('');
 
-  // Handle login
-  function onAuthStateChanged(user: any) {
-    if (user) {
-      console.log(JSON.stringify(user));
-    }
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
   // Handle the button press
   const signInWithPhoneNumber = async (phoneNumber: string) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
@@ -83,23 +70,22 @@ function MobileVerification({navigation}): JSX.Element {
       setMobileErr(false);
       setsendOTPbtn('Sending....');
       signInWithPhoneNumber('+91 ' + mobile);
+      AsyncStorage.setItem('mobile', mobile);
       setDisabled(true);
     }
   };
 
   //AUTO OTP VERIFICATION
-  const [otpCode, setOtpCode] = useState('');
+  // const [otpCode, setOtpCode] = useState('');
   async function getOtpCode(message: string) {
     if (message) {
-      // console.log('Message Captured=>', message);
       const otp = /(\d{6})/g.exec(message)![1];
-      setOtpCode(otp);
+      setCode(otp);
       setOtpDisabled(true);
       setCnfmOTPbtn('Validating....');
-      // Navigation
-      navigation.navigate('ServicesView');
       const customerIDM = await AsyncStorage.getItem('userId');
-      const uniqid = 'Y';
+      const mobileNumber = await AsyncStorage.getItem('mobile');
+      const uniqid = 'Auto Verified';
       const mobileUrl =
         'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
       let result = await fetch(mobileUrl, {
@@ -110,13 +96,15 @@ function MobileVerification({navigation}): JSX.Element {
         },
         body: JSON.stringify({
           uniqid,
-          mobile,
+          mobileNumber,
           customerIDM,
         }),
       });
-      Alert.alert('OTP' + otp);
+      // Alert.alert('OTP' + otp);
+      // Navigation
+      navigation.navigate('ServicesView');
     } else {
-      setOtpCode('');
+      setCode('');
       setOtpDisabled(false);
     }
   }
@@ -242,7 +230,7 @@ function MobileVerification({navigation}): JSX.Element {
               maxLength={6}
               inputMode="numeric"
               keyboardType="number-pad"
-              value={otpCode}
+              value={code}
               onChangeText={text => setCode(text)}
             />
             <TouchableOpacity
