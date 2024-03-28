@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -26,7 +27,7 @@ function MobileVerification({navigation}): JSX.Element {
   // MOBILE VERIFIED CHECK
   const tokenLogin = async () => {
     const customerID = await AsyncStorage.getItem('userId');
-    const mobileID = await AsyncStorage.getItem('mobile');
+    // const mobileID = await AsyncStorage.getItem('mobile');
     const dashboardUrl =
       'https://truetechnologies.in/taxConsultant/tax/mobile-api-v1';
     let resultD = await fetch(dashboardUrl, {
@@ -39,10 +40,12 @@ function MobileVerification({navigation}): JSX.Element {
       }),
     });
     let getResultDash = await resultD.json();
-    if (mobileID !== null) {
-      navigation.navigate('ServicesView');
-      console.log('Already Verified ');
-    } else if (getResultDash.mobileNumber !== null) {
+    // if (mobileID !== null) {
+    //   navigation.navigate('ServicesView');
+    //   console.log('Already Verified ');
+    // }
+    // else
+    if (getResultDash.mobileNumber !== null) {
       navigation.navigate('ServicesView');
       console.log('Already Verified ');
     } else {
@@ -85,7 +88,7 @@ function MobileVerification({navigation}): JSX.Element {
       setCnfmOTPbtn('Validating....');
       const customerIDM = await AsyncStorage.getItem('userId');
       const mobileNumber = await AsyncStorage.getItem('mobile');
-      const uniqid = 'Auto Verified';
+      const uniqid = 'Auto Verified.';
       const mobileUrl =
         'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
       let result = await fetch(mobileUrl, {
@@ -100,9 +103,13 @@ function MobileVerification({navigation}): JSX.Element {
           customerIDM,
         }),
       });
-      // Alert.alert('OTP' + otp);
-      // Navigation
-      navigation.navigate('ServicesView');
+      let getResultUpdate = await result.json();
+      if (getResultUpdate.mobile !== null) {
+        // Navigation
+        navigation.navigate('ServicesView');
+      } else {
+        Alert.alert('Internal Failure. Contact to Tech Team');
+      }
     } else {
       setCode('');
       setOtpDisabled(false);
@@ -182,7 +189,6 @@ function MobileVerification({navigation}): JSX.Element {
               />
               <TouchableOpacity
                 style={styles.buttonOTP}
-                // onPress={() => signInWithPhoneNumber('+91 ' + mobile)}
                 disabled={disabled}
                 onPress={validation}>
                 <View style={styles.buttonG}>

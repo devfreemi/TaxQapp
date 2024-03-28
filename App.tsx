@@ -4,6 +4,7 @@
  *
  * @format
  */
+
 import {getAnalytics, logEvent} from '@react-native-firebase/analytics';
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
@@ -22,9 +23,17 @@ function App({navigation}): React.JSX.Element {
 
   useEffect(() => {
     // _retriveData();
+    // userPermission();
+    // const unsubscribe = messaging().onMessage(async remoteMessage => {
+    //   Alert.alert(
+    //     JSON.stringify(remoteMessage.notification.title),
+    //     JSON.stringify(remoteMessage.notification.body),
+    //   );
+    // });
     setTimeout(() => {
       setLoading(false);
     }, 1500);
+    // return unsubscribe;
   }, []);
   const STYLES = 'dark-content';
   const statusBarStyle = STYLES;
