@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
@@ -53,20 +52,13 @@ function Service({navigation}) {
   setTimeout(() => {
     setLoading(false);
     return false;
-  }, 1000);
+  }, 900);
   const comingSoon = () =>
     Alert.alert('Coming Soon!', 'Unlocking Possibilities, Coming Soon!', [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      {text: 'Close', onPress: () => console.log('OK Pressed')},
     ]);
   // Refresh
-  const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
   return (
     <SafeAreaView style={styles.ContentViewReport}>
       <View>
@@ -87,11 +79,7 @@ function Service({navigation}) {
             />
 
             <Text style={styles.reportHead}>Select Our Services</Text>
-            <ScrollView
-              style={styles.ServiceScroll}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }>
+            <ScrollView style={styles.ServiceScroll}>
               <Text style={styles.serviceNamein}>Services</Text>
               <View style={styles.reportGridView}>
                 <View style={styles.divService}>

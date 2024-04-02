@@ -44,8 +44,7 @@ function LoginOption({navigation}): JSX.Element {
       AsyncStorage.setItem('name', user.name);
       AsyncStorage.setItem('photo', user.photo);
       // API CALL
-      const loginUrl =
-        'https://truetechnologies.in/taxConsultant/tax/login-api-v1';
+      const loginUrl = 'https://complyify.in/taxConsultant/tax/login-api-v1';
       let result = await fetch(loginUrl, {
         method: 'POST',
         headers: {

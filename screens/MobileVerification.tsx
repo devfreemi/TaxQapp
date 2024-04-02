@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   SafeAreaView,
@@ -23,13 +24,13 @@ function MobileVerification({navigation}): JSX.Element {
   const [mobile, setMobile] = useState('');
   const [mobileErr, setMobileErr] = useState(false);
   const [codeErr, setCodeErr] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   // MOBILE VERIFIED CHECK
   const tokenLogin = async () => {
     const customerID = await AsyncStorage.getItem('userId');
     // const mobileID = await AsyncStorage.getItem('mobile');
-    const dashboardUrl =
-      'https://truetechnologies.in/taxConsultant/tax/mobile-api-v1';
+    const dashboardUrl = 'https://complyify.in/taxConsultant/tax/mobile-api-v1';
     let resultD = await fetch(dashboardUrl, {
       method: 'POST',
       headers: {
@@ -40,20 +41,18 @@ function MobileVerification({navigation}): JSX.Element {
       }),
     });
     let getResultDash = await resultD.json();
-    // if (mobileID !== null) {
-    //   navigation.navigate('ServicesView');
-    //   console.log('Already Verified ');
-    // }
-    // else
     if (getResultDash.mobileNumber !== null) {
       navigation.navigate('ServicesView');
-      console.log('Already Verified ');
     } else {
       navigation.navigate('MobileVerification');
-      console.log('Not Verified ');
     }
   };
   tokenLogin();
+  setTimeout(() => {
+    setLoading(false);
+    return false;
+  }, 1500);
+
   // verification code (OTP - One-Time-Passcode)
   const [code, setCode] = useState('');
 
@@ -87,10 +86,11 @@ function MobileVerification({navigation}): JSX.Element {
       setOtpDisabled(true);
       setCnfmOTPbtn('Validating....');
       const customerIDM = await AsyncStorage.getItem('userId');
-      const mobileNumber = await AsyncStorage.getItem('mobile');
+      let mobileNumberC = await AsyncStorage.getItem('mobile');
+      const mobileNumber = '+91' + mobileNumberC;
       const uniqid = 'Auto Verified.';
       const mobileUrl =
-        'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
+        'https://complyify.in/taxConsultant/tax/mobile-api-update-v1';
       let result = await fetch(mobileUrl, {
         method: 'POST',
         headers: {
@@ -134,7 +134,7 @@ function MobileVerification({navigation}): JSX.Element {
       const uniqid = res.user.uid;
       const customerIDM = await AsyncStorage.getItem('userId');
       const mobileUrl =
-        'https://truetechnologies.in/taxConsultant/tax/mobile-api-update-v1';
+        'https://complyify.in/taxConsultant/tax/mobile-api-update-v1';
       let result = await fetch(mobileUrl, {
         method: 'POST',
         headers: {
@@ -160,48 +160,59 @@ function MobileVerification({navigation}): JSX.Element {
   if (!confirm) {
     return (
       <>
-        <SafeAreaView style={styles.ContentView}>
-          <View style={styles.hImageOTP}>
-            <Image
-              source={require('../assets/images/otpVer.png')}
-              style={styles.logo}
+        {isLoading ? (
+          <View style={styles.ContentViewHomeChild}>
+            <ActivityIndicator
+              animating={isLoading}
+              size={'large'}
+              style={styles.StyleIndicator}
+              color={'#745bff'}
             />
           </View>
-          <Text style={styles.headerTitle}>Verify Your Mobile Number</Text>
-          {/* <Text style={styles.brand}> TaxQ</Text> */}
-          <ScrollView>
-            <View style={styles.formViewOTP}>
-              {mobileErr ? (
-                <Text style={styles.errorMsg}>
-                  Please Enter Valid Mobile No.
-                </Text>
-              ) : null}
-              <Text style={styles.Lable}>Mobile Number</Text>
-              <TextInput
-                style={styles.inputPass}
-                placeholder="Enter Mobile Number"
-                autoCapitalize="characters"
-                maxLength={10}
-                inputMode="numeric"
-                keyboardType="number-pad"
-                value={mobile}
-                onChangeText={text => setMobile(text)}
+        ) : (
+          <SafeAreaView style={styles.ContentView}>
+            <View style={styles.hImageOTP}>
+              <Image
+                source={require('../assets/images/otpVer.png')}
+                style={styles.logo}
               />
-              <TouchableOpacity
-                style={styles.buttonOTP}
-                disabled={disabled}
-                onPress={validation}>
-                <View style={styles.buttonG}>
-                  <Image
-                    source={require('../assets/images/phone.png')}
-                    style={styles.googleImage}
-                  />
-                  <Text style={styles.submitText}>{sendOTPbtn}</Text>
-                </View>
-              </TouchableOpacity>
             </View>
-          </ScrollView>
-        </SafeAreaView>
+            <Text style={styles.headerTitle}>Verify Your Mobile Number</Text>
+            {/* <Text style={styles.brand}> TaxQ</Text> */}
+            <ScrollView>
+              <View style={styles.formViewOTP}>
+                {mobileErr ? (
+                  <Text style={styles.errorMsg}>
+                    Please Enter Valid Mobile No.
+                  </Text>
+                ) : null}
+                <Text style={styles.Lable}>Mobile Number</Text>
+                <TextInput
+                  style={styles.inputPass}
+                  placeholder="Enter Mobile Number"
+                  autoCapitalize="characters"
+                  maxLength={10}
+                  inputMode="numeric"
+                  keyboardType="number-pad"
+                  value={mobile}
+                  onChangeText={text => setMobile(text)}
+                />
+                <TouchableOpacity
+                  style={styles.buttonOTP}
+                  disabled={disabled}
+                  onPress={validation}>
+                  <View style={styles.buttonG}>
+                    <Image
+                      source={require('../assets/images/phone.png')}
+                      style={styles.googleImage}
+                    />
+                    <Text style={styles.submitText}>{sendOTPbtn}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </SafeAreaView>
+        )}
       </>
     );
   }

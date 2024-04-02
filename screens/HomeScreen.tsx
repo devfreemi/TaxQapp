@@ -53,7 +53,7 @@ function HomeScreen({navigation}): JSX.Element {
   const FetchDashApi = async () => {
     const customerID = await AsyncStorage.getItem('userId');
     const dashboardUrl =
-      'https://truetechnologies.in/taxConsultant/tax/dashboard-api-v1';
+      'https://complyify.in/taxConsultant/tax/dashboard-api-v1';
     let resultD = await fetch(dashboardUrl, {
       method: 'POST',
       headers: {
@@ -75,7 +75,7 @@ function HomeScreen({navigation}): JSX.Element {
     FetchDashApi();
     const customerIDL = await AsyncStorage.getItem('userId');
     const dashboardListUrl =
-      'https://truetechnologies.in/taxConsultant/tax/dashboard-api-service-list-v1';
+      'https://complyify.in/taxConsultant/tax/dashboard-api-service-list-v1';
     let resultDlist = await fetch(dashboardListUrl, {
       method: 'POST',
       headers: {
@@ -92,8 +92,7 @@ function HomeScreen({navigation}): JSX.Element {
   };
   const FetchPaymentApi = async () => {
     const customerIPL = await AsyncStorage.getItem('userId');
-    const paymentUrl =
-      'https://truetechnologies.in/taxConsultant/tax/payment-api-v1';
+    const paymentUrl = 'https://complyify.in/taxConsultant/tax/payment-api-v1';
     let resultPaymet = await fetch(paymentUrl, {
       method: 'POST',
       headers: {
@@ -126,7 +125,7 @@ function HomeScreen({navigation}): JSX.Element {
   // const [razorpay_payment_id, setRazorpay_payment_id] = useState('');
   // const paymentResponse = async () => {
   //   const paymentResUrl =
-  //     'https://truetechnologies.in/taxConsultant/tax/payment-response-api-v1';
+  //     'https://complyify.in/taxConsultant/tax/payment-response-api-v1';
   //   let resultPaymetres = await fetch(paymentResUrl, {
   //     method: 'POST',
   //     headers: {
@@ -146,7 +145,7 @@ function HomeScreen({navigation}): JSX.Element {
     var options = {
       description: 'Credits towards consultation',
       image:
-        'https://truetechnologies.in/taxConsultant//assets/img/icons/brands/appLogo.png',
+        'https://complyify.in/taxConsultant//assets/img/icons/brands/appLogo.png',
       currency: 'INR',
       key: 'rzp_test_nM0gkKKYwEqjex',
       amount: amount,
@@ -166,7 +165,7 @@ function HomeScreen({navigation}): JSX.Element {
         const razorpay_order_res = dataPay.razorpay_order_id;
         const razorpay_payment_res = dataPay.razorpay_payment_id;
         const paymentResUrl =
-          'https://truetechnologies.in/taxConsultant/tax/payment-response-api-v1';
+          'https://complyify.in/taxConsultant/tax/payment-response-api-v1';
         let resultPaymetres = await fetch(paymentResUrl, {
           method: 'POST',
           headers: {

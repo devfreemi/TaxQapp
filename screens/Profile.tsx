@@ -24,8 +24,7 @@ function Profile({navigation}): JSX.Element {
   const [cId, setCid] = useState('Loading...');
   const FetchStorageData = async () => {
     const customerIDP = await AsyncStorage.getItem('userId');
-    const profileUrl =
-      'https://truetechnologies.in/taxConsultant/tax/profile-api-v1';
+    const profileUrl = 'https://complyify.in/taxConsultant/tax/profile-api-v1';
     let resultDlist = await fetch(profileUrl, {
       method: 'POST',
       headers: {

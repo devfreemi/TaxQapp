@@ -79,8 +79,8 @@ android {
         applicationId "com.taxq"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20
-        versionName "1.0.02.13.8"
+        versionCode 23
+        versionName "1.0.02.15"
         android.defaultConfig.ndk.debugSymbolLevel = 'FULL'
     }
 

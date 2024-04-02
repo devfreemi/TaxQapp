@@ -43,8 +43,7 @@ function TradeLicense({navigation}): JSX.Element {
   // PRE DATA CHECK
   const FetchStorageDataSer = async () => {
     const customerIDP = await AsyncStorage.getItem('userId');
-    const profileUrl =
-      'https://truetechnologies.in/taxConsultant/tax/profile-api-v1';
+    const profileUrl = 'https://complyify.in/taxConsultant/tax/profile-api-v1';
     let resultDlist = await fetch(profileUrl, {
       method: 'POST',
       headers: {
@@ -75,7 +74,7 @@ function TradeLicense({navigation}): JSX.Element {
   const submit = async () => {
     try {
       const serviceUrl =
-        'https://truetechnologies.in/taxConsultant/tax/license-api-trade-v1';
+        'https://complyify.in/taxConsultant/tax/license-api-trade-v1';
       let result = await fetch(serviceUrl, {
         method: 'POST',
         headers: {

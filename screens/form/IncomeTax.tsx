@@ -3,8 +3,10 @@ import storage from '@react-native-firebase/storage';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
   PermissionsAndroid,
+  Platform,
   SafeAreaView,
   ScrollView,
   Text,
@@ -58,8 +60,7 @@ function IncomeTax({navigation}): JSX.Element {
   // PRE DATA CHECK
   const FetchStorageDataSer = async () => {
     const customerIDP = await AsyncStorage.getItem('userId');
-    const profileUrl =
-      'https://truetechnologies.in/taxConsultant/tax/profile-api-v1';
+    const profileUrl = 'https://complyify.in/taxConsultant/tax/profile-api-v1';
     let resultDlist = await fetch(profileUrl, {
       method: 'POST',
       headers: {
@@ -73,31 +74,42 @@ function IncomeTax({navigation}): JSX.Element {
     console.log(getResultProfile.name);
     setName(getResultProfile.name);
   };
-
+  // APP PERMISSION
   const pickImage = async () => {
-    const response = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    );
-    if (response === PermissionsAndroid.RESULTS.GRANTED) {
+    if (Number(Platform.Version) >= 33) {
       try {
         const result = await DocumentPicker.pickSingle({
           // type: [DocumentPicker.types.pdf],
           copyTo: 'cachesDirectory',
         });
-        console.log(result);
         setDocumentData(result.fileCopyUri);
         setDocumentDataName(result.name);
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        Alert.alert(error.code);
+      }
+    } else {
+      const response = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      );
+      if (response === PermissionsAndroid.RESULTS.GRANTED) {
+        try {
+          const result = await DocumentPicker.pickSingle({
+            // type: [DocumentPicker.types.pdf],
+            copyTo: 'cachesDirectory',
+          });
+          setDocumentData(result.fileCopyUri);
+          setDocumentDataName(result.name);
+        } catch (error) {
+          Alert.alert(error.code);
+        }
+      } else {
+        Alert.alert('Permission Denided');
       }
     }
   };
   // Bank Statement upload
   const brs = async () => {
-    const response = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    );
-    if (response === PermissionsAndroid.RESULTS.GRANTED) {
+    if (Number(Platform.Version) >= 33) {
       try {
         const resultBrs = await DocumentPicker.pickSingle({
           // type: [DocumentPicker.types.pdf],
@@ -107,7 +119,24 @@ function IncomeTax({navigation}): JSX.Element {
         setDocumentBrsData(resultBrs.fileCopyUri);
         setDocumentBrsDataName(resultBrs.name);
       } catch (err) {
-        console.log(err);
+        Alert.alert(err.code);
+      }
+    } else {
+      const response = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      );
+      if (response === PermissionsAndroid.RESULTS.GRANTED) {
+        try {
+          const resultBrs = await DocumentPicker.pickSingle({
+            // type: [DocumentPicker.types.pdf],
+            copyTo: 'cachesDirectory',
+          });
+          console.log(resultBrs);
+          setDocumentBrsData(resultBrs.fileCopyUri);
+          setDocumentBrsDataName(resultBrs.name);
+        } catch (err) {
+          Alert.alert(err.code);
+        }
       }
     }
   };
@@ -134,7 +163,7 @@ function IncomeTax({navigation}): JSX.Element {
         const eightyC = eightC.toString();
         const eightyD = eightD.toString();
         const serviceUrl =
-          'https://truetechnologies.in/taxConsultant/tax/service-api-v1';
+          'https://complyify.in/taxConsultant/tax/service-api-v1';
         let result = await fetch(serviceUrl, {
           method: 'POST',
           headers: {
@@ -176,7 +205,7 @@ function IncomeTax({navigation}): JSX.Element {
         const eightyC = 'false';
         const eightyD = 'false';
         const serviceUrl =
-          'https://truetechnologies.in/taxConsultant/tax/service-api-v1';
+          'https://complyify.in/taxConsultant/tax/service-api-v1';
         let result = await fetch(serviceUrl, {
           method: 'POST',
           headers: {
