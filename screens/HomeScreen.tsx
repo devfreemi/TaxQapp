@@ -145,7 +145,7 @@ function HomeScreen({navigation}): JSX.Element {
     var options = {
       description: 'Credits towards consultation',
       image:
-        'https://complyify.in/taxConsultant//assets/img/icons/brands/appLogo.png',
+        'https://complyify.in/taxConsultant/assets/img/icons/brands/appLogo.png',
       currency: 'INR',
       key: 'rzp_test_nM0gkKKYwEqjex',
       amount: amount,
@@ -272,6 +272,12 @@ function HomeScreen({navigation}): JSX.Element {
                           <View style={styles.itemStatusInnerPendingPay}>
                             <Text style={styles.itemStatusTextPendingPay}>
                               {item.status}
+                            </Text>
+                          </View>
+                        ) : item.status === 'New Customer' ? (
+                          <View style={styles.itemStatusInnerApproved}>
+                            <Text style={styles.itemStatusTextApproved}>
+                              Submitted
                             </Text>
                           </View>
                         ) : null}

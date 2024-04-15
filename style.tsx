@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
   formView: {
     alignItems: 'center',
-    marginTop: '35%',
+    marginTop: '20%',
   },
   formViewOTP: {
     alignItems: 'center',
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '4%',
-    marginTop: '45%',
-    marginBottom: '10%',
+    marginTop: '50%',
+    // marginBottom: '10%',
     marginRight: 35,
     marginLeft: 35,
   },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: '700',
-    marginTop: '25%',
+    marginTop: '35%',
     color: '#1a1a1a',
     letterSpacing: 0.5,
     marginHorizontal: '3%',
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#745bff',
     marginVertical: 20,
     // padding: 18,
-    height: 57.59,
+    height: 50,
     borderColor: '#745bff',
   },
   googleText: {
@@ -184,9 +184,16 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     marginHorizontal: 18,
     letterSpacing: 1,
-    marginVertical: 18,
+    marginVertical: 8,
   },
   googleImage: {
+    padding: 10,
+    margin: 10,
+    height: 15,
+    width: 15,
+    resizeMode: 'stretch',
+  },
+  buttonImage: {
     padding: 15,
     margin: 15,
     height: 25,
@@ -227,9 +234,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 8,
     backgroundColor: '#ffffff',
-    marginVertical: 20,
+    marginTop: 20,
     // padding: 18,
-    height: 57.59,
+    height: 50,
     borderEndColor: '#4285F4',
     borderBottomColor: '#34A853',
     borderStartColor: '#FBBC05',
@@ -269,7 +276,7 @@ const styles = StyleSheet.create({
     color: '#6a6a6a',
     marginHorizontal: 18,
     letterSpacing: 1,
-    marginVertical: 18,
+    marginVertical: 8,
   },
   logoutText: {
     fontSize: 16,
@@ -1664,6 +1671,85 @@ const styles = StyleSheet.create({
   dot: {
     paddingHorizontal: '1%',
     paddingTop: '1.5%',
+  },
+  // Modal
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginTop: '5',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    // padding: 35,
+    // alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    marginVertical: 25,
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    elevation: 2,
+    width: '50%',
+    // marginHorizontal: '50%',
+    alignSelf: 'center',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  modalText: {
+    fontWeight: '700',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  modalTextBody: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#000000',
+  },
+  modalGridView: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 25,
+  },
+
+  closeModal: {
+    textAlign: 'right',
+    padding: 12,
+  },
+  signupHeadForm: {
+    fontSize: 21,
+    fontWeight: '700',
+    color: '#1a1a1a',
+    letterSpacing: 1,
+    paddingBottom: '2%',
+  },
+  formSingupdiv: {
+    marginTop: '12%',
+    marginHorizontal: '10%',
+    marginBottom: '5%',
+  },
+  signupHead2: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#6a6a6a',
+    letterSpacing: 0.5,
+    textAlign: 'left',
   },
 });
 

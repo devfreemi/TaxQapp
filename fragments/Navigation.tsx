@@ -2,8 +2,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginOption from '../screens/LoginOption';
+import MobileLogin from '../screens/MobileLogin';
 import MobileVerification from '../screens/MobileVerification';
 import ServicesView from '../screens/ServicesView';
+import SignUp from '../screens/SignUp';
 import CompanyIncorporation from '../screens/form/CompanyIncorporation';
 import CorporateCompliance from '../screens/form/CorporateCompliance';
 import DigitalSignature from '../screens/form/DigitalSignature';
@@ -39,6 +41,20 @@ const Navigation = () => {
       <Stack.Screen
         name="MobileVerification"
         component={MobileVerification}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="MobileLogin"
+        component={MobileLogin}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
         options={{
           headerShown: false,
         }}

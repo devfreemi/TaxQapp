@@ -218,7 +218,7 @@ function DigitalSignature({navigation}): JSX.Element {
                   <Text style={styles.Lable}>Aadhaar Number</Text>
                   <TextInput
                     style={styles.inputPass}
-                    placeholder="Enter Your Trade Name"
+                    placeholder="Enter Aadhaar Number"
                     autoCapitalize="characters"
                     maxLength={12}
                     inputMode="numeric"

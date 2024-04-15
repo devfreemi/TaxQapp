@@ -1,9 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
+  BackHandler,
   Image,
   SafeAreaView,
   ScrollView,
@@ -17,6 +18,26 @@ import styles from '../style';
 import Profile from './Profile';
 const Tab = createBottomTabNavigator();
 function ServicesView({navigation}): JSX.Element {
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Stop', 'Are you sure You want to Exit?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'Cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => BackHandler.exitApp(),
+        },
+      ]);
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({

@@ -37,7 +37,6 @@ function LoginOption({navigation}): JSX.Element {
       const name = user.name;
       const photo = user.photo;
       const email = user.email;
-
       // SET ASYNC STORAGE
       AsyncStorage.setItem('userId', user.id);
       AsyncStorage.setItem('email', user.email);
@@ -99,8 +98,7 @@ function LoginOption({navigation}): JSX.Element {
       </View>
       <Text style={styles.headerTitle}>Compliance Simplyfied</Text>
       <Text style={styles.brand2}>Affordable Business Solutions</Text>
-      {/* <Text style={styles.brand2}>Pay Effortlessly.</Text> */}
-      {/* <Text style={styles.brand}> TaxQ</Text> */}
+
       <ScrollView>
         <View style={styles.formView}>
           <TouchableOpacity style={styles.buttonLogin} onPress={FetchLoginApi}>
@@ -110,6 +108,17 @@ function LoginOption({navigation}): JSX.Element {
                 style={styles.googleImage}
               />
               <Text style={styles.loginText}>Login With Google</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonMobile}
+            onPress={() => navigation.navigate('MobileLogin')}>
+            <View style={styles.buttonG}>
+              <Image
+                source={require('../assets/images/phone.png')}
+                style={styles.googleImage}
+              />
+              <Text style={styles.mobileText}>Login With Mobile</Text>
             </View>
           </TouchableOpacity>
         </View>

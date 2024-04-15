@@ -204,7 +204,7 @@ function MobileVerification({navigation}): JSX.Element {
                   <View style={styles.buttonG}>
                     <Image
                       source={require('../assets/images/phone.png')}
-                      style={styles.googleImage}
+                      style={styles.buttonImage}
                     />
                     <Text style={styles.submitText}>{sendOTPbtn}</Text>
                   </View>
@@ -257,7 +257,7 @@ function MobileVerification({navigation}): JSX.Element {
               <View style={styles.buttonG}>
                 <Image
                   source={require('../assets/images/otp.png')}
-                  style={styles.googleImage}
+                  style={styles.buttonImage}
                 />
                 <Text style={styles.submitText}>{cnfmOTPbtn}</Text>
               </View>
