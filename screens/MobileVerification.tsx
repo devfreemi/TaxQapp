@@ -60,6 +60,7 @@ function MobileVerification({navigation}): JSX.Element {
   const signInWithPhoneNumber = async (phoneNumber: string) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
+    console.log(confirmation._verificationId);
   };
   const validation = async () => {
     tokenLogin();
@@ -156,7 +157,18 @@ function MobileVerification({navigation}): JSX.Element {
       }
     }
   };
-
+  const editMobile = async () => {
+    setDisabled(false);
+    setOtpDisabled(false);
+    setConfirm(null);
+    setsendOTPbtn('Send OTP');
+    setCnfmOTPbtn('Confirm OTP');
+    setCode('');
+    setCodeErr(false);
+    await AsyncStorage.removeItem('mobile');
+    console.log('Edit');
+    // navigation.navigate('MobileVerification');
+  };
   if (!confirm) {
     return (
       <>
@@ -261,6 +273,9 @@ function MobileVerification({navigation}): JSX.Element {
                 />
                 <Text style={styles.submitText}>{cnfmOTPbtn}</Text>
               </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => editMobile()}>
+              <Text style={styles.editMobile}>Edit Mobile Number</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
