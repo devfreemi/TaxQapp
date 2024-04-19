@@ -12,8 +12,8 @@ import DigitalSignature from '../screens/form/DigitalSignature';
 import GstFilling from '../screens/form/GstFilling';
 import GstLicense from '../screens/form/GstLicense';
 import IncomeTax from '../screens/form/IncomeTax';
-import PanCard from '../screens/form/PanCard';
 import TradeLicense from '../screens/form/TradeLicense';
+import TradeMark from '../screens/form/TradeMark';
 import Conformation from '../screens/form/conformation';
 const Stack = createNativeStackNavigator();
 
@@ -79,7 +79,7 @@ const Navigation = () => {
       />
       <Stack.Screen name="GST Registration" component={GstLicense} />
       <Stack.Screen name="Trade License" component={TradeLicense} />
-      <Stack.Screen name="Pan Card Application" component={PanCard} />
+      <Stack.Screen name="Trademark Registration" component={TradeMark} />
       <Stack.Screen name="Application Status" component={Conformation} />
     </Stack.Navigator>
   );

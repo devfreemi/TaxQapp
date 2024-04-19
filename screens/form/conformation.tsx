@@ -54,7 +54,7 @@ function Conformation({route, navigation}): JSX.Element {
                 ) : product === '7' ? (
                   <Text style={styles.paramStatus}>Trade License</Text>
                 ) : product === '8' ? (
-                  <Text style={styles.paramStatus}>Pan Card Application</Text>
+                  <Text style={styles.paramStatus}>Trademark Registration</Text>
                 ) : null}
               </View>
             </View>

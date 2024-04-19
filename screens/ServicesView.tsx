@@ -248,18 +248,18 @@ function Service({navigation}) {
                     <TouchableOpacity
                       style={styles.viewElementsReport}
                       onPress={() =>
-                        navigation.navigate('Pan Card Application')
+                        navigation.navigate('Trademark Registration')
                       }>
                       <View style={styles.viewElementsReportF2}>
                         <Image
-                          source={require('../assets/images/pan.png')}
+                          source={require('../assets/images/trademark.png')}
                           style={styles.SerPic}
                         />
                       </View>
                     </TouchableOpacity>
                   </View>
                   <Text style={styles.serviceName}>
-                    Pancard{'\n'}Application
+                    Trademark{'\n'}Registration
                   </Text>
                 </View>
                 <View style={styles.divService}>
