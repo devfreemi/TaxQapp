@@ -26,6 +26,7 @@ function TradeMark({navigation}): JSX.Element {
   const [customerID, setCustomerID] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [businessType, setBusinessType] = useState(null);
   const businessDrop = [
@@ -64,6 +65,7 @@ function TradeMark({navigation}): JSX.Element {
     console.log(getResultProfile.name);
     setCustomerName(getResultProfile.name);
     setMobile(getResultProfile.mobile);
+    setEmail(getResultProfile.email);
   };
   // PRODUCT CODE
   const productID = 8;
@@ -106,6 +108,15 @@ function TradeMark({navigation}): JSX.Element {
           appId: getResultEx.uniqid,
           status: getResultEx.status,
           category: getResultEx.product_id,
+          amount: getResultEx.Amount,
+          amountUI: getResultEx.AmountUI,
+          OrderId: getResultEx.OrderId,
+          Receipt: getResultEx.Receipt,
+          name: getResultEx.Name,
+          mobile: getResultEx.Mobile,
+          statusPayment: getResultEx.statusPayment,
+          // Prefill by api
+          emailId: email,
         });
       } else {
         console.log('Internal Failure. Contact to Tech Team');

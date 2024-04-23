@@ -15,6 +15,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import styles from '../style';
+import Applications from './Applications';
 import Profile from './Profile';
 const Tab = createBottomTabNavigator();
 function ServicesView({navigation}): JSX.Element {
@@ -53,6 +54,8 @@ function ServicesView({navigation}): JSX.Element {
             iconName = focused ? 'reader' : 'reader-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'Applications') {
+            iconName = focused ? 'documents' : 'documents-outline';
           }
 
           // You can return any component that you like here!
@@ -63,6 +66,7 @@ function ServicesView({navigation}): JSX.Element {
       })}>
       <Tab.Screen name="Services" component={Service} />
       <Tab.Screen name="Dashboard" component={HomeScreen} />
+      <Tab.Screen name="Applications" component={Applications} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

@@ -1300,7 +1300,7 @@ const styles = StyleSheet.create({
   conImagediv: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '25%',
+    marginTop: '12%',
     marginBottom: '8%',
   },
   formImage: {
@@ -1357,6 +1357,13 @@ const styles = StyleSheet.create({
   },
   condition: {
     textAlign: 'left',
+    paddingVertical: '2%',
+    fontSize: 13,
+    fontWeight: '400',
+    paddingLeft: '3%',
+  },
+  conditionPayment: {
+    textAlign: 'center',
     paddingVertical: '2%',
     fontSize: 13,
     fontWeight: '400',
@@ -1750,6 +1757,37 @@ const styles = StyleSheet.create({
     color: '#6a6a6a',
     letterSpacing: 0.5,
     textAlign: 'left',
+  },
+  applicationContainer: {
+    alignItems: 'flex-start',
+    padding: '4.5%',
+  },
+  applicationHeadText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#6a6a6a',
+    letterSpacing: 0.8,
+  },
+  orderListView: {
+    alignItems: 'flex-start',
+    padding: '5%',
+  },
+  applicationRec: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    borderColor: '#000000',
+    borderWidth: 2,
+    borderRadius: 4,
+    paddingHorizontal: '2%',
+    paddingVertical: '3%',
+  },
+  itemAppl: {
+    width: '33.33%',
+    textAlign: 'center',
+    // padding: 4,
+    fontWeight: '600',
+    color: '#212529',
+    // marginBottom: 15,
   },
 });
 

@@ -119,27 +119,6 @@ function HomeScreen({navigation}): JSX.Element {
     setLoading(false);
     return false;
   }, 1500);
-  // SEND PAYMENT RESPONSE TO SERVER
-  // const [razorpay_signature, setRazorpay_signature] = useState('');
-  // const [razorpay_order_id, setRazorpay_order_id] = useState('');
-  // const [razorpay_payment_id, setRazorpay_payment_id] = useState('');
-  // const paymentResponse = async () => {
-  //   const paymentResUrl =
-  //     'https://complyify.in/taxConsultant/tax/payment-response-api-v1';
-  //   let resultPaymetres = await fetch(paymentResUrl, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       razorpay_signature,
-  //       razorpay_order_id,
-  //       razorpay_payment_id,
-  //     }),
-  //   });
-  //   let getResultPaymentRes = await resultPaymetres.json();
-  //   console.log(getResultPaymentRes);
-  // };
 
   const pay = async () => {
     var options = {
@@ -211,12 +190,12 @@ function HomeScreen({navigation}): JSX.Element {
           <>
             <TouchableOpacity style={styles.homeGridView} onPress={refresh}>
               <View style={[styles.card]}>
-                <Ionicons
+                {/* <Ionicons
                   name="refresh-outline"
                   size={18}
                   color={'#ffffff'}
                   style={styles.refresh}
-                />
+                /> */}
                 <View style={styles.viewElementsInnerF2}>
                   <Text style={styles.innerTextViewHead}>Your Services</Text>
                   <View style={styles.viewElements}>
@@ -317,7 +296,7 @@ function HomeScreen({navigation}): JSX.Element {
                     </View>
                   </View>
                 </View>
-              ) : paymentStatus === 'Initiated' ? (
+              ) : paymentStatus === 'Payment Success' ? (
                 <View style={[styles.homeGridView3]}>
                   <View style={[styles.elevationPro, styles.cardI]}>
                     <Text style={styles.itemPay}>{productName}</Text>
@@ -328,11 +307,11 @@ function HomeScreen({navigation}): JSX.Element {
                       <Ionicons
                         name="ellipse"
                         size={14}
-                        color={'#ffb400'}
+                        color={'#18b47a'}
                         style={styles.dot}
                       />
                       <Text style={styles.paymentR}>
-                        Your payment is under review !
+                        Your Last payment is Successfull !
                       </Text>
                     </View>
                   </View>
