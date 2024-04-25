@@ -115,6 +115,7 @@ function TradeMark({navigation}): JSX.Element {
           name: getResultEx.Name,
           mobile: getResultEx.Mobile,
           statusPayment: getResultEx.statusPayment,
+          priceCommnets: getResultEx.ProductPriceCommnets,
           // Prefill by api
           emailId: email,
         });

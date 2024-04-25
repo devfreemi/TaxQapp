@@ -21,6 +21,7 @@ function CorporateCompliance({navigation}): JSX.Element {
   // FETCH STORAGE ID OF CUSTOMER
   const [customerID, setCustomerID] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [email, setEmail] = useState('');
   const FetchStorageData = async () => {
     const userId = await AsyncStorage.getItem('userId');
     setCustomerID(userId);
@@ -43,6 +44,7 @@ function CorporateCompliance({navigation}): JSX.Element {
     console.log(getResultProfile.name);
     setCustomerName(getResultProfile.name);
     setMobile(getResultProfile.mobile);
+    setEmail(getResultProfile.email);
   };
   // PRODUCT CODE
   const productID = 5;
@@ -79,13 +81,21 @@ function CorporateCompliance({navigation}): JSX.Element {
       });
 
       let getResultEx = await result.json();
-      console.log(getResultEx);
       if (getResultEx) {
-        console.log(getResultEx);
         navigation.navigate('Application Status', {
           appId: getResultEx.uniqid,
           status: getResultEx.status,
           category: getResultEx.product_id,
+          amount: getResultEx.Amount,
+          amountUI: getResultEx.AmountUI,
+          OrderId: getResultEx.OrderId,
+          Receipt: getResultEx.Receipt,
+          name: getResultEx.Name,
+          mobile: getResultEx.Mobile,
+          statusPayment: getResultEx.statusPayment,
+          priceCommnets: getResultEx.ProductPriceCommnets,
+          // Prefill by api
+          emailId: email,
         });
       } else {
         console.log('Internal Failure. Contact to Tech Team');
@@ -166,7 +176,7 @@ function CorporateCompliance({navigation}): JSX.Element {
       submit();
       setTimeout(() => {
         setFormLoading(false);
-      }, 2000);
+      }, 3000);
     }
   };
   const focus = async () => {

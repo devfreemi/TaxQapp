@@ -21,6 +21,8 @@ function DigitalSignature({navigation}): JSX.Element {
   // FETCH STORAGE ID OF CUSTOMER
   const [customerID, setCustomerID] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
   const FetchStorageData = async () => {
     const userId = await AsyncStorage.getItem('userId');
     setCustomerID(userId);
@@ -43,6 +45,8 @@ function DigitalSignature({navigation}): JSX.Element {
     let getResultProfile = await resultDlist.json();
     console.log(getResultProfile.name);
     setCustomerName(getResultProfile.name);
+    setEmail(getResultProfile.email);
+    setMobile(getResultProfile.mobile);
   };
   // PRODUCT CODE
   const productID = 3;
@@ -72,17 +76,9 @@ function DigitalSignature({navigation}): JSX.Element {
           customerName,
           adhar,
           pan,
+          mobile,
         }),
       });
-      console.log(
-        JSON.stringify({
-          productID,
-          customerID,
-          customerName,
-          adhar,
-          pan,
-        }),
-      );
 
       let getResultEx = await result.json();
       console.log(getResultEx);
@@ -92,6 +88,16 @@ function DigitalSignature({navigation}): JSX.Element {
           appId: getResultEx.uniqid,
           status: getResultEx.status,
           category: getResultEx.product_id,
+          amount: getResultEx.Amount,
+          amountUI: getResultEx.AmountUI,
+          OrderId: getResultEx.OrderId,
+          Receipt: getResultEx.Receipt,
+          name: getResultEx.Name,
+          mobile: getResultEx.Mobile,
+          statusPayment: getResultEx.statusPayment,
+          priceCommnets: getResultEx.ProductPriceCommnets,
+          // Prefill by api
+          emailId: email,
         });
       } else {
         console.log('Internal Failure. Contact to Tech Team');

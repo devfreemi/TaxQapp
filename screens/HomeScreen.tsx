@@ -48,6 +48,7 @@ function HomeScreen({navigation}): JSX.Element {
   const [amount, setAmount] = useState('');
   const [amountUI, setAmountUI] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
+  const [appId, setAppID] = useState('555');
   // const [err, setErr] = useState(false);
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
@@ -102,6 +103,7 @@ function HomeScreen({navigation}): JSX.Element {
         customerIPL,
       }),
     });
+
     let getResultPayment = await resultPaymet.json();
     if (getResultPayment) {
       setAmount(getResultPayment.Amount);
@@ -112,6 +114,7 @@ function HomeScreen({navigation}): JSX.Element {
       setPayeeEmail(getResultPayment.Email);
       setPayeeMobile(getResultPayment.Mobile);
       setPaymentStatus(getResultPayment.status);
+      setAppID(getResultPayment.applicationId);
       console.log(getResultPayment);
     }
   };
@@ -154,6 +157,7 @@ function HomeScreen({navigation}): JSX.Element {
             razorpay_signature_id,
             razorpay_order_res,
             razorpay_payment_res,
+            appId,
           }),
         });
         let getResultPaymentRes = await resultPaymetres.json();

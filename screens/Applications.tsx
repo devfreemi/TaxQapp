@@ -33,6 +33,7 @@ function Applications({navigation}): JSX.Element {
   if (isLoading) {
     FetchDashListApi();
   }
+  // FetchDashListApi();
   return (
     <SafeAreaView style={styles.ContentViewLOG}>
       {isLoading ? (
@@ -50,6 +51,12 @@ function Applications({navigation}): JSX.Element {
             <Text style={styles.applicationHeadText}>
               Your all Applications
             </Text>
+            {/* <Ionicons
+              name="refresh-outline"
+              size={18}
+              color={'#000000'}
+              style={styles.refresh}
+            /> */}
           </View>
 
           <View style={styles.homeGridView2}>

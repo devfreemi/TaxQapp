@@ -841,12 +841,12 @@ const styles = StyleSheet.create({
   homeGridView3: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: '5%',
-    marginBottom: 5,
+    marginTop: '2%',
+    marginBottom: '5%',
     // height: '50%',
     textAlign: 'center',
     // borderWidth: 2,
-    margin: '4%',
+    marginHorizontal: '4%',
   },
   paymentDiv: {
     width: '100%',
@@ -1367,7 +1367,7 @@ const styles = StyleSheet.create({
     paddingVertical: '2%',
     fontSize: 13,
     fontWeight: '400',
-    paddingLeft: '3%',
+    paddingHorizontal: '3%',
   },
   LableCheck: {
     paddingBottom: '4%',
@@ -1780,6 +1780,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: '2%',
     paddingVertical: '3%',
+    marginVertical: '2%',
   },
   itemAppl: {
     width: '33.33%',

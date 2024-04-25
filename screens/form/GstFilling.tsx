@@ -21,6 +21,8 @@ function GstFilling({navigation}): JSX.Element {
   // FETCH STORAGE ID OF CUSTOMER
   const [customerID, setCustomerID] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
   const FetchStorageData = async () => {
     const userId = await AsyncStorage.getItem('userId');
     setCustomerID(userId);
@@ -42,6 +44,8 @@ function GstFilling({navigation}): JSX.Element {
     let getResultProfile = await resultDlist.json();
     console.log(getResultProfile.name);
     setCustomerName(getResultProfile.name);
+    setMobile(getResultProfile.mobile);
+    setEmail(getResultProfile.email);
   };
   // PRODUCT CODE
   const productID = 2;
@@ -71,6 +75,7 @@ function GstFilling({navigation}): JSX.Element {
           trade,
           gst,
           customerName,
+          mobile,
         }),
       });
 
@@ -82,6 +87,16 @@ function GstFilling({navigation}): JSX.Element {
           appId: getResultEx.uniqid,
           status: getResultEx.status,
           category: getResultEx.product_id,
+          amount: getResultEx.Amount,
+          amountUI: getResultEx.AmountUI,
+          OrderId: getResultEx.OrderId,
+          Receipt: getResultEx.Receipt,
+          name: getResultEx.Name,
+          mobile: getResultEx.Mobile,
+          statusPayment: getResultEx.statusPayment,
+          priceCommnets: getResultEx.ProductPriceCommnets,
+          // Prefill by api
+          emailId: email,
         });
       } else {
         console.log('Internal Failure. Contact to Tech Team');

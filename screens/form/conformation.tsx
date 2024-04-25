@@ -15,6 +15,7 @@ function Conformation({route, navigation}): JSX.Element {
     name,
     mobile,
     emailId,
+    priceCommnets,
   } = route.params;
   const statusText = JSON.stringify(status);
   const statusTextString = statusText.replace(/\"/g, '');
@@ -157,8 +158,8 @@ function Conformation({route, navigation}): JSX.Element {
       {statusPayment === 'created' ? (
         <>
           <View>
-            <Text style={styles.condition}>
-              Simplify Your Transactions: Pay Application Fees with Ease
+            <Text style={styles.conditionPayment}>
+              Plaese Pay Rs. {amountUI}.00 for Your {priceCommnets}.
             </Text>
           </View>
           <TouchableOpacity style={styles.buttonCos} onPress={pay}>
