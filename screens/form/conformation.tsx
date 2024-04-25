@@ -66,6 +66,7 @@ function Conformation({route, navigation}): JSX.Element {
       .catch(error => {
         // handle failure
         console.log(`Error: ${error.code} | ${error.description}`);
+        navigation.navigate('Dashboard');
       });
   };
   return (

@@ -1355,6 +1355,14 @@ const styles = StyleSheet.create({
     color: '#745bff',
     paddingHorizontal: '3%',
   },
+  listHead: {
+    textAlign: 'left',
+    paddingBottom: '1%',
+    fontSize: 13,
+    fontWeight: '400',
+    color: '#8b8ba7',
+    paddingHorizontal: '3%',
+  },
   condition: {
     textAlign: 'left',
     paddingVertical: '2%',

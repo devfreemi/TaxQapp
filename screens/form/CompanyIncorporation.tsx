@@ -87,6 +87,16 @@ function CompanyIncorporation({navigation}): JSX.Element {
           appId: getResultEx.uniqid,
           status: getResultEx.status,
           category: getResultEx.product_id,
+          amount: getResultEx.Amount,
+          amountUI: getResultEx.AmountUI,
+          OrderId: getResultEx.OrderId,
+          Receipt: getResultEx.Receipt,
+          name: getResultEx.Name,
+          mobile: getResultEx.Mobile,
+          statusPayment: getResultEx.statusPayment,
+          priceCommnets: getResultEx.ProductPriceCommnets,
+          // Prefill by api
+          emailId: email,
         });
       } else {
         console.log('Internal Failure. Contact to Tech Team');
@@ -163,7 +173,7 @@ function CompanyIncorporation({navigation}): JSX.Element {
       submit();
       setTimeout(() => {
         setFormLoading(false);
-      }, 2000);
+      }, 2800);
     }
   };
   const focus = async () => {
@@ -259,7 +269,12 @@ function CompanyIncorporation({navigation}): JSX.Element {
                     onChangeText={text => setMobile(text)}
                   />
 
-                  <Text style={styles.Lable}>Required Documents</Text>
+                  <Text style={styles.Lable}>
+                    Required Documents{' '}
+                    <Text style={styles.listHead}>
+                      (for Two no of Directors with 10 lac Capitals)
+                    </Text>
+                  </Text>
                   <Text style={styles.list}>1. Voter Id Card</Text>
                   <Text style={styles.list}>
                     2. Two copy of photo of each directors
