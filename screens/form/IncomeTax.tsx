@@ -39,6 +39,9 @@ function IncomeTax({navigation}): JSX.Element {
   // GET INPUT FIELD
   const [pan, setPan] = useState('');
   const [name, setName] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
   // DOCUMENT PICK
   const [documentData, setDocumentData] = useState('');
   const [documentDataName, setDocumentDataName] = useState('');
@@ -73,6 +76,9 @@ function IncomeTax({navigation}): JSX.Element {
     let getResultProfile = await resultDlist.json();
     console.log(getResultProfile.name);
     setName(getResultProfile.name);
+    setCustomerName(getResultProfile.name);
+    setEmail(getResultProfile.email);
+    setMobile(getResultProfile.mobile);
   };
   // APP PERMISSION
   const pickImage = async () => {
@@ -180,6 +186,9 @@ function IncomeTax({navigation}): JSX.Element {
             downloadURLBrsU,
             eightyC,
             eightyD,
+            email,
+            mobile,
+            customerName,
           }),
         });
 
@@ -190,6 +199,16 @@ function IncomeTax({navigation}): JSX.Element {
             appId: getResultEx.uniqid,
             status: getResultEx.status,
             category: getResultEx.product_id,
+            amount: getResultEx.Amount,
+            amountUI: getResultEx.AmountUI,
+            OrderId: getResultEx.OrderId,
+            Receipt: getResultEx.Receipt,
+            name: getResultEx.Name,
+            mobile: getResultEx.Mobile,
+            statusPayment: getResultEx.statusPayment,
+            priceCommnets: getResultEx.ProductPriceCommnets,
+            // Prefill by api
+            emailId: email,
           });
         } else {
           console.log('Internal Failure. Contact to Tech Team');
@@ -222,6 +241,9 @@ function IncomeTax({navigation}): JSX.Element {
             downloadURLBrsU,
             eightyC,
             eightyD,
+            email,
+            mobile,
+            customerName,
           }),
         });
 
@@ -232,6 +254,16 @@ function IncomeTax({navigation}): JSX.Element {
             appId: getResultEx.uniqid,
             status: getResultEx.status,
             category: getResultEx.product_id,
+            amount: getResultEx.Amount,
+            amountUI: getResultEx.AmountUI,
+            OrderId: getResultEx.OrderId,
+            Receipt: getResultEx.Receipt,
+            name: getResultEx.Name,
+            mobile: getResultEx.Mobile,
+            statusPayment: getResultEx.statusPayment,
+            priceCommnets: getResultEx.ProductPriceCommnets,
+            // Prefill by api
+            emailId: email,
           });
         } else {
           console.log('Internal Failure. Contact to Tech Team');

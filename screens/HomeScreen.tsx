@@ -320,6 +320,27 @@ function HomeScreen({navigation}): JSX.Element {
                     </View>
                   </View>
                 </View>
+              ) : paymentStatus === 'Signature Verification Failed' ? (
+                <View style={[styles.homeGridView3]}>
+                  <View style={[styles.elevationPro, styles.cardI]}>
+                    <Text style={styles.itemPay}>{productName}</Text>
+                    <Text style={styles.itemPayAmount}>Rs. {amountUI}.00</Text>
+
+                    <View style={styles.innerViewPay}>
+                      <TouchableOpacity style={styles.buttonPayReject}>
+                        <View>
+                          <Text style={styles.rejectText}>Reject</Text>
+                        </View>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={styles.buttonPay} onPress={pay}>
+                        <View>
+                          <Text style={styles.submitText}>Pay</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
               ) : (
                 <Text style={styles.noService}>
                   You have not any pending payments.

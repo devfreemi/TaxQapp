@@ -63,9 +63,28 @@ function Conformation({route, navigation}): JSX.Element {
         // handle success
         navigation.navigate('Dashboard');
       })
-      .catch(error => {
+      .catch(async error => {
         // handle failure
-        console.log(`Error: ${error.code} | ${error.description}`);
+        const razorpay_signature_id = error.error.reason;
+        const razorpay_order_res = OrderId;
+        const razorpay_payment_res = error.error.reason;
+        const paymentResUrl =
+          'https://complyify.in/taxConsultant/tax/payment-response-api-v1';
+        let resultPaymetres = await fetch(paymentResUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            razorpay_signature_id,
+            razorpay_order_res,
+            razorpay_payment_res,
+            appId,
+          }),
+        });
+        let getResultPaymentRes = await resultPaymetres.json();
+        console.log(getResultPaymentRes);
+        // handle success
         navigation.navigate('Dashboard');
       });
   };

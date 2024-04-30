@@ -80,7 +80,13 @@ const Navigation = () => {
       <Stack.Screen name="GST Registration" component={GstLicense} />
       <Stack.Screen name="Trade License" component={TradeLicense} />
       <Stack.Screen name="Trademark Registration" component={TradeMark} />
-      <Stack.Screen name="Application Status" component={Conformation} />
+      <Stack.Screen
+        name="Application Status"
+        component={Conformation}
+        options={{
+          headerBackVisible: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };

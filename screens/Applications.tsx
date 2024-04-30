@@ -1,11 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
-import {ActivityIndicator, FlatList, Image, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../style';
 
 function Applications({navigation}): JSX.Element {
   const [isLoading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = useState([]);
   setTimeout(() => {
     setLoading(false);
@@ -33,7 +42,14 @@ function Applications({navigation}): JSX.Element {
   if (isLoading) {
     FetchDashListApi();
   }
-  // FetchDashListApi();
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    FetchDashListApi();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
     <SafeAreaView style={styles.ContentViewLOG}>
       {isLoading ? (
@@ -51,12 +67,6 @@ function Applications({navigation}): JSX.Element {
             <Text style={styles.applicationHeadText}>
               Your all Applications
             </Text>
-            {/* <Ionicons
-              name="refresh-outline"
-              size={18}
-              color={'#000000'}
-              style={styles.refresh}
-            /> */}
           </View>
 
           <View style={styles.homeGridView2}>
@@ -64,65 +74,55 @@ function Applications({navigation}): JSX.Element {
               <FlatList
                 style={styles.tableTD}
                 data={data}
+                onRefresh={onRefresh}
+                refreshing={refreshing}
                 renderItem={({item}) => (
-                  <View style={styles.applicationRec}>
-                    <Image
-                      source={{uri: 'https://reactjs.org/logo-og.png'}}
-                      style={styles.SerPic}
-                    />
-                    <Text style={styles.itemAppl}>{item.product}</Text>
-                    <View style={styles.itemStatus}>
-                      {item.status === 'Approved' ? (
-                        <View style={styles.itemStatusInnerApproved}>
-                          <Text style={styles.itemStatusTextApproved}>
-                            {item.status}
-                          </Text>
-                        </View>
-                      ) : item.status === 'Pending' ? (
-                        <View style={styles.itemStatusInnerPending}>
-                          <Text style={styles.itemStatusTextPending}>
-                            {item.status}
-                          </Text>
-                        </View>
-                      ) : item.status === 'Received' ? (
-                        <View style={styles.itemStatusInnerApproved}>
-                          <Text style={styles.itemStatusTextApproved}>
-                            {item.status}
-                          </Text>
-                        </View>
-                      ) : item.status === 'Completed' ? (
-                        <View style={styles.itemStatusInnerActive}>
-                          <Text style={styles.itemStatusTextActive}>
-                            {item.status}
-                          </Text>
-                        </View>
-                      ) : item.status === 'Rejected' ? (
-                        <View style={styles.itemStatusInnerReject}>
-                          <Text style={styles.itemStatusTextReject}>
-                            {item.status}
-                          </Text>
-                        </View>
-                      ) : item.status === 'Pending Payment' ? (
-                        <View style={styles.itemStatusInnerPendingPay}>
-                          <Text style={styles.itemStatusTextPendingPay}>
-                            {item.status}
-                          </Text>
-                        </View>
-                      ) : item.status === 'New Customer' ? (
-                        <View style={styles.itemStatusInnerApproved}>
-                          <Text style={styles.itemStatusTextApproved}>
-                            Submitted
-                          </Text>
-                        </View>
-                      ) : null}
+                  <TouchableOpacity style={styles.outtrtDiv}>
+                    <View style={styles.applicationRec}>
+                      <View style={styles.itemApplIcon}>
+                        <Image
+                          source={{uri: item.product_image}}
+                          style={styles.SerPic}
+                        />
+                      </View>
+                      <Text style={styles.itemAppl}>{item.product}</Text>
+                      <View style={styles.itemStatusAppl}>
+                        {item.PaymentStatus === 'Payment Success' ? (
+                          <View style={styles.itemStatusInnerPaid}>
+                            <Text style={styles.itemStatusTextPaid}>Paid</Text>
+                          </View>
+                        ) : item.PaymentStatus === 'created' ? (
+                          <View style={styles.itemStatusInnerCreated}>
+                            <Text style={styles.itemStatusTextCreated}>
+                              Created
+                            </Text>
+                          </View>
+                        ) : item.PaymentStatus === 'Payment Failed' ? (
+                          <View style={styles.itemStatusInnerFailled}>
+                            <Text style={styles.itemStatusTextFailled}>
+                              Failed
+                            </Text>
+                          </View>
+                        ) : null}
+                      </View>
+                      <View style={styles.itemSettingIcon}>
+                        <Ionicons
+                          name="ellipsis-vertical"
+                          size={18}
+                          color={'#423e3e'}
+                          style={styles.refresh}
+                        />
+                      </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 )}
               />
             ) : (
-              <Text style={styles.noService}>
-                You have not choose any service!{' '}
-              </Text>
+              <View style={styles.noServiceDiv}>
+                <Text style={styles.noServiceAppl}>
+                  You have not choose any service!{' '}
+                </Text>
+              </View>
             )}
           </View>
         </>
