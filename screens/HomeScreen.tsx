@@ -339,6 +339,17 @@ function HomeScreen({navigation}): JSX.Element {
                         </View>
                       </TouchableOpacity>
                     </View>
+                    <View style={styles.innerViewPay}>
+                      <Ionicons
+                        name="ellipse"
+                        size={14}
+                        color={'#DC143C'}
+                        style={styles.dot}
+                      />
+                      <Text style={styles.paymentR}>
+                        Your Last payment is Failed !
+                      </Text>
+                    </View>
                   </View>
                 </View>
               ) : (
