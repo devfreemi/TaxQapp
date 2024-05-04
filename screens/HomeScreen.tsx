@@ -14,7 +14,6 @@ import {
 // import {LineChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native';
-import RazorpayCheckout from 'react-native-razorpay';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../style';
 function HomeScreen({navigation}): JSX.Element {
@@ -40,16 +39,9 @@ function HomeScreen({navigation}): JSX.Element {
   }, []);
   const [isLoading, setLoading] = useState(true);
   const [totalSer, setTotalSer] = useState('');
-  const [orderId, setOrderId] = useState('');
   const [productName, setProductName] = useState('');
-  const [payeeName, setPayeeName] = useState('');
-  const [payeeEmail, setPayeeEmail] = useState('');
-  const [payeeMobile, setPayeeMobile] = useState('');
-  const [amount, setAmount] = useState('');
   const [amountUI, setAmountUI] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
-  const [appId, setAppID] = useState('555');
-  // const [err, setErr] = useState(false);
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
     const customerID = await AsyncStorage.getItem('userId');
@@ -103,18 +95,17 @@ function HomeScreen({navigation}): JSX.Element {
         customerIPL,
       }),
     });
+    console.log(
+      JSON.stringify({
+        customerIPL,
+      }),
+    );
 
     let getResultPayment = await resultPaymet.json();
     if (getResultPayment) {
-      setAmount(getResultPayment.Amount);
       setAmountUI(getResultPayment.AmountUI);
-      setOrderId(getResultPayment.OrderId);
       setProductName(getResultPayment.product);
-      setPayeeName(getResultPayment.Name);
-      setPayeeEmail(getResultPayment.Email);
-      setPayeeMobile(getResultPayment.Mobile);
       setPaymentStatus(getResultPayment.status);
-      setAppID(getResultPayment.applicationId);
       console.log(getResultPayment);
     }
   };
@@ -123,52 +114,6 @@ function HomeScreen({navigation}): JSX.Element {
     return false;
   }, 1500);
 
-  const pay = async () => {
-    var options = {
-      description: 'Credits towards consultation',
-      image:
-        'https://complyify.in/taxConsultant/assets/img/icons/brands/appLogo.png',
-      currency: 'INR',
-      key: 'rzp_test_nM0gkKKYwEqjex',
-      amount: amount,
-      name: 'Complyify',
-      order_id: orderId,
-      prefill: {
-        email: payeeEmail,
-        contact: payeeMobile,
-        name: payeeName,
-      },
-      theme: {color: '#745bff'},
-    };
-    RazorpayCheckout.open(options)
-      .then(async dataPay => {
-        console.log(JSON.stringify(dataPay));
-        const razorpay_signature_id = dataPay.razorpay_signature;
-        const razorpay_order_res = dataPay.razorpay_order_id;
-        const razorpay_payment_res = dataPay.razorpay_payment_id;
-        const paymentResUrl =
-          'https://complyify.in/taxConsultant/tax/payment-response-api-v1';
-        let resultPaymetres = await fetch(paymentResUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            razorpay_signature_id,
-            razorpay_order_res,
-            razorpay_payment_res,
-            appId,
-          }),
-        });
-        let getResultPaymentRes = await resultPaymetres.json();
-        console.log(getResultPaymentRes);
-        // handle success
-      })
-      .catch(error => {
-        // handle failure
-        console.log(`Error: ${error.code} | ${error.description}`);
-      });
-  };
   const refresh = async () => {
     FetchDashListApi();
     FetchPaymentApi();
@@ -276,31 +221,10 @@ function HomeScreen({navigation}): JSX.Element {
             </View>
             <ScrollView>
               <View style={styles.paymentDiv}>
-                <Text style={styles.paymentText}>Pending Payments</Text>
+                <Text style={styles.paymentText}>Payments</Text>
               </View>
 
-              {paymentStatus === 'created' ? (
-                <View style={[styles.homeGridView3]}>
-                  <View style={[styles.elevationPro, styles.cardI]}>
-                    <Text style={styles.itemPay}>{productName}</Text>
-                    <Text style={styles.itemPayAmount}>Rs. {amountUI}.00</Text>
-
-                    <View style={styles.innerViewPay}>
-                      <TouchableOpacity style={styles.buttonPayReject}>
-                        <View>
-                          <Text style={styles.rejectText}>Reject</Text>
-                        </View>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={styles.buttonPay} onPress={pay}>
-                        <View>
-                          <Text style={styles.submitText}>Pay</Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              ) : paymentStatus === 'Payment Success' ? (
+              {paymentStatus === 'Payment Success' ? (
                 <View style={[styles.homeGridView3]}>
                   <View style={[styles.elevationPro, styles.cardI]}>
                     <Text style={styles.itemPay}>{productName}</Text>
@@ -324,30 +248,18 @@ function HomeScreen({navigation}): JSX.Element {
                 <View style={[styles.homeGridView3]}>
                   <View style={[styles.elevationPro, styles.cardI]}>
                     <Text style={styles.itemPay}>{productName}</Text>
-                    <Text style={styles.itemPayAmount}>Rs. {amountUI}.00</Text>
-
-                    <View style={styles.innerViewPay}>
-                      <TouchableOpacity style={styles.buttonPayReject}>
-                        <View>
-                          <Text style={styles.rejectText}>Reject</Text>
-                        </View>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={styles.buttonPay} onPress={pay}>
-                        <View>
-                          <Text style={styles.submitText}>Pay</Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
+                    <Text style={styles.itemPayAmountRev}>
+                      Rs. {amountUI}.00
+                    </Text>
                     <View style={styles.innerViewPay}>
                       <Ionicons
                         name="ellipse"
                         size={14}
-                        color={'#DC143C'}
+                        color={'#dc143c'}
                         style={styles.dot}
                       />
                       <Text style={styles.paymentR}>
-                        Your Last payment is Failed !
+                        Your Last payment is Failled !
                       </Text>
                     </View>
                   </View>

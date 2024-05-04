@@ -60,6 +60,8 @@ function MobileLogin({navigation}): JSX.Element {
       setMobileErr(false);
       setsendOTPbtn('Sending....');
       signInWithPhoneNumber('+91 ' + mobile);
+      const mobileNumberS = '+91 ' + mobile;
+      AsyncStorage.setItem('mobile', mobileNumberS);
       setDisabled(true);
     }
   };
@@ -71,16 +73,17 @@ function MobileLogin({navigation}): JSX.Element {
       const otp = /(\d{6})/g.exec(message)![1];
       setCode(otp);
       setOtpDisabled(true);
-      setCnfmOTPbtn('Validating....');
       const uniqid = 'Auto Verified.';
       AsyncStorage.setItem('uidMobile', uniqid);
+      setCnfmOTPbtn('Validating....');
+      // Navigation
+      navigation.navigate('SignUp');
     } else {
       setCode('');
       setOtpDisabled(false);
     }
   }
   useEffect(() => {
-    // getHash().then(hash => console.log('Message Hash=> ', hash));
     startOtpListener(message => getOtpCode(message));
     return () => removeListener();
   }, []);

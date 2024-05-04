@@ -36,6 +36,7 @@ function Applications({navigation}): JSX.Element {
     });
     let getResultDashList = await resultDlist.json();
     if (getResultDashList.statusCode !== 200) {
+      console.log(getResultDashList);
       setData(getResultDashList);
     }
   };
@@ -49,7 +50,9 @@ function Applications({navigation}): JSX.Element {
       setRefreshing(false);
     }, 2000);
   }, []);
-
+  const refreshButton = async () => {
+    FetchDashListApi();
+  };
   return (
     <SafeAreaView style={styles.ContentViewLOG}>
       {isLoading ? (
@@ -77,7 +80,16 @@ function Applications({navigation}): JSX.Element {
                 onRefresh={onRefresh}
                 refreshing={refreshing}
                 renderItem={({item}) => (
-                  <TouchableOpacity style={styles.outtrtDiv}>
+                  <TouchableOpacity
+                    style={styles.outtrtDiv}
+                    onPress={() =>
+                      navigation.navigate('Application', {
+                        productsId: item.productId,
+                        product: item.product,
+                        jobId: item.jobId,
+                        product_image: item.product_image,
+                      })
+                    }>
                     <View style={styles.applicationRec}>
                       <View style={styles.itemApplIcon}>
                         <Image
@@ -120,8 +132,23 @@ function Applications({navigation}): JSX.Element {
             ) : (
               <View style={styles.noServiceDiv}>
                 <Text style={styles.noServiceAppl}>
-                  You have not choose any service!{' '}
+                  You Have Not Choose Any Service!
                 </Text>
+                <TouchableOpacity
+                  style={styles.buttonRefresh}
+                  onPress={refreshButton}>
+                  <View style={styles.buttonG}>
+                    <Text style={styles.refreshText}>
+                      Refresh {'  '}
+                      <Ionicons
+                        name="reload"
+                        size={18}
+                        color={'#ffffff'}
+                        style={styles.refresh}
+                      />
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             )}
           </View>

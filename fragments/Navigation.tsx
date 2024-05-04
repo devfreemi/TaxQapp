@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ApplicationView from '../screens/ApplicationView';
 import LoginOption from '../screens/LoginOption';
 import MobileLogin from '../screens/MobileLogin';
 import MobileVerification from '../screens/MobileVerification';
@@ -87,6 +88,7 @@ const Navigation = () => {
           headerBackVisible: false,
         }}
       />
+      <Stack.Screen name="Application" component={ApplicationView} />
     </Stack.Navigator>
   );
 };
