@@ -3,6 +3,7 @@ import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -16,23 +17,44 @@ import styles from '../style';
 
 function MobileLogin({navigation}): JSX.Element {
   const [confirm, setConfirm] = useState(null);
-  const [sendOTPbtn, setsendOTPbtn] = useState('Send OTP');
+  const [sendOTPbtn, setsendOTPbtn] = useState('Validate');
   const [disabled, setDisabled] = useState(false);
   const [cnfmOTPbtn, setCnfmOTPbtn] = useState('Confirm OTP');
   const [otpDisabled, setOtpDisabled] = useState(false);
   const [mobile, setMobile] = useState('');
   const [mobileErr, setMobileErr] = useState(false);
+  const [mobileCheck, setMobileCheck] = useState('');
   const [codeErr, setCodeErr] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   // MOBILE VERIFIED CHECK
   const tokenLogin = async () => {
-    const mobileID = await AsyncStorage.getItem('mobile');
+    // const mobileID = await AsyncStorage.getItem('mobile');
 
-    if (mobileID !== null) {
-      navigation.navigate('SignUp');
+    // if (mobileID !== null) {
+    //   navigation.navigate('SignUp');
+    // } else {
+    //   navigation.navigate('MobileLogin');
+    // }
+    const mobileID = '+91' + mobile;
+    const dashboardUrl =
+      'https://complyify.in/taxConsultant/tax/mobile-count-api-v1';
+    let resultD = await fetch(dashboardUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mobileID,
+      }),
+    });
+    let getResultDash = await resultD.json();
+    if (getResultDash.status === 'Fetched') {
+      AsyncStorage.setItem('userId', getResultDash.uniqid);
+
+      setMobileCheck('Y');
     } else {
-      navigation.navigate('MobileLogin');
+      setMobileCheck('N');
     }
   };
   tokenLogin();
@@ -55,13 +77,23 @@ function MobileLogin({navigation}): JSX.Element {
     if (!sampleRegEx.test(mobile)) {
       setMobileErr(true);
       return false;
-    } else {
+    } else if (mobileCheck === 'Y') {
+      console.log(mobileCheck);
+      setsendOTPbtn('Validating....');
+      setDisabled(true);
+      // navigation.navigate('ServicesView');
+      Alert.alert('Congrats!', 'Mobile Number Already Verified!', [
+        {
+          text: 'Ok',
+          onPress: () => navigation.navigate('ServicesView'),
+        },
+      ]);
+    } else if (mobileCheck === 'N') {
+      console.log(mobileCheck);
       setMobile(mobile);
       setMobileErr(false);
       setsendOTPbtn('Sending....');
       signInWithPhoneNumber('+91 ' + mobile);
-      const mobileNumberS = '+91 ' + mobile;
-      AsyncStorage.setItem('mobile', mobileNumberS);
       setDisabled(true);
     }
   };

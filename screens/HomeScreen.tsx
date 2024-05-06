@@ -42,6 +42,7 @@ function HomeScreen({navigation}): JSX.Element {
   const [productName, setProductName] = useState('');
   const [amountUI, setAmountUI] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
+  const [jobID, setJobID] = useState('');
   const [data, setData] = useState([]);
   const FetchDashApi = async () => {
     const customerID = await AsyncStorage.getItem('userId');
@@ -106,6 +107,7 @@ function HomeScreen({navigation}): JSX.Element {
       setAmountUI(getResultPayment.AmountUI);
       setProductName(getResultPayment.product);
       setPaymentStatus(getResultPayment.status);
+      setJobID(getResultPayment.applicationId);
       console.log(getResultPayment);
     }
   };
@@ -226,7 +228,9 @@ function HomeScreen({navigation}): JSX.Element {
 
               {paymentStatus === 'Payment Success' ? (
                 <View style={[styles.homeGridView3]}>
-                  <View style={[styles.elevationPro, styles.cardI]}>
+                  <TouchableOpacity
+                    style={[styles.elevationPro, styles.cardI]}
+                    onPress={() => navigation.navigate('Applications')}>
                     <Text style={styles.itemPay}>{productName}</Text>
                     <Text style={styles.itemPayAmountRev}>
                       Rs. {amountUI}.00
@@ -242,11 +246,13 @@ function HomeScreen({navigation}): JSX.Element {
                         Your Last payment is Successfull !
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               ) : paymentStatus === 'Signature Verification Failed' ? (
                 <View style={[styles.homeGridView3]}>
-                  <View style={[styles.elevationPro, styles.cardI]}>
+                  <TouchableOpacity
+                    style={[styles.elevationPro, styles.cardI]}
+                    onPress={() => navigation.navigate('Applications')}>
                     <Text style={styles.itemPay}>{productName}</Text>
                     <Text style={styles.itemPayAmountRev}>
                       Rs. {amountUI}.00
@@ -262,7 +268,7 @@ function HomeScreen({navigation}): JSX.Element {
                         Your Last payment is Failled !
                       </Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               ) : (
                 <Text style={styles.noService}>
