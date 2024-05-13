@@ -41,16 +41,17 @@ function Profile({navigation}): JSX.Element {
       await AsyncStorage.removeItem('mobile');
       await GoogleSignin.signOut();
       navigation.navigate('LoginHome');
-      console.log(getResultProfile.customerID);
+      // console.log(getResultProfile.customerID);
+    } else {
+      setCid(getResultProfile.customerID);
+      setName(getResultProfile.name);
+      setPhoto(getResultProfile.photo);
+      setMobile(getResultProfile.mobile);
+      setEmail(getResultProfile.email);
     }
-    console.log(getResultProfile);
-    setName(getResultProfile.name);
-    setPhoto(getResultProfile.photo);
-    setMobile(getResultProfile.mobile);
-    setEmail(getResultProfile.email);
-    setCid(getResultProfile.customerID);
   };
   FetchStorageData();
+
   setTimeout(() => {
     FetchStorageData();
     setLoading(false);

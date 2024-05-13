@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import auth from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/database';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
 import {
@@ -13,10 +13,6 @@ import {
 } from 'react-native';
 import styles from '../style';
 function LoginOption({navigation}): JSX.Element {
-  // const [email, setEmail] = useState('');
-  // const [id, setUserId] = useState('');
-  // const [name, setName] = useState('');
-  // const [photo, setPhoto] = useState('');
   // For api
 
   useEffect(() => {
@@ -37,39 +33,76 @@ function LoginOption({navigation}): JSX.Element {
       const name = user.name;
       const photo = user.photo;
       const email = user.email;
-      // SET ASYNC STORAGE
-      AsyncStorage.setItem('userId', user.id);
-      AsyncStorage.setItem('email', user.email);
-      AsyncStorage.setItem('name', user.name);
-      AsyncStorage.setItem('photo', user.photo);
-      // API CALL
-      const loginUrl = 'https://complyify.in/taxConsultant/tax/login-api-v1';
-      let result = await fetch(loginUrl, {
+      // EMAIL CTOSS CHECK
+      const emailCountUrl =
+        'https://complyify.in/taxConsultant/tax/email-count-api-v1';
+      let resultEmail = await fetch(emailCountUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Cache-Control': 'max-age=3600',
         },
         body: JSON.stringify({
-          uniqid,
-          loginWith,
           email,
-          familyName,
-          givenName,
-          name,
-          photo,
         }),
       });
-      let getResultEx = await result.json();
-      if (getResultEx) {
-        console.log(getResultEx);
+      let getResultEmail = await resultEmail.json();
+      if (getResultEmail.status === 'Fetched') {
+        AsyncStorage.setItem('userId', getResultEmail.uniqid);
+        // Navigate
+        navigation.navigate('MobileVerification');
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        return auth().signInWithCredential(googleCredential);
       } else {
-        console.log('Internal Failure. Contact to Tech Team');
+        // SET ASYNC STORAGE
+        AsyncStorage.setItem('userId', user.id);
+        AsyncStorage.setItem('email', user.email);
+        AsyncStorage.setItem('name', user.name);
+        AsyncStorage.setItem('photo', user.photo);
+        // API CALL
+        const loginUrl = 'https://complyify.in/taxConsultant/tax/login-api-v1';
+        let result = await fetch(loginUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'max-age=3600',
+          },
+          body: JSON.stringify({
+            uniqid,
+            loginWith,
+            email,
+            familyName,
+            givenName,
+            name,
+            photo,
+          }),
+        });
+        let getResultEx = await result.json();
+        if (getResultEx) {
+          console.log(getResultEx);
+          await firebase
+            .app()
+            .database(
+              'https://taxq-cfaf0-default-rtdb.asia-southeast1.firebasedatabase.app/',
+            )
+            .ref('/user/' + uniqid)
+            .set({
+              name: name,
+              email: email,
+              photo: photo,
+              loginWith: loginWith,
+              familyName: familyName,
+              givenName: givenName,
+            })
+            .then();
+        } else {
+          console.log('Internal Failure. Contact to Tech Team');
+        }
+        // Navigate
+        navigation.navigate('MobileVerification');
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        return auth().signInWithCredential(googleCredential);
       }
-      // Navigate
-      navigation.navigate('MobileVerification');
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      return auth().signInWithCredential(googleCredential);
     } catch (error) {
       console.log(error);
     }

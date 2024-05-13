@@ -74,7 +74,7 @@ function ApplicationView({route, navigation}): JSX.Element {
       image:
         'https://complyify.in/taxConsultant/assets/img/icons/brands/appLogo.png',
       currency: 'INR',
-      key: 'rzp_test_nM0gkKKYwEqjex',
+      key: 'rzp_live_bnIERNe35ujSDt',
       amount: amount,
       name: 'Complyify',
       order_id: orderId,
@@ -132,7 +132,7 @@ function ApplicationView({route, navigation}): JSX.Element {
         let getResultPaymentRes = await resultPaymetres.json();
         console.log(getResultPaymentRes);
         // handle success
-        navigation.navigate('Application');
+        navigation.navigate('Dashboard');
       });
   };
   return (
@@ -187,6 +187,11 @@ function ApplicationView({route, navigation}): JSX.Element {
                       <Text style={styles.paramStatusFail}>
                         {paymentStatus}
                       </Text>
+                    ) : paymentStatus === 'created' ||
+                      paymentStatus === 'Pending Payments' ? (
+                      <Text style={styles.paramStatusCreate}>
+                        {paymentStatus}
+                      </Text>
                     ) : null}
                   </View>
                 </View>
@@ -223,6 +228,39 @@ function ApplicationView({route, navigation}): JSX.Element {
               </View>
             </View>
             {paymentStatus === 'Payment Failed' ? (
+              <View style={[styles.homeGridView3]}>
+                <View style={[styles.elevationPro, styles.cardI]}>
+                  <Text style={styles.itemPay}>{product}</Text>
+                  <Text style={styles.itemPayAmount}>Rs. {amountUi}.00</Text>
+
+                  <View style={styles.innerViewPay}>
+                    <TouchableOpacity style={styles.buttonPayReject}>
+                      <View>
+                        <Text style={styles.rejectText}>Reject</Text>
+                      </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.buttonPay} onPress={pay}>
+                      <View>
+                        <Text style={styles.submitText}>Pay</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.innerViewPay}>
+                    <Ionicons
+                      name="ellipse"
+                      size={14}
+                      color={'#DC143C'}
+                      style={styles.dot}
+                    />
+                    <Text style={styles.paymentR}>
+                      Your Last payment is Failed !
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            ) : paymentStatus === 'created' ||
+              paymentStatus === 'Pending Payments' ? (
               <View style={[styles.homeGridView3]}>
                 <View style={[styles.elevationPro, styles.cardI]}>
                   <Text style={styles.itemPay}>{product}</Text>

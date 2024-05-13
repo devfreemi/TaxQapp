@@ -270,6 +270,28 @@ function HomeScreen({navigation}): JSX.Element {
                     </View>
                   </TouchableOpacity>
                 </View>
+              ) : paymentStatus === 'created' ? (
+                <View style={[styles.homeGridView3]}>
+                  <TouchableOpacity
+                    style={[styles.elevationPro, styles.cardI]}
+                    onPress={() => navigation.navigate('Applications')}>
+                    <Text style={styles.itemPay}>{productName}</Text>
+                    <Text style={styles.itemPayAmountRev}>
+                      Rs. {amountUI}.00
+                    </Text>
+                    <View style={styles.innerViewPay}>
+                      <Ionicons
+                        name="ellipse"
+                        size={14}
+                        color={'#dc143c'}
+                        style={styles.dot}
+                      />
+                      <Text style={styles.paymentR}>
+                        Your Last payment is Failled !
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               ) : (
                 <Text style={styles.noService}>
                   You have not any pending payments.

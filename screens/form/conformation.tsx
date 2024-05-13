@@ -27,7 +27,7 @@ function Conformation({route, navigation}): JSX.Element {
       image:
         'https://complyify.in/taxConsultant/assets/img/icons/brands/appLogo.png',
       currency: 'INR',
-      key: 'rzp_test_nM0gkKKYwEqjex',
+      key: 'rzp_live_bnIERNe35ujSDt',
       amount: amount,
       name: 'Complyify',
       order_id: OrderId,

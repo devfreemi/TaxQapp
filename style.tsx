@@ -1941,6 +1941,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     textAlign: 'right',
   },
+  paramStatusCreate: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#ffb400',
+    letterSpacing: 0.5,
+    textAlign: 'right',
+  },
   reportApllText: {
     textAlign: 'left',
     padding: 4,

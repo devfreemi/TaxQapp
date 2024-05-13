@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {firebase} from '@react-native-firebase/database';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
@@ -111,7 +112,23 @@ function SignUp({navigation}): JSX.Element {
       });
       let getResultEx = await result.json();
       if (getResultEx) {
-        console.log(getResultEx);
+        // console.log(getResultEx);
+        await firebase
+          .app()
+          .database(
+            'https://taxq-cfaf0-default-rtdb.asia-southeast1.firebasedatabase.app/',
+          )
+          .ref('/user/' + uniqid)
+          .set({
+            name: name,
+            email: email,
+            photo: photo,
+            loginWith: loginWith,
+            familyName: familyName,
+            givenName: givenName,
+            mobile: mobile,
+          })
+          .then();
       } else {
         console.log('Internal Failure. Contact to Tech Team');
       }

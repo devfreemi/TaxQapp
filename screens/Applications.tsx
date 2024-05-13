@@ -103,7 +103,8 @@ function Applications({navigation}): JSX.Element {
                           <View style={styles.itemStatusInnerPaid}>
                             <Text style={styles.itemStatusTextPaid}>Paid</Text>
                           </View>
-                        ) : item.PaymentStatus === 'created' ? (
+                        ) : item.PaymentStatus === 'created' ||
+                          item.PaymentStatus === 'Pending Payments' ? (
                           <View style={styles.itemStatusInnerCreated}>
                             <Text style={styles.itemStatusTextCreated}>
                               Created

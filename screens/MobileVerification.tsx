@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/database';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -25,7 +26,7 @@ function MobileVerification({navigation}): JSX.Element {
   const [mobileErr, setMobileErr] = useState(false);
   const [codeErr, setCodeErr] = useState(false);
   const [isLoading, setLoading] = useState(true);
-
+  const [mobileCheck, setMobileCheck] = useState('');
   // MOBILE VERIFIED CHECK
   const tokenLogin = async () => {
     const customerID = await AsyncStorage.getItem('userId');
@@ -44,6 +45,27 @@ function MobileVerification({navigation}): JSX.Element {
     if (getResultDash.mobileNumber !== null) {
       navigation.navigate('ServicesView');
     } else {
+      const mobileID = '+91' + mobile;
+      const mobileCheckUrl =
+        'https://complyify.in/taxConsultant/tax/mobile-count-api-v1';
+      let resultMbCh = await fetch(mobileCheckUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mobileID,
+        }),
+      });
+      let getResultCheck = await resultMbCh.json();
+      if (getResultCheck.status === 'Fetched') {
+        console.log(getResultCheck);
+
+        AsyncStorage.setItem('userId', getResultCheck.uniqid);
+        setMobileCheck('Y');
+      } else {
+        setMobileCheck('N');
+      }
       navigation.navigate('MobileVerification');
     }
   };
@@ -60,7 +82,6 @@ function MobileVerification({navigation}): JSX.Element {
   const signInWithPhoneNumber = async (phoneNumber: string) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
-    console.log(confirmation._verificationId);
   };
   const validation = async () => {
     tokenLogin();
@@ -68,7 +89,17 @@ function MobileVerification({navigation}): JSX.Element {
     if (!sampleRegEx.test(mobile)) {
       setMobileErr(true);
       return false;
-    } else {
+    } else if (mobileCheck === 'Y') {
+      setsendOTPbtn('Validating....');
+      setDisabled(true);
+
+      Alert.alert('Congrats!', 'Mobile Number Already Verified!', [
+        {
+          text: 'Ok',
+          onPress: () => navigation.navigate('ServicesView'),
+        },
+      ]);
+    } else if (mobileCheck === 'N') {
       setMobile(mobile);
       setMobileErr(false);
       setsendOTPbtn('Sending....');
@@ -106,6 +137,16 @@ function MobileVerification({navigation}): JSX.Element {
       });
       let getResultUpdate = await result.json();
       if (getResultUpdate.mobile !== null) {
+        await firebase
+          .app()
+          .database(
+            'https://taxq-cfaf0-default-rtdb.asia-southeast1.firebasedatabase.app/',
+          )
+          .ref('/user/' + customerIDM)
+          .update({
+            mobile: mobileNumber,
+          })
+          .then(() => console.log('Data set.'));
         // Navigation
         navigation.navigate('ServicesView');
       } else {
@@ -150,6 +191,16 @@ function MobileVerification({navigation}): JSX.Element {
       });
       // console.log(res);
       // console.log(getResultMupdate);
+      await firebase
+        .app()
+        .database(
+          'https://taxq-cfaf0-default-rtdb.asia-southeast1.firebasedatabase.app/',
+        )
+        .ref('/user/' + customerIDM)
+        .update({
+          mobile: mobileNumber,
+        })
+        .then(() => console.log('Data set.'));
     } catch (error) {
       if (error.code === 'auth/invalid-verification-code') {
         setCodeErr(true);
