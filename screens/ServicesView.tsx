@@ -1,10 +1,13 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Carousel from 'react-native-reanimated-carousel';
+
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
   BackHandler,
+  Dimensions,
   Image,
   SafeAreaView,
   ScrollView,
@@ -83,6 +86,25 @@ function Service({navigation}) {
       {text: 'Close', onPress: () => console.log('OK Pressed')},
     ]);
   // Refresh
+  const width = Dimensions.get('window').width;
+  const [data, setData] = useState([]);
+  const FetchImageSlider = async () => {
+    const dashboardListUrl =
+      'https://complyify.in/taxConsultant/tax/image-api-v1';
+    let resultDlist = await fetch(dashboardListUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    let getResultDashList = await resultDlist.json();
+    if (getResultDashList.statusCode !== 200) {
+      setData(getResultDashList);
+    }
+  };
+  if (isLoading) {
+    FetchImageSlider();
+  }
 
   return (
     <SafeAreaView style={styles.ContentViewReport}>
@@ -98,11 +120,30 @@ function Service({navigation}) {
           </View>
         ) : (
           <>
-            <Image
-              source={require('../assets/images/banner2.jpg')}
-              style={styles.banner}
-            />
-
+            <View style={styles.banner}>
+              <Carousel
+                loop
+                width={width}
+                height={width / 2}
+                autoPlay={true}
+                mode="parallax"
+                modeConfig={{
+                  parallaxScrollingScale: 0.9,
+                  parallaxScrollingOffset: 50,
+                }}
+                data={data}
+                scrollAnimationDuration={1000}
+                // autoPlayInterval={1000}
+                renderItem={({item}) => (
+                  <View style={styles.slider}>
+                    <Image
+                      source={{uri: item.product_image}}
+                      style={styles.slidePic}
+                    />
+                  </View>
+                )}
+              />
+            </View>
             <Text style={styles.reportHead}>Select Our Services</Text>
             <ScrollView style={styles.ServiceScroll}>
               <Text style={styles.serviceNamein}>Services</Text>

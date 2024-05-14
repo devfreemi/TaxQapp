@@ -1006,14 +1006,23 @@ const styles = StyleSheet.create({
     marginHorizontal: '2%',
   },
   // Report screen
+
   banner: {
-    width: 'auto',
-    height: '15%',
-    marginHorizontal: '3%',
-    marginTop: 3,
+    height: '20%',
     borderRadius: 12,
   },
-
+  slidePic: {
+    width: 'auto',
+    height: '100%',
+    borderRadius: 8,
+  },
+  slider: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    width: '100%',
+  },
   ContentViewReport: {
     height: '100%',
     backgroundColor: '#fdfcfc',
@@ -1045,8 +1054,8 @@ const styles = StyleSheet.create({
     marginVertical: '1%',
   },
   ServiceScroll: {
-    // height: '100%',
-    marginBottom: '45%',
+    height: 'auto',
+    marginBottom: 'auto',
   },
   cardIReport: {
     backgroundColor: '#e7e6ff',
@@ -1128,9 +1137,9 @@ const styles = StyleSheet.create({
     color: '#535353',
     letterSpacing: 1,
     textAlign: 'left',
-    paddingBottom: '4%',
+    paddingTop: '12%',
     marginHorizontal: '4%',
-    marginTop: '2%',
+    marginTop: '3%',
   },
   reportHead2: {
     fontSize: 16,
