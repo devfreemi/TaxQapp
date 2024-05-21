@@ -1067,6 +1067,22 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
     paddingVertical: '2%',
   },
+  TandCText: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#2f3337',
+    letterSpacing: 0.8,
+    paddingTop: '2%',
+    textAlign: 'justify',
+  },
+  tcHead: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#2f3337',
+    letterSpacing: 0.8,
+    paddingTop: '2%',
+    textAlign: 'justify',
+  },
   cardIReport: {
     backgroundColor: '#e7e6ff',
     borderRadius: 150,

@@ -18,6 +18,7 @@ import TradeMark from '../screens/form/TradeMark';
 import Conformation from '../screens/form/conformation';
 import Account from '../screens/profile/Account';
 import Support from '../screens/profile/Support';
+import TermsConditions from '../screens/profile/TermsConditions';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -93,6 +94,7 @@ const Navigation = () => {
       <Stack.Screen name="Application" component={ApplicationView} />
       <Stack.Screen name="Account" component={Account} />
       <Stack.Screen name="Support" component={Support} />
+      <Stack.Screen name="Terms & Conditions" component={TermsConditions} />
     </Stack.Navigator>
   );
 };

@@ -153,7 +153,9 @@ function Profile({navigation}): JSX.Element {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.viewProfileCard}>
+            <TouchableOpacity
+              style={styles.viewProfileCard}
+              onPress={() => navigation.navigate('Terms & Conditions')}>
               <View style={styles.itemStatusProfile}>
                 <Ionicons
                   name="document-lock-outline"
