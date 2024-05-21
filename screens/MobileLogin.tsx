@@ -82,7 +82,7 @@ function MobileLogin({navigation}): JSX.Element {
       setsendOTPbtn('Validating....');
       setDisabled(true);
       // navigation.navigate('ServicesView');
-      Alert.alert('Congrats!', 'Mobile Number Already Verified!', [
+      Alert.alert('Welcome Back!', 'Mobile Number Already Verified!', [
         {
           text: 'Ok',
           onPress: () => navigation.navigate('ServicesView'),
@@ -95,6 +95,7 @@ function MobileLogin({navigation}): JSX.Element {
       setsendOTPbtn('Sending....');
       signInWithPhoneNumber('+91 ' + mobile);
       setDisabled(true);
+      AsyncStorage.setItem('mobile', '+91' + mobile);
     }
   };
 

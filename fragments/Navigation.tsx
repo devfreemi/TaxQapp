@@ -16,6 +16,8 @@ import IncomeTax from '../screens/form/IncomeTax';
 import TradeLicense from '../screens/form/TradeLicense';
 import TradeMark from '../screens/form/TradeMark';
 import Conformation from '../screens/form/conformation';
+import Account from '../screens/profile/Account';
+import Support from '../screens/profile/Support';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -89,6 +91,8 @@ const Navigation = () => {
         }}
       />
       <Stack.Screen name="Application" component={ApplicationView} />
+      <Stack.Screen name="Account" component={Account} />
+      <Stack.Screen name="Support" component={Support} />
     </Stack.Navigator>
   );
 };

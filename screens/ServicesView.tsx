@@ -127,10 +127,10 @@ function Service({navigation}) {
                 height={width / 2}
                 autoPlay={true}
                 mode="parallax"
-                modeConfig={{
-                  parallaxScrollingScale: 0.9,
-                  parallaxScrollingOffset: 50,
-                }}
+                // modeConfig={{
+                //   parallaxScrollingScale: 0.9,
+                //   parallaxScrollingOffset: 50,
+                // }}
                 data={data}
                 scrollAnimationDuration={1000}
                 // autoPlayInterval={1000}
