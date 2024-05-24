@@ -4,24 +4,24 @@ import React, {useState} from 'react';
 import {
   ActivityIndicator,
   Image,
+  Linking,
   ScrollView,
+  Share,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {version} from '../package.json';
 import styles from '../style';
-
 function Profile({navigation}): JSX.Element {
   const [name, setName] = useState('Loading...');
   const [photo, setPhoto] = useState(
     'https://www.flaticon.com/free-icon/user_3177440?term=profile&page=1&position=13&origin=tag&related_id=3177440',
   );
-  const [email, setEmail] = useState('Loading...');
-  const [mobile, setMobile] = useState('Loading...');
   const [isLoading, setLoading] = useState(true);
-  const [cId, setCid] = useState('Loading...');
+
   const FetchStorageData = async () => {
     const customerIDP = await AsyncStorage.getItem('userId');
     const profileUrl = 'https://complyify.in/taxConsultant/tax/profile-api-v1';
@@ -43,11 +43,8 @@ function Profile({navigation}): JSX.Element {
       navigation.navigate('LoginHome');
       // console.log(getResultProfile.customerID);
     } else {
-      setCid(getResultProfile.customerID);
       setName(getResultProfile.name);
       setPhoto(getResultProfile.photo);
-      setMobile(getResultProfile.mobile);
-      setEmail(getResultProfile.email);
     }
   };
   FetchStorageData();
@@ -63,7 +60,31 @@ function Profile({navigation}): JSX.Element {
     await GoogleSignin.signOut();
     navigation.navigate('LoginHome');
   };
-
+  const openURL = async () => {
+    Linking.openURL('https://complyify.in/refundpolicy.php');
+  };
+  // Share
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Complyify | Compliance Simplyfied',
+        message:
+          'Complyify | Compliance Simplyfied | Affordable Business Solutions | Download it from Playstore : https://play.google.com/store/apps/details?id=com.taxq',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+  // share
   return (
     <SafeAreaView style={styles.ContentViewLOG}>
       {isLoading ? (
@@ -174,7 +195,9 @@ function Profile({navigation}): JSX.Element {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.viewProfileCard}>
+            <TouchableOpacity
+              style={styles.viewProfileCard}
+              onPress={() => navigation.navigate('Privacy & Policy')}>
               <View style={styles.itemStatusProfile}>
                 <Ionicons
                   name="shield-checkmark-outline"
@@ -193,7 +216,7 @@ function Profile({navigation}): JSX.Element {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.viewProfileCard}>
+            <TouchableOpacity style={styles.viewProfileCard} onPress={openURL}>
               <View style={styles.itemStatusProfile}>
                 <Ionicons
                   name="refresh-circle-outline"
@@ -212,7 +235,7 @@ function Profile({navigation}): JSX.Element {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.viewProfileCard}>
+            <TouchableOpacity style={styles.viewProfileCard} onPress={onShare}>
               <View style={styles.itemStatusProfile}>
                 <Ionicons
                   name="phone-portrait-outline"
@@ -252,6 +275,13 @@ function Profile({navigation}): JSX.Element {
                 />
               </View>
             </TouchableOpacity>
+          </View>
+          <View style={styles.buttonVersion}>
+            <Image
+              source={require('../assets/images/appIcon.png')}
+              style={styles.appIcon}
+            />
+            <Text style={styles.versionText}>Version {version}</Text>
           </View>
         </ScrollView>
       )}

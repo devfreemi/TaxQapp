@@ -17,6 +17,7 @@ import TradeLicense from '../screens/form/TradeLicense';
 import TradeMark from '../screens/form/TradeMark';
 import Conformation from '../screens/form/conformation';
 import Account from '../screens/profile/Account';
+import PrivacyNpolicy from '../screens/profile/PrivacyNpolicy';
 import Support from '../screens/profile/Support';
 import TermsConditions from '../screens/profile/TermsConditions';
 const Stack = createNativeStackNavigator();
@@ -95,6 +96,7 @@ const Navigation = () => {
       <Stack.Screen name="Account" component={Account} />
       <Stack.Screen name="Support" component={Support} />
       <Stack.Screen name="Terms & Conditions" component={TermsConditions} />
+      <Stack.Screen name="Privacy & Policy" component={PrivacyNpolicy} />
     </Stack.Navigator>
   );
 };

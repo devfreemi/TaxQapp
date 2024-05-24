@@ -1083,6 +1083,26 @@ const styles = StyleSheet.create({
     paddingTop: '2%',
     textAlign: 'justify',
   },
+  buttonReadmore: {
+    marginVertical: '10%',
+    alignSelf: 'center',
+  },
+  buttonVersion: {
+    marginVertical: '3%',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  readText: {
+    color: '#0a0099',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  versionText: {color: '#75808a', fontSize: 12, fontWeight: '400'},
+  appIcon: {
+    width: 50,
+    height: 50,
+  },
+
   cardIReport: {
     backgroundColor: '#e7e6ff',
     borderRadius: 150,
