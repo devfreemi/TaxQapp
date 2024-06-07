@@ -87,6 +87,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // alignItems: 'baseline',
   },
+  containerPartner: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: '10%',
+    // alignItems: 'baseline',
+  },
   containerTrade: {
     flex: 1,
     flexDirection: 'row',
@@ -1349,6 +1355,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '5%',
+    marginBottom: '2%',
+  },
+  formImagedivPertner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '15%',
     marginBottom: '2%',
   },
   conImagediv: {

@@ -155,7 +155,9 @@ function Profile({navigation}): JSX.Element {
             </View>
           </View>
           <View style={styles.logoutCont}>
-            <TouchableOpacity style={styles.viewProfileCardFirst}>
+            <TouchableOpacity
+              style={styles.viewProfileCardFirst}
+              onPress={() => navigation.navigate('Become Our Partner')}>
               <View style={styles.itemStatusProfile}>
                 <Ionicons
                   name="id-card-outline"

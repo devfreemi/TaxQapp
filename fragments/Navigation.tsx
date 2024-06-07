@@ -17,6 +17,8 @@ import TradeLicense from '../screens/form/TradeLicense';
 import TradeMark from '../screens/form/TradeMark';
 import Conformation from '../screens/form/conformation';
 import Account from '../screens/profile/Account';
+import Partner from '../screens/profile/Partner';
+import PartnerConf from '../screens/profile/PartnerConf';
 import PrivacyNpolicy from '../screens/profile/PrivacyNpolicy';
 import Support from '../screens/profile/Support';
 import TermsConditions from '../screens/profile/TermsConditions';
@@ -97,6 +99,14 @@ const Navigation = () => {
       <Stack.Screen name="Support" component={Support} />
       <Stack.Screen name="Terms & Conditions" component={TermsConditions} />
       <Stack.Screen name="Privacy & Policy" component={PrivacyNpolicy} />
+      <Stack.Screen name="Become Our Partner" component={Partner} />
+      <Stack.Screen
+        name="Partner Application"
+        component={PartnerConf}
+        options={{
+          headerBackVisible: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };
