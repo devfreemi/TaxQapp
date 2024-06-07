@@ -1,6 +1,6 @@
 {
   "name": "TaxQ",
-  "version": "1.0.04.1",
+  "version": "1.0.05",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
